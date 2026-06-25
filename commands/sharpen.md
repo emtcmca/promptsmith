@@ -1,6 +1,6 @@
 ---
 description: "Turn a rough request into a sharpened, gap-filled, professionally-reviewed prompt ready to paste into any agent."
-usage: "/sharpen <rough request> [--lens name,name] [--deep] — e.g. /sharpen update the dashboard to feel calmer and more authoritative --lens ux-designer,visual-design"
+usage: "/promptsmith:sharpen <rough request> [--lens name,name] [--deep] — e.g. /promptsmith:sharpen update the dashboard to feel calmer and more authoritative --lens ux-designer,visual-design"
 category: "dev"
 ---
 

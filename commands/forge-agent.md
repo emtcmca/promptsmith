@@ -1,6 +1,6 @@
 ---
 description: "Author a complete, reusable agent system prompt from a short description — role, objective, method, guardrails, output contract, and baked-in push-back."
-usage: "/forge-agent <description of the agent you want> [--lens name,name] [--deep] — e.g. /forge-agent a reviewer that critiques HOA letters for tone and compliance"
+usage: "/promptsmith:forge-agent <description of the agent you want> [--lens name,name] [--deep] — e.g. /promptsmith:forge-agent a reviewer that critiques HOA letters for tone and compliance"
 category: "dev"
 ---
 

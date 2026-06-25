@@ -40,21 +40,31 @@ had to make, and offers a `--deep` interview to resolve them one question at a t
 (Or point the marketplace at the GitHub repo once it's pushed:
 `/plugin marketplace add emtcmca/promptsmith`.)
 
-Verify: type `/` and confirm `/sharpen`, `/forge-agent`, and `/lens` autocomplete.
+Verify: type `/promptsmith` and confirm `/promptsmith:sharpen`, `/promptsmith:forge-agent`,
+and `/promptsmith:lens` autocomplete.
 
-### Option B — manual
+### Option B — manual (standalone, bare command names)
 
 Copy `commands/` and `skills/` into your `~/.claude/` directory
-(Windows: `C:\Users\<you>\.claude\`).
+(Windows: `C:\Users\<you>\.claude\`), **and** copy `lenses/` into
+`~/.claude/promptsmith-lenses/` so the lens pass can find them. Installed this way the
+commands are bare — `/sharpen`, `/forge-agent`, `/lens` — because standalone commands
+aren't namespaced. (Skip the lenses copy and the engine's lens step has nothing to load.)
 
 ---
 
 ## Usage
 
+> **Command names are namespaced.** Installed as a plugin (Option A), the commands are
+> `/promptsmith:sharpen`, `/promptsmith:forge-agent`, and `/promptsmith:lens` — type
+> `/promptsmith` to autocomplete them. Claude Code namespaces every plugin command to avoid
+> collisions; bare `/sharpen` exists only with the manual/standalone install (Option B).
+> The examples below use the namespaced form.
+
 ### Sharpen a request
 
 ```
-/sharpen update the dashboard to feel calmer and more authoritative
+/promptsmith:sharpen update the dashboard to feel calmer and more authoritative
 ```
 
 You get a copy-pasteable prompt block (role, objective, requirements with the *named* tone
@@ -64,19 +74,19 @@ then the assumptions it made, the push-back worth hearing, and open questions.
 Force specific lenses:
 
 ```
-/sharpen redesign the signup form --lens ux-designer,accessibility
+/promptsmith:sharpen redesign the signup form --lens ux-designer,accessibility
 ```
 
 Go deep (interview instead of assume):
 
 ```
-/sharpen draft a violation notice for an unresolved fence dispute --deep
+/promptsmith:sharpen draft a violation notice for an unresolved fence dispute --deep
 ```
 
 ### Forge a reusable agent
 
 ```
-/forge-agent a reviewer that critiques HOA letters for tone and compliance
+/promptsmith:forge-agent a reviewer that critiques HOA letters for tone and compliance
 ```
 
 Returns a full system prompt — role, objective, standing operating principles (with the
@@ -86,11 +96,11 @@ contract — ready to drop into a subagent, a skill, or any system-prompt field.
 ### Review through a lens
 
 ```
-/lens (paste a component, prompt, or draft) --lens visual-design,accessibility
+/promptsmith:lens (paste a component, prompt, or draft) --lens visual-design,accessibility
 ```
 
 Returns findings (✅ checked / ⚠️ weak / ❌ failing) per lens, worst-first, plus the top 3
-fixes by impact. To get a corrected version, feed those findings into `/sharpen`.
+fixes by impact. To get a corrected version, feed those findings into `/promptsmith:sharpen`.
 
 ---
 
@@ -130,7 +140,7 @@ applies-to: comma, separated, topics, that, auto-select, this, lens
 - Another check. Keep them concrete and answerable.
 ```
 
-Then: `/sharpen ... --lens my-lens` (or let auto-select pick it up by topic).
+Then: `/promptsmith:sharpen ... --lens my-lens` (or let auto-select pick it up by topic).
 
 ---
 
