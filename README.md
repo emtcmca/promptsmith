@@ -115,6 +115,9 @@ A lens is a professional's checklist in a markdown file. Built-in lenses:
 | `accessibility` | a11y, WCAG, keyboard, contrast, screen readers |
 | `security-reviewer` | code, auth, data, input, integrations |
 | `performance` | speed, scale, queries, rendering, payloads |
+| `api-design` | endpoints, contracts, backend routes, integrations, webhooks |
+| `data-integrity` | billing, payments, transactions, schemas, migrations, money |
+| `seo` | search, metadata, crawlability, structured data, marketing pages |
 | `product-strategist` | scope, value, MVP, prioritization |
 | `editorial` | copy, email, docs, tone of voice |
 | `skeptic` | the "push back on me" red-team lens (applied by default) |
