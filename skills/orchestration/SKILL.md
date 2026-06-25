@@ -23,6 +23,26 @@ runs this protocol; there is no bundled runtime.
 **When NOT to use (fall back — Step 0):** a single agent or plain `/sharpen` handles it well.
 Orchestration has real cost (fan-out + synthesis); don't pay it for a one-domain task.
 
+## Context discipline — keep big things out of your window
+
+The coordinator must stay **context-aware**: hold the plan, the seams, and the conclusions —
+**not the raw material.** Subagent context is disposable; exploit that. A coordinator that pulls
+large artifacts into its own window goes blind faster and loses the thread.
+
+- **Never read a large artifact into your own context** to review, edit, or search it — a big
+  file, a whole directory, a long log, a corpus, a giant tool output. Dispatch a subagent that
+  reads it in *its* context and returns only the distilled result: findings, a diff, a verdict,
+  a summary, the specific lines.
+- **Pass references, not contents.** Hand subagents file paths, globs, line ranges, IDs — let
+  them fetch. Don't paste a file's body into a slice goal.
+- **Editing a large file:** dispatch a builder to produce or apply the change in its context and
+  return a compact diff / `--stat`; review the diff, not the file. (If you already have a
+  subagent that produced the change, resume *it* to apply — it still holds the context.)
+- **Synthesize from distilled returns**, never by re-ingesting every slice's raw output. If a
+  single return is itself large, route it through a summarizer before you hold it.
+- The test: *if reading something would burn a big chunk of your window and you only need the
+  conclusion, that's a subagent's job, not yours.*
+
 ## The pipeline
 
 ### Step 0 — Gate: intent first, then worth
@@ -179,6 +199,9 @@ Lead with the **synthesized deliverable**. Then, separated below it:
 - Approval gate before fan-out unless explicitly waived; intent + verification gates are not waivable.
 - Cap fan-out (default ≤ 7 agents); if more slices exist, sequence or batch and say so.
 - The deliverable is the synthesis. A concatenation of agent outputs is a failure, not an output.
+- **Coordinator stays light.** Large files / dirs / logs / tool dumps are read by disposable
+  subagents that return distilled results; never pull raw bulk into your own window (see Context
+  discipline). Pass references, review diffs — don't ingest the artifact.
 
 ## Coverage-gap log format
 
