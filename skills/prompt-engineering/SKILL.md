@@ -69,6 +69,11 @@ Do not stop to ask — that's the deeper interview mode (Step 7). Each assumptio
 - Reversible — the user can override it in one line.
 - Tracked — you will list every assumption back to the user at the end.
 
+Assume **preferences and defaults only.** Facts are never assumed: legal/governing provisions,
+statute or section numbers, dollar amounts, names, dates, and the tech stack. Surface a
+missing fact as a flagged placeholder (e.g. `[CC&Rs §__]`, `[stack?]`) or an open question —
+inventing one to fill a gap is the single failure that makes the draft unusable and untrustworthy.
+
 This is the "one-shot" half of the hybrid model: a complete draft now, with its
 assumptions visible.
 
@@ -93,6 +98,9 @@ security reviewer, editor, skeptic, …).
 Lens selection:
 - If the command passed `--lens a,b`, use exactly those.
 - Otherwise auto-pick 1–3 lenses whose `applies-to` matches the topic.
+- For any UI / visual / frontend topic, when a UI lens (`visual-design`, `ux-designer`)
+  auto-selects, include `accessibility` too — a UI pass must never skip contrast, keyboard,
+  and focus, even when the request only says "make it nicer."
 
 Loading lenses (in priority order, later overrides earlier on name collision):
 1. Built-in: the `lenses/` directory of this plugin.

@@ -46,4 +46,8 @@ Lead with the **System Prompt** block in a copy-pasteable code fence. Then, belo
 assumptions made, push-back worth hearing, open questions (with the `--deep` offer), and
 the short "How to install this agent" note from the template.
 
+If you seeded from a gallery agent in Step 3, add a one-line **Adapted from: `<name>`** note
+after the block (or **Forged from scratch — no close gallery match** if you didn't), so the
+seeding step is visible and the gallery's reuse is auditable.
+
 No preamble. The system prompt comes first.
