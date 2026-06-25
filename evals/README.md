@@ -29,7 +29,13 @@ evals/
                 hard-gate security, 20 backend-builder, 21 mcp-integrator; 17-19 orchestration —
                 17 live multi-agent dispatch, 18 overkill-fallback, 19 coverage-gap detection)
   runs/         dated scorecards — the regression trail, committed
+  known-bad/    negative fixtures the harness MUST FAIL — the test of the test (calibration)
 ```
+
+**Judge independence.** The harness is host-judged, which risks a producer grading its own work
+(the first 9 runs were all-PASS). For high-stakes routes (cases 15, 16, 17, 20) the judge must be a
+**separate invocation** from the producer (see `runner.md`), and the `known-bad/` fixtures must
+periodically FAIL — a judge that can't say no isn't judging.
 
 ## How to run
 
