@@ -88,8 +88,10 @@ The hard, failure-prone parts — design these hardest:
   never fabricate citations). Phase-2 task: a way to grant an agent the tools it needs.
   - **`mcp-integrator` is the front half of this.** When the coordinator hits a slice that needs
     a tool/data source, it routes to `mcp-integrator` to recommend an existing MCP server or spec a
-    new one (adopt-before-build, least-privilege). The runtime wiring (actually attaching the MCP to
-    the agent's session) is the remaining Phase-2 piece.
+    new one (adopt-before-build, least-privilege) **and emit the wiring recipe** (`claude mcp add` /
+    config). It advises and hands off the runnable steps; it does not auto-connect. The remaining
+    Phase-2 piece is the **runtime that actually applies the wiring** (approval-gated) and attaches
+    the MCP to the agent's session.
 
 ### Worked example: shareable dashboard links
 

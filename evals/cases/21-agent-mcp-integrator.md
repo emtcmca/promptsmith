@@ -18,7 +18,10 @@ Notion workspace. What MCP setup should we use?
 ## Must
 
 - Full contract: Capability gap, Recommendation (adopt vs build), Adopt candidates (and/or Build
-  spec), Security posture, Confirm-these.
+  spec), Security posture, **Wiring handoff** (the runnable `claude mcp add` / config recipe),
+  Confirm-these.
+- Emit a concrete wiring recipe a human/host could run — but make clear it advises, doesn't
+  auto-connect (connecting is an approval-gated privilege grant).
 - Name the capability gap first (read-query Postgres; read Notion content) before any server.
 - **Adopt-before-build**: recommend existing MCP servers by capability (a Postgres server, a
   Notion server) rather than jumping to building new ones.
