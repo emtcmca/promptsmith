@@ -86,6 +86,10 @@ The hard, failure-prone parts — design these hardest:
   code runner. The orchestration runtime is where agents get scoped tool access. Until then,
   affected agents must **degrade honestly** (D5: declare no-source, label training knowledge,
   never fabricate citations). Phase-2 task: a way to grant an agent the tools it needs.
+  - **`mcp-integrator` is the front half of this.** When the coordinator hits a slice that needs
+    a tool/data source, it routes to `mcp-integrator` to recommend an existing MCP server or spec a
+    new one (adopt-before-build, least-privilege). The runtime wiring (actually attaching the MCP to
+    the agent's session) is the remaining Phase-2 piece.
 
 ### Worked example: shareable dashboard links
 
