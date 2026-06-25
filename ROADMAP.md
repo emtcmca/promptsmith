@@ -56,6 +56,12 @@ The hard, failure-prone parts — design these hardest:
   Auris coordinator synthesis). A pile of subagent outputs is not a deliverable.
 - **Guardrails.** Detect when orchestration is overkill (a single agent does it better) and
   fall back to plain `/sharpen`. Cap fan-out. Surface what each specialist did.
+- **Coverage-gap detection → gallery growth.** When part of a request falls outside every
+  existing agent's purview, the coordinator must not silently drop it or fake-cover it. It
+  **logs the unmet slice** (what was asked, why no agent fits), surfaces it to the user, and
+  feeds it back to the gallery: a recurring gap becomes the spec for a new agent forged via
+  `/forge-agent` and dropped into `agents/`. This is the feedback loop that makes the roster
+  grow from real demand instead of guesswork — orchestration and the gallery improving each other.
 - **Agent tool / source access.** Some specialists are only fully useful with live tools —
   `research-synthesizer` needs web/retrieval; others may need a database, a file reader, or a
   code runner. The orchestration runtime is where agents get scoped tool access. Until then,

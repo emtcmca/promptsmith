@@ -99,3 +99,5 @@ outputs, also the `prompt-engineer` agent's eye.
 - **Conflict resolved** — cross-agent contradictions are reconciled before output, not pasted side by side.
 - **Single-voice synthesis** — one coherent deliverable, not a pile of agent outputs.
 - **Completeness** — every implied domain represented or deferred with a reason.
+- **Coverage-gap honesty** — slices with no matching agent are logged as unmet gaps and
+  surfaced (candidates for a new forged agent), never silently dropped or faked.

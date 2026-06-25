@@ -33,6 +33,9 @@ A genuinely multi-domain build request: it crosses spec, data, security, API, UI
   concatenation of seven agent outputs in seven formats.
 - **Completeness:** spec, schema, security posture, endpoint contract, UI, tests, and docs are
   each represented or explicitly deferred with a reason.
+- **Coverage-gap honesty:** any slice that no existing agent covers is **logged as an unmet
+  gap** (what was asked, why nothing fits) and surfaced — not silently dropped or fake-covered.
+  Recurring gaps become the spec for a new forged agent.
 
 ## Must not
 
