@@ -1,0 +1,40 @@
+---
+description: "Turn a rough request into a sharpened, gap-filled, professionally-reviewed prompt ready to paste into any agent."
+usage: "/sharpen <rough request> [--lens name,name] [--deep] — e.g. /sharpen update the dashboard to feel calmer and more authoritative --lens ux-designer,visual-design"
+category: "dev"
+---
+
+Sharpen a one-off task request into a complete, executable prompt. Model-agnostic — the
+output is plain text you can paste into any agent or chat.
+
+## Step 1 — Load the engine
+
+Read `skills/prompt-engineering/SKILL.md` (in this plugin) in full. It defines the
+pipeline. This command runs that pipeline on the **SHARPEN** path.
+
+## Step 2 — Parse arguments
+
+Parse `$ARGUMENTS`:
+- `--lens <a,b>` — explicit lenses to apply. If absent, auto-pick by topic (engine Step 5).
+- `--deep` — run the interactive interview instead of assuming (engine Step 7). Ask the
+  open questions one at a time, wait for answers, then synthesize.
+- Everything else = the rough request to sharpen.
+
+If the request is empty, ask the user what they want to sharpen and stop.
+
+## Step 3 — Run the engine
+
+Execute engine Steps 2–7 with route = SHARPEN:
+1. Extract goal, audience, tone/feel/theme, constraints, success criteria, format, scope.
+2. Gap-fill with labeled assumptions (unless `--deep`, then ask).
+3. Red-team the request; turn findings into guardrails.
+4. Load and apply the selected lenses (built-in + user dirs).
+5. Synthesize using `templates/sharpened-prompt.md`.
+
+## Step 4 — Output
+
+Lead with the **Prompt** block in a copy-pasteable code fence. Then, separated below it:
+the assumptions you made, the 1–2 push-backs worth hearing, and the open questions —
+ending with an offer to rerun with `--deep` for a deeper pass.
+
+No preamble. The artifact comes first.
