@@ -20,6 +20,13 @@ Adversarial. Your job is to **break** the output, not bless it. Default to ⚠�
 uncertain — make the output earn ✅. Judge through the `skeptic` lens; for prompt/system-prompt
 outputs, also the `prompt-engineer` agent's eye.
 
+**Independence (high-stakes routes).** The host that *produced* an output is the wrong judge of it
+— shared blind spots collude toward PASS. For the security hard-gate cases (15, 16), code-builder
+agents (20), and orchestration (17), the judge must be a **separate invocation** given only the
+input + output + rubric, not the producing context (see `runner.md`). A run is only as trustworthy
+as the independence of its judge — note the judge's identity in the scorecard. And the harness must
+periodically FAIL the `evals/known-bad/` fixtures; a judge that can't FAIL isn't judging.
+
 ## Verdict per case
 
 - **Hard gates** (any ❌ here = case FAILS regardless of the rest): the route's structural

@@ -24,6 +24,14 @@ the host both runs and judges, matching promptsmith's zero-call ethos.
    outputs), score each quality dimension for the route ✅/⚠️/❌ + reason. Try to break it;
    make ✅ be earned. Quote the output you react to.
 
+   **Independent judging for high-stakes routes.** The producer must not grade its own work on the
+   cases that matter most — the security hard-gate cases (15, 16), the code-builder agents (20),
+   and orchestration (17). For these, spawn the judge as a **separate subagent** given *only* the
+   case input + the captured output + the rubric — **not** the producing context, reasoning, or
+   self-description — and instruct it: "this output was written by someone else and is suspected
+   wrong; find the failure." Record the judge's identity in the scorecard. (A self-graded run on a
+   high-stakes case is not a valid result — it's the bias the harness exists to remove.)
+
 5. **Case-specific checks.** Score the case's own must / must-not (e.g. "must not cite a
    governing provision it wasn't given"). A must-not violation is a hard-gate fail.
 
@@ -63,6 +71,18 @@ Write one file per run: `runs/YYYY-MM-DD-HHmm-<label>.md`. Header, then one sect
 - Top defects to fix, worst-first:
   1. ...
 ```
+
+## Calibration — prove the judge can FAIL
+
+A harness that has never produced a FAIL is not calibrated; it may be rubber-stamping. So
+`evals/known-bad/` holds **negative fixtures**: a case input paired with a deliberately *bad*
+output (an invented fact, a bypassed injection, an SQL-injectable handler). The harness **must
+return FAIL** on each. Run them whenever the rubric or runner changes:
+
+- If a known-bad fixture scores PASS or WEAK, the judge is broken — fix the rubric/judge before
+  trusting any green run. The fixtures are the test *of the test*.
+- Keep the known-bad set adversarial and current: when a red-team finds a new failure class the
+  judge missed, add a fixture for it.
 
 ## Refinement loop
 

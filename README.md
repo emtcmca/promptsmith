@@ -276,6 +276,8 @@ promptsmith/
   command chooser, every command, lenses, the gallery, orchestration, the eval harness.
 - [COMMAND-SHEET.md](docs/COMMAND-SHEET.md) — one-page reference: commands, flags, lenses, gallery,
   recipes.
+- [SECURITY.md](docs/SECURITY.md) — threat model + the guardrails (untrusted-input boundary, intent
+  gate, supplied-fact verification, independent verification).
 - [ROADMAP.md](ROADMAP.md) — the two-layer architecture and what's next.
 
 ---

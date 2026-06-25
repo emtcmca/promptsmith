@@ -20,7 +20,8 @@ Parse `$ARGUMENTS`:
 - `--dry` — stop after the decomposition + plan (Step 5). Show slices, slice→agent map, seams,
   conflicts, coverage gaps, and fan-out size. Do **not** dispatch. Useful for inspecting routing.
 - `--gate` — always pause for approval before fan-out (override the smart threshold).
-- `--no-gate` — never pause; run autonomously through dispatch + synthesis (override the threshold).
+- `--no-gate` — never pause for *approval*; run autonomously through dispatch + synthesis. **Does
+  not** waive the intent gate (Step 0) or the adversarial-verify gate (Step 6.5) — those always apply.
 - (default) — **smart threshold**: auto-run small/low-risk plans (≤ 3 agents, nothing
   irreversible); gate larger or risky fan-outs. See engine Step 5.
 - Everything else = the multi-domain request to coordinate.

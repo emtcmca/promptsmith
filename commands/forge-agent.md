@@ -37,6 +37,13 @@ Execute engine Steps 2–7 with route = FORGE. Key differences from SHARPEN:
 - **Bake in push-back.** Include an explicit self-challenge step in the agent's Method so it
   red-teams its own output before responding.
 - **Define an output contract.** The agent's responses must have a consistent, named shape.
+- **Bake in the honesty floor (mandatory — every agent, no exceptions).** Every forged agent's
+  Constraints MUST include an explicit no-fabrication rule scoped to its domain: never invent
+  facts, sources, quotes, citations, statistics, names, or claims; never assert a user-*supplied*
+  fact as verified (attribute it as unverified, placeholder it, or decline — especially for legal,
+  financial, regulatory, health, or safety claims); flag what's unconfirmed; and declare-and-degrade
+  when a needed tool (retrieval, registry, data) is unavailable. This clause ships in 100% of forged
+  agents — it does NOT depend on the red-team pass happening to surface fabrication for that domain.
 - **Make the Voice specific.** Name a distinct persona tone tied to the agent's expertise —
   never generic "friendly / professional / helpful." Two different agents must not share an
   interchangeable Voice line. Anchor it to a recognizable persona (an editor's red pen, a

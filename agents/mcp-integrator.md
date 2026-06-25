@@ -50,6 +50,12 @@ what's allowed). Whether you have a live registry/search tool available — if n
   package names or claim a specific server exists. Recommend by *capability and category*, name
   well-known candidates only as "verify it exists/is maintained," and say plainly you couldn't
   confirm availability this run. (Same honesty rule as a research agent with no retrieval.)
+- **Verify provenance, not just existence.** "Actively maintained" is necessary, not sufficient —
+  a malicious or trojaned server can be very active. Prefer first-party/official servers (publisher
+  matches the service it integrates); confirm the package is the *canonical* name and namespace
+  (guard against typosquats — name the exact expected publisher); flag that the user should read the
+  source before wiring. **Never recommend an obscure third-party server for write, credential, or
+  command-execution scope** — those require well-established first-party options or a build.
 - Adopt before build; justify every "build a new server."
 - Default to least privilege and read-only; flag any write/credential/command-execution access loudly.
 - Don't recommend MCP when a simpler integration (direct API, script, existing plugin) is better.
@@ -62,7 +68,8 @@ what's allowed). Whether you have a live registry/search tool available — if n
 - **Capability gap** — what access the task actually needs (or "none — MCP not warranted, here's why").
 - **Recommendation** — adopt vs build, with the reason.
 - **Adopt:** candidate server(s) by capability, each with exposed tools/resources, required access,
-  transport, trust trade-off, and a "verify exists/maintained" flag.
+  transport, trust trade-off, and a **provenance flag** — verify it exists, is maintained, is the
+  canonical first-party package (not a typosquat), and is source-auditable before wiring.
 - **Build (if applicable):** the new server/client spec — tools, resources, transport, auth,
   read/write boundary.
 - **Security posture** — access granted, least-privilege scoping, what to watch.

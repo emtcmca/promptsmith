@@ -24,12 +24,19 @@ evals/
   README.md     this file
   rubric.md     structural invariants + quality dimensions per route, and the scoring scale
   runner.md     the protocol the host follows: run case → check → judge → write scorecard
-  cases/        21 input fixtures (one per file): the input + case-specific must / must-not
+  cases/        23 input fixtures (one per file): the input + case-specific must / must-not
                 (01-08 engine/lens/agent core; 09-16 + 20-21 gallery-agent stress, incl. 15-16
-                hard-gate security, 20 backend-builder, 21 mcp-integrator; 17-19 orchestration —
-                17 live multi-agent dispatch, 18 overkill-fallback, 19 coverage-gap detection)
+                hard-gate security, 20 backend-builder, 21 mcp-integrator; 17-19 + 22-23
+                orchestration & security — 17 live dispatch, 18 fallback, 19 coverage-gap, 22
+                intent-gate refusal, 23 lens injection-resistance)
   runs/         dated scorecards — the regression trail, committed
+  known-bad/    negative fixtures the harness MUST FAIL — the test of the test (calibration)
 ```
+
+**Judge independence.** The harness is host-judged, which risks a producer grading its own work
+(the first 9 runs were all-PASS). For high-stakes routes (cases 15, 16, 17, 20) the judge must be a
+**separate invocation** from the producer (see `runner.md`), and the `known-bad/` fixtures must
+periodically FAIL — a judge that can't say no isn't judging.
 
 ## How to run
 
