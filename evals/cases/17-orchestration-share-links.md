@@ -1,16 +1,15 @@
 ---
 id: "17"
 route: orchestration
-status: deferred-target
-blocked-on: Layer 2 (no coordinator exists yet)
+status: active
+first-pass: PASS (live dispatch) — runs/2026-06-25-0053-orchestration-case17-live.md
 expected-agents: [feature-spec, data-modeler, security-review, api-reviewer, frontend-builder, test-author, docs-writer]
 tests: multi-agent decomposition, seam ownership, conflict resolution, single-voice synthesis
 ---
 
-> **This case is a forward target, not yet runnable.** promptsmith has no coordinator today
-> (Layer 2, deferred — see ROADMAP). Until then its verdict is **N/A — blocked**. It exists to
-> give the orchestration layer a concrete thing to pass when built, and to pin the requirements
-> the manual cross-over test surfaced.
+> **Runnable as of the Layer 2 coordinator v0** (`/promptsmith:orchestrate`). First live run
+> (4-agent dispatch, 2026-06-25) **PASSED** — see the run file referenced above. This case pins
+> the requirements the manual cross-over test surfaced; it is now the orchestration regression anchor.
 
 ## Input
 

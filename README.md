@@ -22,6 +22,11 @@ and asked the agent to push back on you and review the work like a seasoned prof
 | `/sharpen` | a rough task request | a complete, gap-filled, reviewed **prompt** to paste into any agent |
 | `/forge-agent` | a short description of an assistant | a complete, reusable **system prompt** |
 | `/lens` | an existing prompt / page / draft | **findings** from one or more professional lenses |
+| `/orchestrate` | a multi-domain request | **one synthesized deliverable** — the gallery, coordinated *(Layer 2)* |
+
+The first three are **Layer 1**: zero model calls, paste-anywhere. `/orchestrate` is **Layer 2**
+— it dispatches live subagents, so it needs a host that can spawn them (Claude Code). See
+[ROADMAP](ROADMAP.md).
 
 Every run is **hybrid**: it returns a finished draft immediately, lists the assumptions it
 had to make, and offers a `--deep` interview to resolve them one question at a time.
@@ -198,8 +203,13 @@ promptsmith/
   skills/
     prompt-engineering/SKILL.md   the shared engine
   lenses/              built-in expert lenses
-  agents/              pre-forged specialist system prompts (the gallery / future roster)
+  agents/              pre-forged specialist system prompts (the gallery / dispatch roster)
+                       + coverage-gaps.md (slices no agent covers yet)
+  skills/
+    prompt-engineering/SKILL.md   Layer 1 engine (sharpen/forge/lens)
+    orchestration/SKILL.md        Layer 2 coordinator (orchestrate)
   templates/           output skeletons for sharpen + forge
+  evals/               host-judged eval harness (rubric, runner, cases, runs)
   docs/                test-run records
 ```
 
