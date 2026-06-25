@@ -62,7 +62,27 @@ The hard, failure-prone parts — design these hardest:
   affected agents must **degrade honestly** (D5: declare no-source, label training knowledge,
   never fabricate citations). Phase-2 task: a way to grant an agent the tools it needs.
 
+### Worked example: shareable dashboard links
+
+A manual stand-in-coordinator run of *"Add public, read-only shareable links to user
+dashboards"* (eval case 17) decomposed to feature-spec, data-modeler, security-review, and
+frontend-builder. Run in isolation, the agents exposed exactly the failure modes Layer 2 must
+own:
+
+- **Unowned seam.** `expires_at`: data-modeler *stores* it, security-review *demands enforcement*,
+  the API slice would *check* it — and in isolation each assumes another owns it. Nobody enforces.
+  → The coordinator must assign every seam an explicit owner.
+- **Overlap / duplication.** feature-spec and security-review both raise "public = data exposure";
+  data-modeler and security-review both opine on token randomness. → Dedup the concern to one voice.
+- **Direct conflict.** feature-spec's "no expiry in the MVP cut line" contradicts security-review's
+  "expiry is mandatory." → The coordinator resolves it before output; it doesn't paste both.
+- **Pile, not deliverable.** Four output contracts, four personas. → Synthesis to one voice is the moat.
+
+This is the acceptance bar encoded in case 17: decompose-without-overlap, seam-ownership,
+conflict-resolution, single-voice synthesis, domain completeness.
+
 Open questions to resolve before Layer 2:
 - Host mechanism: Task tool vs. Workflow harness for dispatch + assembly?
 - How does the coordinator pick specialists — lens/topic match, or an explicit routing pass?
 - Where does the user approve the decomposition before fan-out (cost + correctness gate)?
+- How is a cross-agent conflict surfaced and resolved — coordinator decides, or escalate to the user?

@@ -55,6 +55,12 @@ outputs, also the `prompt-engineer` agent's eye.
 - Output matches that agent's own **Output contract** section, section for section.
 - A **Voice** is detectable in the prose.
 
+### ORCHESTRATION *(forward target — Layer 2; not runnable until a coordinator exists)*
+- Output is **one coherent deliverable**, not concatenated agent outputs.
+- Every domain the request implies is represented or explicitly deferred with a reason.
+- Every seam (a fact/step >1 agent touches) has a named owner.
+- Until Layer 2 ships, a case on this route scores **N/A — blocked**, not PASS/FAIL.
+
 ---
 
 ## Quality dimensions (host-judged)
@@ -85,3 +91,11 @@ outputs, also the `prompt-engineer` agent's eye.
   feature-spec states a cut line and the sharpest objection.
 - **In voice** — reads as the persona, not generic assistant.
 - **Self-challenge done** — the agent's own pre-finalize check actually happened.
+
+### ORCHESTRATION *(Layer 2 — score only once a coordinator exists)*
+- **Decompose without overlap** — no concern stated 2–3× across slices.
+- **Seam ownership** — each shared fact/step (e.g. expiry enforcement) is assigned to exactly
+  one slice, not left implicit.
+- **Conflict resolved** — cross-agent contradictions are reconciled before output, not pasted side by side.
+- **Single-voice synthesis** — one coherent deliverable, not a pile of agent outputs.
+- **Completeness** — every implied domain represented or deferred with a reason.
