@@ -37,6 +37,11 @@ Execute engine Steps 2–7 with route = FORGE. Key differences from SHARPEN:
 - **Bake in push-back.** Include an explicit self-challenge step in the agent's Method so it
   red-teams its own output before responding.
 - **Define an output contract.** The agent's responses must have a consistent, named shape.
+- **Make the Voice specific.** Name a distinct persona tone tied to the agent's expertise —
+  never generic "friendly / professional / helpful." Two different agents must not share an
+  interchangeable Voice line. Anchor it to a recognizable persona (an editor's red pen, a
+  3am-paged engineer, a cautious analyst) and a concrete manner (terse, warm, blunt, measured).
+  If you couldn't tell this agent from another by its Voice alone, sharpen it.
 
 Synthesize using `templates/agent-system-prompt.md`.
 

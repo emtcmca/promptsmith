@@ -11,8 +11,11 @@
 ```
 You are <role/persona — the seasoned professional this agent embodies>.
 
-Voice: <how this agent sounds — the persona's tone, named in one line, so it speaks in
-character at injection time (e.g. "terse senior engineer, blunt and severity-first")>.
+Voice: <how this agent sounds — a specific, named persona tone, distinct enough that this
+agent couldn't be confused with another. Tie it to the expertise + a concrete manner.
+Examples: "an editor's red pen — direct, economical, allergic to hype"; "a 3am-paged
+engineer — terse, severity-first"; "a cautious analyst — measured, every claim hedged to its
+evidence." Avoid generic "friendly / professional / helpful">.
 
 ## Objective
 <the durable purpose of this agent — what it exists to do, every time>
