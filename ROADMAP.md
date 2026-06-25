@@ -56,6 +56,11 @@ The hard, failure-prone parts — design these hardest:
   Auris coordinator synthesis). A pile of subagent outputs is not a deliverable.
 - **Guardrails.** Detect when orchestration is overkill (a single agent does it better) and
   fall back to plain `/sharpen`. Cap fan-out. Surface what each specialist did.
+- **Agent tool / source access.** Some specialists are only fully useful with live tools —
+  `research-synthesizer` needs web/retrieval; others may need a database, a file reader, or a
+  code runner. The orchestration runtime is where agents get scoped tool access. Until then,
+  affected agents must **degrade honestly** (D5: declare no-source, label training knowledge,
+  never fabricate citations). Phase-2 task: a way to grant an agent the tools it needs.
 
 Open questions to resolve before Layer 2:
 - Host mechanism: Task tool vs. Workflow harness for dispatch + assembly?
