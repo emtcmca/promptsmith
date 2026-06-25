@@ -24,7 +24,10 @@ evals/
   README.md     this file
   rubric.md     structural invariants + quality dimensions per route, and the scoring scale
   runner.md     the protocol the host follows: run case → check → judge → write scorecard
-  cases/        input fixtures (one per file): the input + case-specific must / must-not
+  cases/        17 input fixtures (one per file): the input + case-specific must / must-not
+                (01-08 engine/lens/agent core; 09-16 gallery-agent stress cases on novel
+                queries, incl. 15-16 hard-gate security; 17 a deferred orchestration target
+                for Layer 2 — N/A until a coordinator exists)
   runs/         dated scorecards — the regression trail, committed
 ```
 
