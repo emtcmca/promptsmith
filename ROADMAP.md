@@ -58,8 +58,11 @@ target is eval case 17.
 - [x] First live multi-agent run: case 17 PASS via real 4-agent dispatch; guardrail cases 18
   (overkill-fallback) + 19 (coverage-gap) PASS; D6 applied (catch agent-emergent conflicts).
 - [ ] Continue tuning from real runs (more domains, larger fan-out, the deferred slices).
-- [ ] Forge `backend-builder` when the API-maker gap recurs (logged in agents/coverage-gaps.md).
-- [ ] Resolve the open mechanism decisions below.
+- [x] Forge `backend-builder` to fill the API-maker gap (gallery now 15 agents).
+- [x] Mechanism decisions resolved (2026-06-25): dispatch = **subagents** (Workflow later only
+  if fan-out demands); agent form = **inline-prompt** (single source of truth, portable);
+  approval gate = **smart threshold** (auto ≤3 agents/low-risk, gate larger; `--gate`/`--no-gate`
+  override); command name = `/orchestrate`; specialist selection = roster/lens match.
 
 The hard, failure-prone parts — design these hardest:
 
@@ -103,8 +106,13 @@ own:
 This is the acceptance bar encoded in case 17: decompose-without-overlap, seam-ownership,
 conflict-resolution, single-voice synthesis, domain completeness.
 
-Open questions to resolve before Layer 2:
-- Host mechanism: Task tool vs. Workflow harness for dispatch + assembly?
-- How does the coordinator pick specialists — lens/topic match, or an explicit routing pass?
-- Where does the user approve the decomposition before fan-out (cost + correctness gate)?
-- How is a cross-agent conflict surfaced and resolved — coordinator decides, or escalate to the user?
+Resolved (2026-06-25):
+- Host mechanism → **subagents** (Agent/Task); Workflow revisited only if fan-out outgrows it.
+- Specialist selection → **roster/lens match** against `agents/README.md`.
+- Approval point → **smart-threshold gate** before fan-out (Step 5).
+- Conflict handling → coordinator **resolves within authority, escalates product/risk calls** (D6).
+
+Still open (deferred, not blocking):
+- Promote gallery agents to first-class Claude Code subagent definitions (agentType)? — kept
+  inline-prompt for now (single source of truth, portable).
+- Workflow harness for very large / pipelined fan-outs.

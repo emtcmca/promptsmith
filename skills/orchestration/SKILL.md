@@ -66,11 +66,18 @@ Surface every **cross-slice conflict** now (e.g. "MVP defers expiry" vs. "expiry
 Conflicts are resolved by the coordinator before dispatch or flagged for the user — never
 shipped as two contradictory outputs.
 
-### Step 5 — Approval gate (default ON)
+### Step 5 — Approval gate (smart threshold)
 
-Before any fan-out, present the plan: the slices, slice→agent map, seams + owners, surfaced
-conflicts, coverage gaps, and the rough fan-out size (cost). Wait for the user to approve or
-adjust. (Skippable with `--no-gate` when the user wants autonomous run.)
+Whether to pause for approval before fan-out depends on size and risk:
+
+- **Auto-run** (proceed straight to dispatch) when the plan is small — **≤ 3 agents** *and* no
+  slice is irreversible, outward-facing, or otherwise high-cost/high-risk.
+- **Gate** (present the plan and wait) when fan-out is **> 3 agents**, or any slice is costly,
+  irreversible, or security-sensitive.
+
+When gating, present: the slices, slice→agent map, seams + owners, surfaced conflicts, coverage
+gaps, and the fan-out size. Flags override the threshold: `--gate` always pauses; `--no-gate`
+always runs autonomously.
 
 ### Step 6 — Dispatch
 

@@ -159,9 +159,9 @@ backend/API, SEO) are exactly the jobs a single task agent should refuse but a u
 needs next. The `agents/` gallery holds ready-to-paste **specialist system prompts** for
 them — the kind `/promptsmith:forge-agent` produces, saved so you don't rebuild them cold.
 
-A roster of 14 specialists across spec → build → test → review → document → content:
+A roster of 15 specialists across spec → build → test → review → document → content:
 
-- **Build:** `feature-spec`, `data-modeler`, `frontend-builder`, `test-author`, `refactor-planner`
+- **Build:** `feature-spec`, `data-modeler`, `backend-builder`, `frontend-builder`, `test-author`, `refactor-planner`
 - **Review:** `api-reviewer`, `security-review`, `debugger`
 - **Write:** `copy-rewrite`, `docs-writer`, `sop-writer`, `governance-letter`
 - **Meta:** `research-synthesizer`, `prompt-engineer`
