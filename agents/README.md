@@ -18,6 +18,7 @@ are exactly the jobs a single task agent should refuse but a user often needs ne
 | `test-author` | writes focused tests for given code, behavior-first | skeptic |
 | `refactor-planner` | turns messy code + a goal into a staged, commit-by-commit plan | product-strategist, skeptic |
 | `data-modeler` | turns requirements into a schema + safe migration plan | data-integrity, api-design |
+| `backend-builder` | builds an endpoint/service to contract — validated, authorized, idempotent | api-design, data-integrity, security-reviewer |
 | `docs-writer` | turns code/feature into README, usage, or an ADR | editorial, skeptic |
 | `debugger` | turns an error + context into ranked root-cause hypotheses + probes | skeptic |
 | `research-synthesizer` | fans out, then synthesizes sources into a cited brief | skeptic, editorial |

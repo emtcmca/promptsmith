@@ -19,7 +19,10 @@ itself loads the Layer 1 `prompt-engineering` skill in its Step 1.)
 Parse `$ARGUMENTS`:
 - `--dry` — stop after the decomposition + plan (Step 5). Show slices, slice→agent map, seams,
   conflicts, coverage gaps, and fan-out size. Do **not** dispatch. Useful for inspecting routing.
-- `--no-gate` — skip the approval gate and run autonomously through dispatch + synthesis.
+- `--gate` — always pause for approval before fan-out (override the smart threshold).
+- `--no-gate` — never pause; run autonomously through dispatch + synthesis (override the threshold).
+- (default) — **smart threshold**: auto-run small/low-risk plans (≤ 3 agents, nothing
+  irreversible); gate larger or risky fan-outs. See engine Step 5.
 - Everything else = the multi-domain request to coordinate.
 
 If the request is empty, ask what to coordinate and stop.

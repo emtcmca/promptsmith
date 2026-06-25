@@ -21,3 +21,4 @@ Format:
   `api-reviewer` (reviews an endpoint) and `data-modeler` (schema) but nothing that *writes* a
   route handler. Suggested agent: `backend-builder` — builds an endpoint/service to contract,
   with validation, authz, idempotency, and error shape baked in. Forge when the gap recurs.
+  **→ RESOLVED 2026-06-25: forged `agents/backend-builder.md` (structural hole, not a fluke).**
