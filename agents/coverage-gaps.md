@@ -14,3 +14,10 @@ Format:
 ---
 
 <!-- entries below, newest last -->
+
+- [2026-06-25] "Add public read-only shareable dashboard links" → slice "implement the share
+  API (generate/revoke handlers + the public read endpoint that enforces expiry/revocation and
+  projects an allow-list DTO)": no agent covers backend *construction*. The gallery has
+  `api-reviewer` (reviews an endpoint) and `data-modeler` (schema) but nothing that *writes* a
+  route handler. Suggested agent: `backend-builder` — builds an endpoint/service to contract,
+  with validation, authz, idempotency, and error shape baked in. Forge when the gap recurs.

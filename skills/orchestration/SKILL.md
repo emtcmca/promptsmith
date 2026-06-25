@@ -84,6 +84,10 @@ This is the moat, not an afterthought:
 - **Dedup** overlapping content to a single statement.
 - **Apply the seam decisions** so the parts agree (the API slice enforces the expiry the data
   slice stored, etc.).
+- **Catch agent-emergent conflicts.** A slice often surfaces a new conflict or seam that Step 4
+  couldn't see in advance (e.g. an agent argues for a snapshot when the plan assumed a live read).
+  Treat these like Step 4 conflicts: resolve within your authority, or **escalate to the user**
+  when it's a product/risk call above the coordinator — never bury it.
 - **Resolve conflicts** per Step 4 — one answer, not two.
 - **Unify voice and format** into one coherent deliverable a person can act on — not seven
   agent outputs in seven shapes.
