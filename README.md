@@ -11,7 +11,8 @@ and asked the agent to push back on you and review the work like a seasoned prof
 - **No dependencies. No API keys. No model calls.** It's pure method + structure. Your agent
   (Claude Code, or anything you paste the output into) does the reasoning. Model-agnostic by
   construction.
-- **Three commands**, one shared engine, a library of expert lenses you can extend.
+- **Four commands** (three core + a coordinator), one shared engine, a library of expert lenses
+  you can extend, and a 16-agent specialist gallery.
 
 ---
 
@@ -30,6 +31,60 @@ The first three are **Layer 1**: zero model calls, paste-anywhere. `/orchestrate
 
 Every run is **hybrid**: it returns a finished draft immediately, lists the assumptions it
 had to make, and offers a `--deep` interview to resolve them one question at a time.
+
+---
+
+## Why it matters
+
+The value a skilled person adds to a prompt is invisible scaffolding — the tone they wanted, the
+constraints they forgot to state, the edge cases they didn't think of, the professional eye they
+wish they had, the push-back they need to hear. promptsmith makes that scaffolding explicit,
+repeatable, and auditable.
+
+The two-layer split is the bet. **Layer 1** stays portable and honest — no API keys, no model
+calls, works pasted into anything — a defensible identity. **Layer 2** turns a roster of
+single-purpose specialists into something that handles real multi-domain work *coherently*,
+catching the cross-slice conflicts no single agent can see. That's not theoretical: a live
+7-agent build caught a three-way conflict (two agents assumed "regenerate replaces a link," one
+implemented "regenerate is blocked") that would otherwise have shipped a test suite failing
+against its own handler. Honesty guardrails run through everything — never fabricate a fact, a
+citation, or an MCP server you can't verify.
+
+So it can: sharpen any vague ask into an executable prompt; author reusable agent system prompts;
+review code, prompts, or UI through professional lenses; and — the headline — take a request like
+*"add public shareable links to dashboards"* and produce a complete, coherent build (spec → schema
+→ API → UI → tests → docs) by coordinating specialists, resolving their conflicts, escalating the
+genuine product decisions to you instead of guessing, and flagging where it's missing an agent or
+a tool — then growing itself to fill the gap. It shows its work and proves it with evals.
+
+---
+
+## Example — a real run
+
+**Layer 1 — sharpen a vague ask:**
+```
+/promptsmith:sharpen make the settings page feel calmer and more trustworthy
+```
+→ a copy-pasteable prompt with the tone adjectives *named* (calm, ordered, trustworthy), the
+accessibility/UX/visual lenses folded into the requirements, guardrails from a red-team pass, and
+— because it never invents facts — the stack flagged as `[stack?]` rather than assumed. Below it:
+the assumptions it made, the push-back worth hearing, and the open questions.
+
+**Layer 2 — coordinate a multi-domain build:**
+```
+/promptsmith:orchestrate add public read-only shareable links to user dashboards
+```
+What happens (the proven flow):
+1. **Sharpens** the request, then **decomposes** it into slices: spec · schema · API · UI · tests · docs.
+2. **Routes** each slice to a gallery agent; **gates** for approval (7 agents > the smart threshold).
+3. **Dispatches** them as live subagents in parallel.
+4. **Owns the seams** — e.g. data-modeler stores `expires_at`, the API enforces it at read time;
+   security-review and data-modeler independently converge on hashing the token, so it stores
+   `sha256(token)`.
+5. **Resolves conflicts** — caught a three-way disagreement on regenerate behavior and settled it;
+   **escalated** the live-vs-snapshot product call to you instead of guessing.
+6. **Synthesizes one build plan** — spec, schema, the actual API handler, the React modal, the test
+   suite, and the docs — not six pasted outputs.
 
 ---
 
@@ -212,6 +267,16 @@ promptsmith/
   evals/               host-judged eval harness (rubric, runner, cases, runs)
   docs/                test-run records
 ```
+
+---
+
+## Docs
+
+- [USING-PROMPTSMITH.md](docs/USING-PROMPTSMITH.md) — the full how-to (human or agent): install,
+  command chooser, every command, lenses, the gallery, orchestration, the eval harness.
+- [COMMAND-SHEET.md](docs/COMMAND-SHEET.md) — one-page reference: commands, flags, lenses, gallery,
+  recipes.
+- [ROADMAP.md](ROADMAP.md) — the two-layer architecture and what's next.
 
 ---
 
