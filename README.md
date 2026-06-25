@@ -40,21 +40,31 @@ had to make, and offers a `--deep` interview to resolve them one question at a t
 (Or point the marketplace at the GitHub repo once it's pushed:
 `/plugin marketplace add emtcmca/promptsmith`.)
 
-Verify: type `/` and confirm `/sharpen`, `/forge-agent`, and `/lens` autocomplete.
+Verify: type `/promptsmith` and confirm `/promptsmith:sharpen`, `/promptsmith:forge-agent`,
+and `/promptsmith:lens` autocomplete.
 
-### Option B — manual
+### Option B — manual (standalone, bare command names)
 
 Copy `commands/` and `skills/` into your `~/.claude/` directory
-(Windows: `C:\Users\<you>\.claude\`).
+(Windows: `C:\Users\<you>\.claude\`), **and** copy `lenses/` into
+`~/.claude/promptsmith-lenses/` so the lens pass can find them. Installed this way the
+commands are bare — `/sharpen`, `/forge-agent`, `/lens` — because standalone commands
+aren't namespaced. (Skip the lenses copy and the engine's lens step has nothing to load.)
 
 ---
 
 ## Usage
 
+> **Command names are namespaced.** Installed as a plugin (Option A), the commands are
+> `/promptsmith:sharpen`, `/promptsmith:forge-agent`, and `/promptsmith:lens` — type
+> `/promptsmith` to autocomplete them. Claude Code namespaces every plugin command to avoid
+> collisions; bare `/sharpen` exists only with the manual/standalone install (Option B).
+> The examples below use the namespaced form.
+
 ### Sharpen a request
 
 ```
-/sharpen update the dashboard to feel calmer and more authoritative
+/promptsmith:sharpen update the dashboard to feel calmer and more authoritative
 ```
 
 You get a copy-pasteable prompt block (role, objective, requirements with the *named* tone
@@ -64,19 +74,19 @@ then the assumptions it made, the push-back worth hearing, and open questions.
 Force specific lenses:
 
 ```
-/sharpen redesign the signup form --lens ux-designer,accessibility
+/promptsmith:sharpen redesign the signup form --lens ux-designer,accessibility
 ```
 
 Go deep (interview instead of assume):
 
 ```
-/sharpen draft a violation notice for an unresolved fence dispute --deep
+/promptsmith:sharpen draft a violation notice for an unresolved fence dispute --deep
 ```
 
 ### Forge a reusable agent
 
 ```
-/forge-agent a reviewer that critiques HOA letters for tone and compliance
+/promptsmith:forge-agent a reviewer that critiques HOA letters for tone and compliance
 ```
 
 Returns a full system prompt — role, objective, standing operating principles (with the
@@ -86,11 +96,11 @@ contract — ready to drop into a subagent, a skill, or any system-prompt field.
 ### Review through a lens
 
 ```
-/lens (paste a component, prompt, or draft) --lens visual-design,accessibility
+/promptsmith:lens (paste a component, prompt, or draft) --lens visual-design,accessibility
 ```
 
 Returns findings (✅ checked / ⚠️ weak / ❌ failing) per lens, worst-first, plus the top 3
-fixes by impact. To get a corrected version, feed those findings into `/sharpen`.
+fixes by impact. To get a corrected version, feed those findings into `/promptsmith:sharpen`.
 
 ---
 
@@ -105,6 +115,9 @@ A lens is a professional's checklist in a markdown file. Built-in lenses:
 | `accessibility` | a11y, WCAG, keyboard, contrast, screen readers |
 | `security-reviewer` | code, auth, data, input, integrations |
 | `performance` | speed, scale, queries, rendering, payloads |
+| `api-design` | endpoints, contracts, backend routes, integrations, webhooks |
+| `data-integrity` | billing, payments, transactions, schemas, migrations, money |
+| `seo` | search, metadata, crawlability, structured data, marketing pages |
 | `product-strategist` | scope, value, MVP, prioritization |
 | `editorial` | copy, email, docs, tone of voice |
 | `skeptic` | the "push back on me" red-team lens (applied by default) |
@@ -130,9 +143,33 @@ applies-to: comma, separated, topics, that, auto-select, this, lens
 - Another check. Keep them concrete and answerable.
 ```
 
-Then: `/sharpen ... --lens my-lens` (or let auto-select pick it up by topic).
+Then: `/promptsmith:sharpen ... --lens my-lens` (or let auto-select pick it up by topic).
 
 ---
+
+## Pre-forged agent gallery
+
+The common `/sharpen` *out-of-scope* items (new features, copywriting, performance,
+backend/API, SEO) are exactly the jobs a single task agent should refuse but a user often
+needs next. The `agents/` gallery holds ready-to-paste **specialist system prompts** for
+them — the kind `/promptsmith:forge-agent` produces, saved so you don't rebuild them cold.
+
+A roster of 14 specialists across spec → build → test → review → document → content:
+
+- **Build:** `feature-spec`, `data-modeler`, `frontend-builder`, `test-author`, `refactor-planner`
+- **Review:** `api-reviewer`, `security-review`, `debugger`
+- **Write:** `copy-rewrite`, `docs-writer`, `sop-writer`, `governance-letter`
+- **Meta:** `research-synthesizer`, `prompt-engineer`
+
+Each carries a named **voice** so it speaks in character at injection. `/promptsmith:forge-agent`
+checks this gallery first and **adapts** a close match instead of starting cold. Forge your
+own, then drop it in `agents/` to grow the roster. Full list + format in
+[`agents/README.md`](agents/README.md).
+
+> **Roadmap:** the gallery is also the foundation for a planned **orchestration layer** —
+> promptsmith as a coordinator that sharpens a prompt, dispatches the right specialists, and
+> assembles their work. That layer is Claude-Code-native; the core plugin stays zero-call and
+> paste-anywhere. See [`ROADMAP.md`](ROADMAP.md).
 
 ## How it works (the engine)
 
@@ -161,7 +198,9 @@ promptsmith/
   skills/
     prompt-engineering/SKILL.md   the shared engine
   lenses/              built-in expert lenses
+  agents/              pre-forged specialist system prompts (the gallery / future roster)
   templates/           output skeletons for sharpen + forge
+  docs/                test-run records
 ```
 
 ---

@@ -1,6 +1,6 @@
 ---
 description: "Review an existing prompt, page, component, or draft through one or more expert lenses. Returns findings, not a rewrite."
-usage: "/lens <target or pasted artifact> [--lens name,name] — e.g. /lens (paste a React component) --lens ux-designer,accessibility"
+usage: "/promptsmith:lens <target or pasted artifact> [--lens name,name] — e.g. /promptsmith:lens (paste a React component) --lens ux-designer,accessibility"
 category: "dev"
 ---
 
@@ -47,4 +47,5 @@ checked, not to flatter.
 ## Step 5 — Close
 
 End with the **top 3 fixes** across all lenses, ranked by impact, and a one-line offer:
-"Run `/sharpen` with these findings to get a corrected version."
+"Run `/promptsmith:sharpen` with these findings to get a corrected version" (or bare
+`/sharpen` if installed standalone).

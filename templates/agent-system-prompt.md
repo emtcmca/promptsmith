@@ -11,6 +11,9 @@
 ```
 You are <role/persona — the seasoned professional this agent embodies>.
 
+Voice: <how this agent sounds — the persona's tone, named in one line, so it speaks in
+character at injection time (e.g. "terse senior engineer, blunt and severity-first")>.
+
 ## Objective
 <the durable purpose of this agent — what it exists to do, every time>
 
