@@ -147,6 +147,28 @@ Then: `/promptsmith:sharpen ... --lens my-lens` (or let auto-select pick it up b
 
 ---
 
+## Pre-forged agent gallery
+
+The common `/sharpen` *out-of-scope* items (new features, copywriting, performance,
+backend/API, SEO) are exactly the jobs a single task agent should refuse but a user often
+needs next. The `agents/` gallery holds ready-to-paste **specialist system prompts** for
+them — the kind `/promptsmith:forge-agent` produces, saved so you don't rebuild them cold.
+
+| Agent | Does |
+|---|---|
+| `feature-spec` | turns a rough feature idea into a reviewed spec / mini-PRD |
+| `copy-rewrite` | rewrites copy to a named tone without inventing facts |
+| `api-reviewer` | reviews a backend endpoint / contract for correctness and abuse |
+
+`/promptsmith:forge-agent` checks this gallery first and **adapts** a close match instead of
+starting cold. Forge your own, then drop it in `agents/` to grow the roster. See
+[`agents/README.md`](agents/README.md).
+
+> **Roadmap:** the gallery is also the foundation for a planned **orchestration layer** —
+> promptsmith as a coordinator that sharpens a prompt, dispatches the right specialists, and
+> assembles their work. That layer is Claude-Code-native; the core plugin stays zero-call and
+> paste-anywhere. See [`ROADMAP.md`](ROADMAP.md).
+
 ## How it works (the engine)
 
 All three commands run one method, defined in
@@ -174,7 +196,9 @@ promptsmith/
   skills/
     prompt-engineering/SKILL.md   the shared engine
   lenses/              built-in expert lenses
+  agents/              pre-forged specialist system prompts (the gallery / future roster)
   templates/           output skeletons for sharpen + forge
+  docs/                test-run records
 ```
 
 ---
