@@ -154,14 +154,16 @@ backend/API, SEO) are exactly the jobs a single task agent should refuse but a u
 needs next. The `agents/` gallery holds ready-to-paste **specialist system prompts** for
 them — the kind `/promptsmith:forge-agent` produces, saved so you don't rebuild them cold.
 
-| Agent | Does |
-|---|---|
-| `feature-spec` | turns a rough feature idea into a reviewed spec / mini-PRD |
-| `copy-rewrite` | rewrites copy to a named tone without inventing facts |
-| `api-reviewer` | reviews a backend endpoint / contract for correctness and abuse |
+A roster of 14 specialists across spec → build → test → review → document → content:
 
-`/promptsmith:forge-agent` checks this gallery first and **adapts** a close match instead of
-starting cold. Forge your own, then drop it in `agents/` to grow the roster. See
+- **Build:** `feature-spec`, `data-modeler`, `frontend-builder`, `test-author`, `refactor-planner`
+- **Review:** `api-reviewer`, `security-review`, `debugger`
+- **Write:** `copy-rewrite`, `docs-writer`, `sop-writer`, `governance-letter`
+- **Meta:** `research-synthesizer`, `prompt-engineer`
+
+Each carries a named **voice** so it speaks in character at injection. `/promptsmith:forge-agent`
+checks this gallery first and **adapts** a close match instead of starting cold. Forge your
+own, then drop it in `agents/` to grow the roster. Full list + format in
 [`agents/README.md`](agents/README.md).
 
 > **Roadmap:** the gallery is also the foundation for a planned **orchestration layer** —

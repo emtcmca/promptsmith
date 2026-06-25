@@ -15,6 +15,17 @@ are exactly the jobs a single task agent should refuse but a user often needs ne
 | `feature-spec` | turns a rough feature idea into a reviewed spec / mini-PRD | product-strategist, skeptic |
 | `copy-rewrite` | rewrites copy to a named tone without inventing facts | editorial, skeptic |
 | `api-reviewer` | reviews a backend endpoint / contract for correctness and abuse | api-design, security-reviewer, skeptic |
+| `test-author` | writes focused tests for given code, behavior-first | skeptic |
+| `refactor-planner` | turns messy code + a goal into a staged, commit-by-commit plan | product-strategist, skeptic |
+| `data-modeler` | turns requirements into a schema + safe migration plan | data-integrity, api-design |
+| `docs-writer` | turns code/feature into README, usage, or an ADR | editorial, skeptic |
+| `debugger` | turns an error + context into ranked root-cause hypotheses + probes | skeptic |
+| `research-synthesizer` | fans out, then synthesizes sources into a cited brief | skeptic, editorial |
+| `frontend-builder` | builds a UI component to brand, a11y, and UX standards | ux-designer, accessibility, visual-design |
+| `security-review` | reviews a change for vulnerabilities across several lenses | security-reviewer, data-integrity, api-design, skeptic |
+| `governance-letter` | drafts HOA / board correspondence — firm, compliant, on-tone | editorial, skeptic |
+| `sop-writer` | turns a process into a clear, followable SOP | editorial, product-strategist |
+| `prompt-engineer` | sharpens a system prompt into a tighter, more concrete one | skeptic, editorial |
 
 ## How `/forge-agent` uses this
 
@@ -31,10 +42,14 @@ Each file is frontmatter + the system prompt as the body:
 ---
 name: agent-name
 role: one-line description of the specialist
+voice: the persona's tone in a few words
 lenses: lens-a, lens-b
 ---
 
 You are <role>.
+
+Voice: <how this agent sounds — named so it speaks in character at injection>.
+
 ## Objective ...
 ## Operating principles ...
 ## Method ...

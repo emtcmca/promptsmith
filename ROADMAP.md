@@ -31,10 +31,13 @@ become the **specialist roster** the coordinator dispatches to. Nothing built no
 - [x] Add `seo`, `api-design`, `data-integrity` lenses (cover the common out-of-scope items).
 - [x] Start the pre-forged agent gallery: `feature-spec`, `copy-rewrite`, `api-reviewer`.
 - [x] Wire `/forge-agent` to seed from the gallery before building cold.
-- [ ] Grow the gallery to cover the rest of the out-of-scope map:
-  - [ ] `perf-audit` (performance lens) — speed/scale/payload audit.
-  - [ ] `seo-auditor` (seo lens) — crawl + metadata + CWV pass.
-  - [ ] `security-review` agent (security-reviewer + data-integrity).
+- [x] Add a named `voice` to the agent template + gallery so each speaks in character.
+- [x] Build out the v1 roster (Tier 1–3) — 14 specialists across spec/build/test/review/docs/content:
+      `test-author`, `refactor-planner`, `data-modeler`, `docs-writer`, `debugger`,
+      `research-synthesizer`, `frontend-builder`, `security-review`, `governance-letter`,
+      `sop-writer`, `prompt-engineer` (+ the original three).
+  - Deliberately **not** built as agents: `perf-audit`, `seo-auditor` — they would clone the
+    `performance` / `seo` lenses, already reachable via `/lens`. Gallery stays makers + lens-fusers.
 - [ ] Tune from real use: run each command/agent on real tasks, log friction in `docs/test-runs/`,
       fix the engine/templates/lenses. Core is "tuned" when real runs stop surfacing defects.
 - [ ] Merge `test/real-run-pass` to main once the gallery + tuning land.
