@@ -33,12 +33,12 @@ had to make, and offers a `--deep` interview to resolve them one question at a t
 ### Option A — as a plugin (recommended)
 
 ```
-/plugin marketplace add C:\Dev\promptsmith
+/plugin marketplace add emtcmca/promptsmith
 /plugin install promptsmith
 ```
 
-(Or point the marketplace at the GitHub repo once it's pushed:
-`/plugin marketplace add emtcmca/promptsmith`.)
+(For local development against a clone, add the working copy instead:
+`/plugin marketplace add C:\Dev\promptsmith`.)
 
 Verify: type `/promptsmith` and confirm `/promptsmith:sharpen`, `/promptsmith:forge-agent`,
 and `/promptsmith:lens` autocomplete.
