@@ -53,6 +53,10 @@ character at injection time (e.g. "terse senior engineer, blunt and severity-fir
 1. <gap that most changes the agent's behavior>
 2. <second gap>
 
+## Provenance
+- **Adapted from: `<gallery agent name>`** — or **Forged from scratch — no close gallery
+  match** — so the seeding step (forge Step 3) is visible and auditable.
+
 ## How to install this agent
 - **Claude Code subagent / skill:** save the System Prompt block as the body of a
   `SKILL.md` or agent definition.
