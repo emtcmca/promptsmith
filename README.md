@@ -214,12 +214,12 @@ backend/API, SEO) are exactly the jobs a single task agent should refuse but a u
 needs next. The `agents/` gallery holds ready-to-paste **specialist system prompts** for
 them — the kind `/promptsmith:forge-agent` produces, saved so you don't rebuild them cold.
 
-A roster of 21 specialists across spec → build → test → review → document → market:
+A roster of 22 specialists across spec → build → test → review → document → market:
 
 - **Build:** `feature-spec`, `data-modeler`, `backend-builder`, `frontend-builder`, `test-author`, `refactor-planner`
 - **Review:** `api-reviewer`, `security-review`, `verifier`, `debugger`
 - **Write:** `copy-rewrite`, `docs-writer`, `sop-writer`, `governance-letter`
-- **Market:** `icp-architect`, `outreach-strategist`, `marketing-copywriter`, `apify-scraper`
+- **Market:** `campaign-director`, `icp-architect`, `outreach-strategist`, `marketing-copywriter`, `apify-scraper`
 - **Meta:** `research-synthesizer`, `prompt-engineer`, `mcp-integrator`
 
 > `apify-scraper` is a **tool-using** agent (assumes an Apify MCP is connected) with a hard

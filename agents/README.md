@@ -27,6 +27,7 @@ are exactly the jobs a single task agent should refuse but a user often needs ne
 | `outreach-strategist` | designs the outreach/nurture sequence + human-approval & compliance gates | product-strategist, editorial, skeptic |
 | `marketing-copywriter` | drafts outreach/marketing copy — on-voice, one CTA, no invented claims | editorial, skeptic, product-strategist |
 | `apify-scraper` | pulls web data via Apify Actors — only after a costed, human-approved brief | security-reviewer, data-integrity, skeptic |
+| `campaign-director` | turns ICP + data + strategy + copy into one accountable campaign (objective, KPIs, budget, test plan, gates) | product-strategist, editorial, skeptic |
 | `frontend-builder` | builds a UI component to brand, a11y, and UX standards | ux-designer, accessibility, visual-design |
 | `security-review` | reviews a change for vulnerabilities across several lenses | security-reviewer, data-integrity, api-design, skeptic |
 | `verifier` | independently refutes that an artifact meets its contract; returns a blocking verdict | security-reviewer, api-design, data-integrity, skeptic |
