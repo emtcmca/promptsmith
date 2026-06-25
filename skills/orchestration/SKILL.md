@@ -110,12 +110,13 @@ slices in parallel; respect dependencies for the rest. Capture each output.
 ### Step 6.5 — Adversarial verify (code / security / outward-facing slices)
 
 A producer never audits its own output. Before assembly, any slice whose output is **executable,
-handles untrusted input, or ships externally** is re-dispatched to a *different* agent than
-produced it (e.g. `security-review` or `api-reviewer`) with the explicit task: "find the
-injection / authz / secret-leak / correctness defect in this artifact — assume it has one." The
-verifier's findings are blocking seam inputs: an unresolved **HIGH** defect **halts synthesis and
-escalates** rather than synthesizing a vouched-for-but-unverified deliverable. Do not let the
-report repeat a builder's self-description ("production-grade") as if it were an audit.
+handles untrusted input, or ships externally** is re-dispatched to the **`verifier`** agent (or a
+domain reviewer like `security-review` / `api-reviewer`) — a *different* agent than produced it —
+given the artifact + its claimed contract, with the standing task: "assume this is wrong; refute
+that it meets its contract." The verifier returns a **blocking verdict**: an unresolved **HIGH**
+defect **halts synthesis and escalates** rather than synthesizing a vouched-for-but-unverified
+deliverable. Do not let the report repeat a builder's self-description ("production-grade") as if
+it were an audit — only the verifier's verdict counts.
 
 ### Step 7 — Assemble + curate
 

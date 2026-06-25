@@ -25,6 +25,7 @@ are exactly the jobs a single task agent should refuse but a user often needs ne
 | `mcp-integrator` | finds/recommends MCP servers for a task, or specs a new server/client | api-design, security-reviewer, product-strategist |
 | `frontend-builder` | builds a UI component to brand, a11y, and UX standards | ux-designer, accessibility, visual-design |
 | `security-review` | reviews a change for vulnerabilities across several lenses | security-reviewer, data-integrity, api-design, skeptic |
+| `verifier` | independently refutes that an artifact meets its contract; returns a blocking verdict | security-reviewer, api-design, data-integrity, skeptic |
 | `governance-letter` | drafts HOA / board correspondence — firm, compliant, on-tone | editorial, skeptic |
 | `sop-writer` | turns a process into a clear, followable SOP | editorial, product-strategist |
 | `prompt-engineer` | sharpens a system prompt into a tighter, more concrete one | skeptic, editorial |
