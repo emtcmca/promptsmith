@@ -9,10 +9,7 @@
   "plugins": [
     {
       "name": "promptsmith",
-      "source": {
-        "source": "github",
-        "repo": "emtcmca/promptsmith"
-      },
+      "source": "./",
       "description": "Sharpen rough requests into complete prompts, author reusable agent system prompts, and review drafts through built-in and custom expert lenses."
     }
   ]
