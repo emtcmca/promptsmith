@@ -43,7 +43,20 @@ become the **specialist roster** the coordinator dispatches to. Nothing built no
 - [ ] Merge `test/real-run-pass` to main once the gallery + tuning land.
 - [ ] Push to GitHub (`emtcmca/promptsmith`); flip marketplace source from local path to repo.
 
-## Later — Layer 2 orchestration (runtime deps; build after core+gallery tuned)
+## Now in progress — Layer 2 orchestration (Claude-Code-native)
+
+**Status (2026-06-25):** coordinator v0 built on branch `feat/layer2-orchestration` —
+`skills/orchestration/SKILL.md` (the pipeline) + `commands/orchestrate.md` (the `/orchestrate`
+command) + `agents/coverage-gaps.md` (the gap log). The pipeline encodes gate → sharpen →
+decompose → route → seams/conflicts → approval gate → dispatch (subagents) → assemble/curate →
+report. **Not yet merged** (awaits review). Open mechanism decisions remain (below). Acceptance
+target is eval case 17.
+
+- [x] Coordinator pipeline (decompose / route / seams / synthesize) specified as runnable protocol.
+- [x] Coverage-gap detection + log (`agents/coverage-gaps.md`) feeding `/forge-agent`.
+- [x] Approval gate before fan-out (default ON; `--no-gate` to waive); `--dry` to inspect routing.
+- [ ] Tune from real multi-agent runs (eval case 17 + new orchestration cases).
+- [ ] Resolve the open mechanism decisions below.
 
 The hard, failure-prone parts — design these hardest:
 
