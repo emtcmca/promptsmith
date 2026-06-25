@@ -26,11 +26,11 @@ the host both runs and judges, matching promptsmith's zero-call ethos.
 
    **Independent judging for high-stakes routes.** The producer must not grade its own work on the
    cases that matter most — the security hard-gate cases (15, 16), the code-builder agents (20),
-   and orchestration (17). For these, spawn the judge as a **separate subagent** given *only* the
-   case input + the captured output + the rubric — **not** the producing context, reasoning, or
-   self-description — and instruct it: "this output was written by someone else and is suspected
-   wrong; find the failure." Record the judge's identity in the scorecard. (A self-graded run on a
-   high-stakes case is not a valid result — it's the bias the harness exists to remove.)
+   and orchestration (17). For these, spawn the judge as a **separate subagent** — the `verifier`
+   agent is purpose-built for this — given *only* the case input + the captured output + the rubric,
+   **not** the producing context, reasoning, or self-description. Its frame is "assume this is wrong;
+   refute it." Record the judge's identity in the scorecard. (A self-graded run on a high-stakes case
+   is not a valid result — it's the bias the harness exists to remove.)
 
 5. **Case-specific checks.** Score the case's own must / must-not (e.g. "must not cite a
    governing provision it wasn't given"). A must-not violation is a hard-gate fail.

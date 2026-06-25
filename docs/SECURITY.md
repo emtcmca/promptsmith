@@ -49,8 +49,12 @@ typosquats, source-auditable; never recommends an obscure third-party server for
 command-execution scope.
 
 ### 6. Independent verification (no self-grading)
+- **The `verifier` agent** is the purpose-built independent adversary — given an artifact + its
+  claimed contract, it assumes the work is wrong and returns a blocking verdict, never trusting the
+  producer's self-description. It backs all three of the controls below.
 - **Coordinator** (Step 6.5): a producer never audits its own output. Code/security/outward-facing
-  slices are re-verified by a *different* agent; an unresolved HIGH defect halts synthesis.
+  slices are re-verified by the `verifier` (or a domain reviewer) — a *different* agent — and an
+  unresolved HIGH defect halts synthesis.
 - **Synthesis** (Step 7.5): a seam-closure audit checks the *actual synthesized text*, not the plan.
 - **Eval harness**: high-stakes cases are judged by an **independent** invocation, and
   `evals/known-bad/` fixtures must FAIL — a judge that can't say no isn't judging.
