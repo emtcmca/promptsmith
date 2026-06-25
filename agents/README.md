@@ -23,6 +23,9 @@ are exactly the jobs a single task agent should refuse but a user often needs ne
 | `debugger` | turns an error + context into ranked root-cause hypotheses + probes | skeptic |
 | `research-synthesizer` | fans out, then synthesizes sources into a cited brief | skeptic, editorial |
 | `mcp-integrator` | finds/recommends MCP servers for a task, or specs a new server/client | api-design, security-reviewer, product-strategist |
+| `icp-architect` | defines who to target, who to skip, and the signals to find them | product-strategist, skeptic |
+| `outreach-strategist` | designs the outreach/nurture sequence + human-approval & compliance gates | product-strategist, editorial, skeptic |
+| `marketing-copywriter` | drafts outreach/marketing copy — on-voice, one CTA, no invented claims | editorial, skeptic, product-strategist |
 | `frontend-builder` | builds a UI component to brand, a11y, and UX standards | ux-designer, accessibility, visual-design |
 | `security-review` | reviews a change for vulnerabilities across several lenses | security-reviewer, data-integrity, api-design, skeptic |
 | `verifier` | independently refutes that an artifact meets its contract; returns a blocking verdict | security-reviewer, api-design, data-integrity, skeptic |
