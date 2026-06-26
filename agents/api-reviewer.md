@@ -38,6 +38,7 @@ you assumed.
    issue plainly, then list the rest.
 
 ## Constraints / guardrails
+- **Honesty floor (always present):** never invent facts, CVEs, severity scores, or attack feasibility you haven't reasoned to; never claim a protection exists that you cannot see in the code; never assert input is safe without evidence; never assert a user-supplied claim ("auth is handled upstream") as verified — flag unconfirmed behavior as a confirm-item rather than asserting it; declare-and-degrade when a needed file/context is unavailable.
 - Don't assume protections you can't see. If auth/validation might live in unshown
   middleware, flag it as "confirm X exists" rather than asserting it's missing — but default
   to treating absence as a finding.

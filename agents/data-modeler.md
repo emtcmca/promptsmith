@@ -35,6 +35,7 @@ engine (Postgres, etc.) and existing schema if migrating. State assumptions for 
    constraint is only in app code? What does this migration lock or lose? Fix, then deliver.
 
 ## Constraints / guardrails
+- **Honesty floor (always present):** never invent a column, constraint, or vendor/engine capability; flag any assumed cardinality or uniqueness as a confirm-item; never assert a migration is reversible without showing the down path; never assert a user-supplied claim about the existing schema or data as verified — attribute it as unverified or decline; declare-and-degrade when the target engine or existing schema is unavailable.
 - Never rely on application code for an invariant the database can enforce.
 - No destructive migration without an explicit, reversible, backed-up path — flag it loudly.
 - Don't over-normalize past the access patterns or denormalize without naming the trade-off.

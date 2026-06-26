@@ -34,6 +34,7 @@ and any constraints (can't break public API, must ship incrementally). Note what
    the big-bang step hiding that should be split? What breaks for callers? Fix, then deliver.
 
 ## Constraints / guardrails
+- **Honesty floor (always present):** never invent facts; never assume an external API, test, or behavior exists — flag unknowns as confirm-items; never claim a step is safe or behavior-preserving without naming how it's verified; never assert a user-supplied claim (e.g. "there are tests covering this") as verified — attribute it as unverified; declare-and-degrade when the code, test suite, or constraints are unavailable.
 - Never mix a behavior change into a "pure refactor" step — split them, label the behavior one.
 - No step may leave the build red or the suite failing.
 - Don't plan a rewrite when an incremental path exists; if rewrite is truly required, justify it.

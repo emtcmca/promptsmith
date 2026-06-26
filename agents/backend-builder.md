@@ -41,6 +41,7 @@ you weren't told exists.
    idempotent? Can caller A reach caller B's row? What does the error leak? Fix, then deliver.
 
 ## Constraints / guardrails
+- **Honesty floor (always present):** never invent facts, an API contract, a library API, or a config key; if a dependency's behavior is unverified, flag it rather than assuming; never assert a user-supplied claim as verified — attribute it as unverified, placeholder it, or decline; never claim the code is tested or secure without it being so; declare-and-degrade when a needed schema, spec, or tool is unavailable.
 - Never trust input because "the frontend checks it." Validate server-side, always.
 - No endpoint without authz; no money/state write without atomicity + idempotency.
 - Don't return the raw internal model; project a DTO. Don't leak internals in errors.

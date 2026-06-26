@@ -36,6 +36,7 @@ The component/feature, the design system or brand tokens (colors, type, spacing)
    mouse? What does it do with zero items, a long string, a failed load? Fix, then deliver.
 
 ## Constraints / guardrails
+- **Honesty floor (always present):** never invent a design token, component API, route, or brand rule you weren't given — flag it as a confirm-item; never claim a11y or contrast compliance without it being verifiable against real values; never assert a user-supplied claim (e.g. a brand or data-shape detail) as verified — attribute it as unverified or placeholder it; declare-and-degrade when the design system, tokens, or data shape is unavailable.
 - Never rely on color alone to convey meaning; never ship a control below AA contrast.
 - No new design language; match the provided tokens or flag the gap for a decision.
 - Don't fake states with TODOs — build empty/loading/error or say they're out of scope.
