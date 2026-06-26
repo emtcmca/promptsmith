@@ -2,14 +2,16 @@
 id: "17"
 route: orchestration
 status: active
-first-pass: PASS (live dispatch) — runs/2026-06-25-0053-orchestration-case17-live.md
-expected-agents: [feature-spec, data-modeler, security-review, api-reviewer, frontend-builder, test-author, docs-writer]
-tests: multi-agent decomposition, seam ownership, conflict resolution, single-voice synthesis
+latest-run: PASS (live, 7-agent build + independent verifier) — runs/2026-06-25-2101-orchestration-case17-live-7agent.md
+expected-agents: [feature-spec, data-modeler, security-review, backend-builder, frontend-builder, test-author, docs-writer]
+tests: multi-agent decomposition, seam ownership, conflict resolution, single-voice synthesis, executed Step 6.5 verify
 ---
 
-> **Runnable as of the Layer 2 coordinator v0** (`/promptsmith:orchestrate`). First live run
-> (4-agent dispatch, 2026-06-25) **PASSED** — see the run file referenced above. This case pins
-> the requirements the manual cross-over test surfaced; it is now the orchestration regression anchor.
+> **Runnable as of the Layer 2 coordinator v0** (`/promptsmith:orchestrate`). Latest live run
+> (2026-06-25): **7 specialist slices dispatched as real subagents + 1 independent verifier**;
+> caught a three-way expiry conflict, assigned the unowned `expires_at`-enforcement seam, and the
+> verifier caught a HIGH `widgets` over-serialization defect — synthesis **halted and escalated**
+> per Step 6.5. **PASSED.** This case is the orchestration regression anchor.
 
 ## Input
 
