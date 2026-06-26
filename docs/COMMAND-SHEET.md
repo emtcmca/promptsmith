@@ -42,10 +42,10 @@ Critique only → `lens`. Several domains, one coherent result → `orchestrate`
 **Add your own:** a markdown file with `name:` + `applies-to:` frontmatter in
 `~/.claude/promptsmith-lenses/` (global) or `./.promptsmith-lenses/` (project). Auto-loaded.
 
-## Gallery (16 specialists — paste directly, or let `/orchestrate` dispatch them)
+## Gallery (20 specialists — paste directly, or let `/orchestrate` dispatch them)
 
-- **Build:** feature-spec · data-modeler · backend-builder · frontend-builder · test-author · refactor-planner
-- **Review:** api-reviewer · security-review · debugger
+- **Build:** feature-spec · planner · data-modeler · backend-builder · frontend-builder · test-author · refactor-planner
+- **Review:** api-reviewer · security-review · verifier · evaluator · compliance-reviewer · debugger
 - **Write:** copy-rewrite · docs-writer · sop-writer · governance-letter
 - **Meta:** research-synthesizer · prompt-engineer · mcp-integrator
 
@@ -73,7 +73,7 @@ Files live in `agents/`. Forge a new one with `/forge-agent` and drop it in to g
 
 ## Eval harness (test & refine)
 
-- Run: say **"run the promptsmith evals"** (all 21 cases) or **"run eval case 17"** (one).
+- Run: say **"run the promptsmith evals"** (all 27 cases) or **"run eval case 17"** (one).
 - Output: a dated scorecard in `evals/runs/`.
 - Refine: change a lens/engine/agent → re-run the same cases → diff scorecards → keep only
   non-regressing improvements.

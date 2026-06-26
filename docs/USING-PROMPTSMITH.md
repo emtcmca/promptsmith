@@ -83,7 +83,7 @@ auto-loaded and selectable by `--lens <name>` or by topic.
 
 ---
 
-## 5. The agent gallery (16 specialists)
+## 5. The agent gallery (20 specialists)
 
 `agents/` holds ready-to-paste **specialist system prompts** — each with a named voice and a
 self-challenge step. Two ways to use them:
@@ -92,10 +92,10 @@ self-challenge step. Two ways to use them:
   system-prompt field.
 - **Via `/orchestrate`:** the coordinator dispatches them for you.
 
-Roster: **Build** — feature-spec, data-modeler, backend-builder, frontend-builder, test-author,
-refactor-planner · **Review** — api-reviewer, security-review, debugger · **Write** —
-copy-rewrite, docs-writer, sop-writer, governance-letter · **Meta** — research-synthesizer,
-prompt-engineer, mcp-integrator.
+Roster: **Build** — feature-spec, planner, data-modeler, backend-builder, frontend-builder,
+test-author, refactor-planner · **Review** — api-reviewer, security-review, verifier, evaluator,
+compliance-reviewer, debugger · **Write** — copy-rewrite, docs-writer, sop-writer,
+governance-letter · **Meta** — research-synthesizer, prompt-engineer, mcp-integrator.
 
 Forge a new one with `/forge-agent` and drop it in `agents/` to grow the roster.
 
@@ -138,7 +138,7 @@ coverage gaps, and what each agent contributed.
 
 ## 8. Testing & refining (the eval harness)
 
-`evals/` is a host-judged harness: structural invariants + an adversarial skeptic rubric over 21
+`evals/` is a host-judged harness: structural invariants + an adversarial skeptic rubric over 27
 cases. Run it by saying **"run the promptsmith evals"** (all) or **"run eval case 17"** (one).
 It writes a dated scorecard to `evals/runs/`. To refine: change a lens/engine/agent, re-run the
 same cases, diff the scorecards, keep only non-regressing improvements.
