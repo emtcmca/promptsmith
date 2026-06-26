@@ -92,6 +92,13 @@ reference the visual lenses point to?
 
 ## Candidate 4 — Evidence-separated, tri-state verdict
 
+**STATUS: IMPLEMENTED** (feat/planned-features-batch) — `agents/verifier.md` now returns a
+tri-state verdict (VERIFIED / VERIFIED WITH GAPS / NOT VERIFIED) plus an explicit BLOCKING flag,
+and splits output into Observable evidence (facts) vs Assessment (judgment). Folds in the existing
+"Claimed vs actual" + "Confirm-these" (the latter is now what makes a verdict WITH GAPS).
+Orchestration unchanged — it keys on the BLOCKING/HIGH semantics, which are preserved. Concept only
+(loki is BUSL — no code/text copied).
+
 **Source:** loki-mode "Evidence Receipt" + verdict levels.
 **Idea:** the `verifier` agent (and `/lens`) structures output as deterministic/observable
 evidence vs. AI assessment, and rolls up to a single tri-state verdict:
