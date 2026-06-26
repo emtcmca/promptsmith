@@ -43,6 +43,24 @@ for the corrected output.
 **Effort:** low–medium. **Identity cost:** none (stays markdown).
 **Open question:** flag (`--fix`) vs always offering the corrected draft at the end.
 
+## Candidate 7 — Voice-preservation guardrail (small)
+
+**STATUS: IMPLEMENTED** (feat/planned-features-batch) — voice-preservation guardrail added to
+`lenses/editorial.md` and strengthened in `agents/copy-rewrite.md`, explicitly framed as a
+counterweight to the `ai-tells` lens (a deliberate stylistic signature is not an AI tell).
+**Source:** ComposioHQ/awesome-claude-skills `content-research-writer` (verify per-skill license
+before adapting any text; the principle itself is concept-only).
+**Idea:** add a voice-preservation guardrail to `lenses/editorial.md` and `agents/copy-rewrite.md`:
+when the author has a known voice or supplied samples, match it — enhance, don't override; suggest,
+don't replace; flag where a change would alter voice. **Acts as a counterweight to the new
+`ai-tells` lens**, which strips patterns aggressively and could otherwise flatten a distinctive
+author into generic prose.
+**Why:** prevents homogenizing the user's voice; resolves a real tension introduced by candidate 6.
+**Touches:** `lenses/editorial.md`, `agents/copy-rewrite.md`.
+**Effort:** low. **Identity cost:** none.
+**Note:** the rest of the source skill (full long-form research/drafting workflow) is REJECTED as
+scope creep — promptsmith engineers prompts/agents, it is not a writing companion.
+
 ## Candidate 6 — AI-writing-tells catalog for the editorial lens  ⭐ strong
 
 **STATUS: IMPLEMENTED** (feat/planned-features-batch) — shipped as a dedicated `lenses/ai-tells.md`
@@ -233,6 +251,7 @@ entry per repo, with source attribution.
 - [x] TheQmaks/crowdcast — DONE (rejected — passes guardrails but wrong domain/scope)
 - [x] takechanman1228/claude-persona — DONE (rejected — Python deps + wrong domain)
 - [x] conorbronsdon/avoid-ai-writing — DONE (candidate 6 — AI-tells catalog for editorial lens)
+- [x] ComposioHQ/.../content-research-writer — DONE (workflow rejected; candidate 7 — voice preservation)
 - [ ] _next repo — pending_
 
 ---
