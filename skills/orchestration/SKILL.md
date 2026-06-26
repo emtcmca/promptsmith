@@ -43,6 +43,29 @@ large artifacts into its own window goes blind faster and loses the thread.
 - The test: *if reading something would burn a big chunk of your window and you only need the
   conclusion, that's a subagent's job, not yours.*
 
+## Checkpoint & compact (prune at the seams)
+
+Context discipline keeps bulk *out* of your window; this keeps what's *in* from bloating. A long
+program — many waves, many fan-outs — fills the coordinator's window, which is slower, costlier
+(a heavy window is paid for on **every** turn), and easier to lose the thread in. So checkpoint
+and prune at natural breakpoints, not only when a limit forces it.
+
+- **Checkpoint first, then prune.** Before suggesting a compaction, write the durable state — the
+  decisions, the wave/segment status, what's committed, what's next — to a persistent place (a
+  tracker file, the ledger, the vault). Compaction is only safe once the state survives *outside*
+  the window.
+- **Trigger points** (proactively suggest a compact sweep here — don't wait for the window to fill):
+  - a segment/wave completes and is committed or merged,
+  - a large fan-out returns and its raw outputs have been distilled to conclusions,
+  - the work pivots to a new topic/phase,
+  - the transcript is visibly heavy with tool dumps and superseded drafts.
+- **What a sweep keeps vs. drops:** keep the conclusions, the open decisions, and the next step;
+  drop the already-distilled raw material (subagent transcripts, large file contents, dead drafts).
+- **You suggest; the user compacts.** The coordinator can't force a `/compact` — having checkpointed,
+  flag that now is a good point and let the user run it (or their save-then-compact routine).
+- **Treat it as cost control, not housekeeping.** Pruning at the seams preserves the user's compute
+  budget; it's part of the job, the same way bounding a fan-out is.
+
 ## The pipeline
 
 ### Step 0 — Gate: intent first, then worth
@@ -202,6 +225,9 @@ Lead with the **synthesized deliverable**. Then, separated below it:
 - **Coordinator stays light.** Large files / dirs / logs / tool dumps are read by disposable
   subagents that return distilled results; never pull raw bulk into your own window (see Context
   discipline). Pass references, review diffs — don't ingest the artifact.
+- **Checkpoint + compact at the seams.** At each wave/segment boundary and after big fan-outs,
+  write durable state, then suggest a compact sweep (see Checkpoint & compact). Don't let the
+  window bloat unchecked across a long program — it costs the user on every turn.
 
 ## Coverage-gap log format
 
