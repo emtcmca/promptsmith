@@ -58,6 +58,12 @@ references?
 
 ## Candidate 5 — Style-aware lenses (hard-rule vs style-preference split)  ⭐ strong
 
+**STATUS: IMPLEMENTED** (feat/planned-features-batch) — `lenses/visual-design.md` rewritten into
+hard-rules vs style-relative sections + 8 style families inline, with "establish the intended
+aesthetic first, never cross-penalize." `lenses/ux-designer.md` framed as the style-independent
+hard-rules lens (+ affordance, state-closure). DEFERRED: the optional `--style <family>` CLI flag
+(command-surface change; lens-level family detection covers the core value for now).
+
 **Source:** oil-oil/ui-ux-guide (Apache-2.0, markdown-only — compatible to adapt with attribution).
 **Idea:** restructure the `visual-design` / `ux-designer` lenses to separate two kinds of checks:
 - **Hard rules** — style-independent UX/perception facts that are always true (task priority,
