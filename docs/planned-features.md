@@ -29,6 +29,11 @@ constraints are where vague prompts most often go wrong.
 
 ## Candidate 2 — One-step lens → fix  ⭐ removes a documented round-trip
 
+**STATUS: IMPLEMENTED** (feat/planned-features-batch) — `/lens --fix` added: new Step 6 emits a
+corrected artifact in its own form (prose/code/prompt), minimal targeted changes, injection-safe,
+with a second-pass check. Default (no flag) keeps the critique-only behavior + manual-sharpen
+offer. README usage updated.
+
 **Source:** GSD `/gsd-verify-work` (auto-diagnose AND emit a fix plan, not just findings).
 **Idea:** `/lens --fix` (or an auto-offer) returns a corrected draft, not only findings. Today
 the README tells the user to manually re-feed lens findings into `/sharpen` — kill that hop.

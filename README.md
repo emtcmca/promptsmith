@@ -172,7 +172,11 @@ contract — ready to drop into a subagent, a skill, or any system-prompt field.
 ```
 
 Returns findings (✅ checked / ⚠️ weak / ❌ failing) per lens, worst-first, plus the top 3
-fixes by impact. To get a corrected version, feed those findings into `/promptsmith:sharpen`.
+fixes by impact. Add `--fix` to get a corrected version in the same run:
+
+```
+/promptsmith:lens (paste a component, prompt, or draft) --lens accessibility --fix
+```
 
 ---
 
