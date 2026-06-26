@@ -192,6 +192,7 @@ A lens is a professional's checklist in a markdown file. Built-in lenses:
 | `seo` | search, metadata, crawlability, structured data, marketing pages |
 | `product-strategist` | scope, value, MVP, prioritization |
 | `editorial` | copy, email, docs, tone of voice |
+| `ai-tells` | removing AI-sounding patterns — tiered vocabulary, rhythm, placeholders |
 | `skeptic` | the "push back on me" red-team lens (applied by default) |
 
 ### Add your own lens (no fork needed)

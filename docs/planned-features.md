@@ -40,6 +40,11 @@ for the corrected output.
 
 ## Candidate 6 — AI-writing-tells catalog for the editorial lens  ⭐ strong
 
+**STATUS: IMPLEMENTED** (feat/planned-features-batch) — shipped as a dedicated `lenses/ai-tells.md`
+(6-category catalog + tiered vocabulary + two-pass discipline, adapted from avoid-ai-writing with
+attribution) rather than folded into editorial; `editorial.md` cross-references it; README lens
+table updated. The upstream Node scoring engine was intentionally NOT ported (stays method-only).
+
 **Source:** conorbronsdon/avoid-ai-writing (MIT — adapt catalog content with attribution).
 **Idea:** enrich `lenses/editorial.md` with a structured AI-tell catalog: ~6 categories
 (content / language / structure / communication / structural-detection / tool-fingerprints) and a
