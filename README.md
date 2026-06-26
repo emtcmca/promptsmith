@@ -12,7 +12,7 @@ and asked the agent to push back on you and review the work like a seasoned prof
   (Claude Code, or anything you paste the output into) does the reasoning. Model-agnostic by
   construction.
 - **Four commands** (three core + a coordinator), one shared engine, a library of expert lenses
-  you can extend, and a 16-agent specialist gallery.
+  you can extend, and a 20-agent specialist gallery.
 
 ---
 
@@ -214,16 +214,12 @@ backend/API, SEO) are exactly the jobs a single task agent should refuse but a u
 needs next. The `agents/` gallery holds ready-to-paste **specialist system prompts** for
 them — the kind `/promptsmith:forge-agent` produces, saved so you don't rebuild them cold.
 
-A roster of 22 specialists across spec → build → test → review → document → market:
+A roster of 20 specialists across spec → plan → build → test → review → document:
 
-- **Build:** `feature-spec`, `data-modeler`, `backend-builder`, `frontend-builder`, `test-author`, `refactor-planner`
-- **Review:** `api-reviewer`, `security-review`, `verifier`, `debugger`
+- **Build:** `feature-spec`, `planner`, `data-modeler`, `backend-builder`, `frontend-builder`, `test-author`, `refactor-planner`
+- **Review:** `api-reviewer`, `security-review`, `verifier`, `evaluator`, `compliance-reviewer`, `debugger`
 - **Write:** `copy-rewrite`, `docs-writer`, `sop-writer`, `governance-letter`
-- **Market:** `campaign-director`, `icp-architect`, `outreach-strategist`, `marketing-copywriter`, `apify-scraper`
 - **Meta:** `research-synthesizer`, `prompt-engineer`, `mcp-integrator`
-
-> `apify-scraper` is a **tool-using** agent (assumes an Apify MCP is connected) with a hard
-> **cost + consent gate** — it never runs an Actor without an explicit, costed, human-approved brief.
 
 Each carries a named **voice** so it speaks in character at injection. `/promptsmith:forge-agent`
 checks this gallery first and **adapts** a close match instead of starting cold. Forge your
