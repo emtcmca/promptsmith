@@ -37,29 +37,15 @@ had to make, and offers a `--deep` interview to resolve them one question at a t
 ## Why it matters
 
 The value a skilled person adds to a prompt is invisible scaffolding — the tone they wanted, the
-constraints they forgot to state, the edge cases they didn't think of, the professional eye they
-wish they had, the push-back they need to hear. promptsmith makes that scaffolding explicit,
-repeatable, and auditable.
+constraints they forgot to state, the edge cases they didn't think of, the push-back they need to
+hear. promptsmith makes that scaffolding explicit, repeatable, and auditable.
 
-The two-layer split is the bet. **Layer 1** stays portable and honest — no API keys, no model
-calls, works pasted into anything — a defensible identity. **Layer 2** turns a roster of
-single-purpose specialists into something that handles real multi-domain work *coherently*,
-catching the cross-slice conflicts no single agent can see. That's not theoretical: a live
-8-agent run (7 specialists + an independent verifier) on *"add public shareable dashboard links"*
-caught a **three-way conflict** on link expiry (spec said "no expiry in the MVP," the schema made it
-optional, security called it mandatory) and assigned the **unowned seam** everyone assumed someone
-else held (who *enforces* `expires_at` at read time). Then the independent verifier caught a **HIGH
-data-exposure defect the builder's own "allow-list DTO" missed** — it allow-listed columns but
-shipped the entire `widgets` blob to anonymous viewers — so the pipeline **halted and escalated
-instead of shipping it.** Honesty guardrails run through everything — never fabricate a fact, a
-citation, or an MCP server you can't verify.
-
-So it can: sharpen any vague ask into an executable prompt; author reusable agent system prompts;
-review code, prompts, or UI through professional lenses; and — the headline — take a request like
-*"add public shareable links to dashboards"* and produce a complete, coherent build (spec → schema
-→ API → UI → tests → docs) by coordinating specialists, resolving their conflicts, escalating the
-genuine product decisions to you instead of guessing, and flagging where it's missing an agent or
-a tool — then growing itself to fill the gap. It shows its work and proves it with evals.
+The two-layer split is deliberate. Layer 1 (`/sharpen`, `/forge-agent`, `/lens`) stays portable:
+no API keys, no model calls, works pasted into anything. Layer 2 (`/orchestrate`) coordinates the
+specialist gallery on multi-domain work, catching the cross-slice conflicts no single agent sees
+and escalating real product decisions instead of guessing. Honesty guardrails run through both —
+it never fabricates a fact, a citation, or an MCP server it can't verify, and it shows its work
+with evals. The orchestration walkthrough below is a live run, logged in `evals/runs/`.
 
 ---
 
@@ -119,6 +105,23 @@ Copy `commands/` and `skills/` into your `~/.claude/` directory
 `~/.claude/promptsmith-lenses/` so the lens pass can find them. Installed this way the
 commands are bare — `/sharpen`, `/forge-agent`, `/lens` — because standalone commands
 aren't namespaced. (Skip the lenses copy and the engine's lens step has nothing to load.)
+
+### Uninstall
+
+If you installed as a plugin (Option A):
+
+```
+/plugin uninstall promptsmith
+/plugin marketplace remove emtcmca/promptsmith
+```
+
+If you installed manually (Option B), delete what you copied:
+
+- `~/.claude/commands/sharpen.md`, `forge-agent.md`, `lens.md`, `orchestrate.md`
+- `~/.claude/skills/prompt-engineering/` and `~/.claude/skills/orchestration/`
+- `~/.claude/promptsmith-lenses/`
+
+That's the full footprint — promptsmith writes nothing else and leaves no state behind.
 
 ---
 
@@ -265,13 +268,11 @@ promptsmith/
   .claude-plugin/      plugin.json + marketplace.json (install metadata)
   commands/            /sharpen, /forge-agent, /lens
   skills/
-    prompt-engineering/SKILL.md   the shared engine
+    prompt-engineering/SKILL.md   Layer 1 engine (sharpen / forge / lens)
+    orchestration/SKILL.md        Layer 2 coordinator (orchestrate)
   lenses/              built-in expert lenses
   agents/              pre-forged specialist system prompts (the gallery / dispatch roster)
                        + coverage-gaps.md (slices no agent covers yet)
-  skills/
-    prompt-engineering/SKILL.md   Layer 1 engine (sharpen/forge/lens)
-    orchestration/SKILL.md        Layer 2 coordinator (orchestrate)
   templates/           output skeletons for sharpen + forge
   evals/               host-judged eval harness (rubric, runner, cases, runs)
   docs/                test-run records
