@@ -34,6 +34,9 @@ are exactly the jobs a single task agent should refuse but a user often needs ne
 | `governance-letter` | drafts HOA / board correspondence — firm, compliant, on-tone | editorial, skeptic |
 | `sop-writer` | turns a process into a clear, followable SOP | editorial, product-strategist |
 | `prompt-engineer` | sharpens a system prompt into a tighter, more concrete one | skeptic, editorial |
+| `planner` | turns a goal/spec into an ordered, dependency-aware task plan with acceptance criteria + critical path | product-strategist, skeptic |
+| `evaluator` | grades an artifact against a rubric — scored verdict + the highest-leverage fixes to iterate on | skeptic, product-strategist |
+| `compliance-reviewer` | flags regulatory exposure (GDPR/CCPA/PCI/HIPAA/SOC2/ADA/FTC) — a flag list, not legal advice | security-reviewer, data-integrity, skeptic |
 
 ## How `/forge-agent` uses this
 
