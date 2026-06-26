@@ -23,12 +23,17 @@ REQUIREMENTS:
 GUARDRAILS (from red-team pass):
 - <guardrail addressing a failure mode the literal request ignored>
 
+PROHIBITIONS (must NOT do — negative space):
+- <don't invent: identifiers/APIs/paths/facts/numbers — flag the gap instead>
+- <don't touch: the protected surfaces this change must not modify (auth, schema, billing, security, public contracts)>
+- <don't exceed scope: no drive-by refactors, renames, or dependency additions>
+
 SUCCESS CRITERIA:
 - <how we'll know the result is good>
 
 OUTPUT FORMAT: <the exact shape of the deliverable>
 
-OUT OF SCOPE: <what to explicitly not do>
+OUT OF SCOPE: <which features / work to explicitly not build (distinct from prohibitions above)>
 ```
 
 ---
