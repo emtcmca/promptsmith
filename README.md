@@ -172,7 +172,11 @@ contract — ready to drop into a subagent, a skill, or any system-prompt field.
 ```
 
 Returns findings (✅ checked / ⚠️ weak / ❌ failing) per lens, worst-first, plus the top 3
-fixes by impact. To get a corrected version, feed those findings into `/promptsmith:sharpen`.
+fixes by impact. Add `--fix` to get a corrected version in the same run:
+
+```
+/promptsmith:lens (paste a component, prompt, or draft) --lens accessibility --fix
+```
 
 ---
 
@@ -192,6 +196,7 @@ A lens is a professional's checklist in a markdown file. Built-in lenses:
 | `seo` | search, metadata, crawlability, structured data, marketing pages |
 | `product-strategist` | scope, value, MVP, prioritization |
 | `editorial` | copy, email, docs, tone of voice |
+| `ai-tells` | removing AI-sounding patterns — tiered vocabulary, rhythm, placeholders |
 | `skeptic` | the "push back on me" red-team lens (applied by default) |
 
 ### Add your own lens (no fork needed)

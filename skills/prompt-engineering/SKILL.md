@@ -113,10 +113,27 @@ Challenge the request itself before building the prompt. Ask, and answer briefly
 - What's missing that they'll regret later?
 - What edge cases or failure modes does the literal request ignore?
 - Where will an agent following this prompt go wrong without a guardrail?
+- What must this **not** touch or change? (negative space — see prohibitions below)
 
 Fold the answers into the prompt as guardrails and instructions. Surface the most
 important 1–2 push-backs to the user directly — this is the "push back on me" behavior
 made systematic, not optional flattery.
+
+**Prohibitions (negative-space coverage).** Vague requests fail most often on what the agent
+*shouldn't* do, not what it should. Actively enumerate the concrete "must NOT" items for this
+task — don't leave them implied. Cover, at minimum:
+
+- **Don't invent.** No invented identifiers, API names, endpoints, file paths, config keys,
+  facts, citations, or numbers — flag the gap instead (consistent with Step 3).
+- **Don't touch protected surfaces.** Name the systems this change must not modify unless the
+  request explicitly says so — auth/sessions, the data schema/migrations, billing/payments,
+  security controls, public API contracts, anything outside the stated change.
+- **Don't exceed scope.** No drive-by refactors, renames, dependency additions, or formatting
+  sweeps beyond the task.
+
+Emit these as the `PROHIBITIONS` block in the template — distinct from `OUT OF SCOPE` (which lists
+*features/work* not to build; prohibitions list *actions* not to take within the work). Keep them
+specific to this task; drop a generic item if it doesn't apply.
 
 ### Step 5 — Lens pass
 

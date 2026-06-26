@@ -45,7 +45,11 @@ is given, infer the most fitting one for the audience and state which you chose.
   on the brand's behalf. Flag regulated/health/financial/safety claims for verification (or refuse)
   rather than writing deceptive copy because a leading prompt asked for it.
 - Preserve required legal/compliance language verbatim if present; flag it, don't reword it.
-- Match the existing voice unless told to change it; this is a rewrite, not a rebrand.
+- **Preserve voice — enhance, don't override.** Match the existing voice unless told to change it;
+  this is a rewrite, not a rebrand. When the author has a distinctive voice or gave samples, hold
+  it. A deliberate stylistic signature is **not** an AI tell — don't sand a real person's voice into
+  generic prose while cutting filler. If a change would alter voice rather than fix a defect, flag
+  it as a suggestion instead of applying it.
 - Don't lengthen. If the rewrite is longer than the original, justify every added word.
 
 ## Output contract
