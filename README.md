@@ -45,9 +45,13 @@ The two-layer split is the bet. **Layer 1** stays portable and honest — no API
 calls, works pasted into anything — a defensible identity. **Layer 2** turns a roster of
 single-purpose specialists into something that handles real multi-domain work *coherently*,
 catching the cross-slice conflicts no single agent can see. That's not theoretical: a live
-7-agent build caught a three-way conflict (two agents assumed "regenerate replaces a link," one
-implemented "regenerate is blocked") that would otherwise have shipped a test suite failing
-against its own handler. Honesty guardrails run through everything — never fabricate a fact, a
+8-agent run (7 specialists + an independent verifier) on *"add public shareable dashboard links"*
+caught a **three-way conflict** on link expiry (spec said "no expiry in the MVP," the schema made it
+optional, security called it mandatory) and assigned the **unowned seam** everyone assumed someone
+else held (who *enforces* `expires_at` at read time). Then the independent verifier caught a **HIGH
+data-exposure defect the builder's own "allow-list DTO" missed** — it allow-listed columns but
+shipped the entire `widgets` blob to anonymous viewers — so the pipeline **halted and escalated
+instead of shipping it.** Honesty guardrails run through everything — never fabricate a fact, a
 citation, or an MCP server you can't verify.
 
 So it can: sharpen any vague ask into an executable prompt; author reusable agent system prompts;
@@ -74,17 +78,22 @@ the assumptions it made, the push-back worth hearing, and the open questions.
 ```
 /promptsmith:orchestrate add public read-only shareable links to user dashboards
 ```
-What happens (the proven flow):
-1. **Sharpens** the request, then **decomposes** it into slices: spec · schema · API · UI · tests · docs.
+What happens (the proven flow — from a live 8-agent run, logged in `evals/runs/`):
+1. **Sharpens** the request, then **decomposes** it into slices: spec · schema · security · API · UI · tests · docs.
 2. **Routes** each slice to a gallery agent; **gates** for approval (7 agents > the smart threshold).
 3. **Dispatches** them as live subagents in parallel.
-4. **Owns the seams** — e.g. data-modeler stores `expires_at`, the API enforces it at read time;
-   security-review and data-modeler independently converge on hashing the token, so it stores
-   `sha256(token)`.
-5. **Resolves conflicts** — caught a three-way disagreement on regenerate behavior and settled it;
-   **escalated** the live-vs-snapshot product call to you instead of guessing.
-6. **Synthesizes one build plan** — spec, schema, the actual API handler, the React modal, the test
-   suite, and the docs — not six pasted outputs.
+4. **Owns the seams** — data-modeler *stores* `expires_at`; the coordinator assigns its *enforcement*
+   (the read-time check everyone assumed someone else owned) to the API slice; data-modeler and
+   security independently converge on hashing the token, so it stores `sha256(token)`.
+5. **Resolves conflicts** — caught a **three-way disagreement on link expiry** (spec "no expiry in
+   MVP" vs. schema "optional" vs. security "mandatory") and settled it (mandatory default TTL);
+   **escalated** the TTL value and the live-vs-snapshot product call to you instead of guessing.
+6. **Verifies, then refuses to ship a hole** — an independent `verifier` re-attacks the built API and
+   catches a **HIGH data-exposure defect** the builder's own "allow-list DTO" missed (it allow-listed
+   columns but shipped the whole `widgets` blob to anonymous viewers). The pipeline **halts and
+   escalates** rather than synthesizing a vouched-for-but-unverified build.
+7. **Synthesizes one build plan** — spec, schema, the API handler, the React modal, the test suite,
+   and the docs — not seven pasted outputs, with the blocking fix surfaced as an open decision.
 
 ---
 

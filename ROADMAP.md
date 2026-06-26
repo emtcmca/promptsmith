@@ -73,6 +73,11 @@ target is eval case 17.
 - [x] Approval gate before fan-out (default ON; `--no-gate` to waive); `--dry` to inspect routing.
 - [x] First live multi-agent run: case 17 PASS via real 4-agent dispatch; guardrail cases 18
   (overkill-fallback) + 19 (coverage-gap) PASS; D6 applied (catch agent-emergent conflicts).
+- [x] Full live re-run (2026-06-25): case 17 as a real **7-agent build + independent verifier**
+  (runs/2026-06-25-2101-orchestration-case17-live-7agent.md). Caught a 3-way expiry conflict,
+  assigned the unowned `expires_at`-enforcement seam, and Step 6.5's verifier caught a HIGH
+  `widgets` over-serialization defect → synthesis halted + escalated. The regression anchor now
+  has a non-simulated PASS.
 - [ ] Continue tuning from real runs (more domains, larger fan-out, the deferred slices).
 - [x] Forge `backend-builder` to fill the API-maker gap (gallery now 15 agents).
 - [x] Mechanism decisions resolved (2026-06-25): dispatch = **subagents** (Workflow later only
