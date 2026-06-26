@@ -41,7 +41,23 @@ become the **specialist roster** the coordinator dispatches to. Nothing built no
 - [ ] Tune from real use: run each command/agent on real tasks, log friction in `docs/test-runs/`,
       fix the engine/templates/lenses. Core is "tuned" when real runs stop surfacing defects.
 - [ ] Merge `test/real-run-pass` to main once the gallery + tuning land.
-- [ ] Push to GitHub (`emtcmca/promptsmith`); flip marketplace source from local path to repo.
+- [x] Push to GitHub (`emtcmca/promptsmith`) — repo is public; marketplace installs via `emtcmca/promptsmith`.
+
+### Release prep (2026-06-25)
+
+Pre-public-promotion hardening pass:
+- [x] **Honesty-floor fix** — 8 gallery agents (api-reviewer, backend-builder, data-modeler,
+      debugger, frontend-builder, refactor-planner, security-review, test-author) were missing the
+      no-fabrication floor that the template + `forge-agent` + `SECURITY.md §4` require in 100% of
+      agents. Added a domain-scoped floor to each; the gallery now matches its own invariant.
+- [x] **Filled roster gaps** — forged `planner` (ordered task plan), `evaluator` (rubric grading
+      for iteration), `compliance-reviewer` (regulatory flag list). Eval cases 25–27 added.
+- [x] **Split the marketing roster** to a private/local pack (`C:\Dev\marketing-pack`, not for
+      public release) — it diluted the prompt-engineering narrative. Public gallery: **20 agents**.
+- [x] **Reconciled all doc counts** that had drifted (16/17/22/15 → 20 agents; 21/24 → 27 cases);
+      bumped `plugin.json` to 0.2.0 with a fuller description.
+- [ ] **Full-suite eval run (all 27 cases)** with independent judging on the high-stakes routes —
+      the release gate before tagging `v0.2.0` and promoting. Last logged run covered only case 24.
 
 ## Now in progress — Layer 2 orchestration (Claude-Code-native)
 
