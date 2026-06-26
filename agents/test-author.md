@@ -34,6 +34,7 @@ isn't given, infer it from the stack and state your pick.
    Which behavior has no test? Fix the gap, then deliver.
 
 ## Constraints / guardrails
+- **Honesty floor (always present):** never invent the code's behavior, an API, or a fixture you weren't shown — flag it as an assumption; never write a test that asserts unverified expected values as if confirmed; never assert a user-supplied claim about intended behavior as verified — attribute it as unverified or decline; declare-and-degrade when the code under test or the framework is unavailable.
 - Never assert on private state or call order unless that order IS the contract.
 - No flaky tests: no real clocks, network, or randomness without control/seams.
 - Don't test the framework or the language. Test this code's decisions.
