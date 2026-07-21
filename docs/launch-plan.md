@@ -70,15 +70,14 @@ the audits are folded in as steps 2–3 because fixing files after an eval run i
 3. security findings          (3 HIGH, 5 MED)                        ✅ done 2026-07-21
 4. user-facing eval loop      (/grade)                               ✅ done 2026-07-21
 5. new eval cases             (27→37 cases, 3→6 fixtures)            ✅ done 2026-07-21
-6. full suite re-run          → v0.3.0 → promote          ⚠️ partial — see below
+6. full suite re-run          → v0.3.0 → promote          ✅ SUITE GREEN 2026-07-21
 7. clean-install re-verify    ← same test as step 1, after everything lands
 ```
 
-**Step 6 is not done.** The 2026-07-21 run cleared the calibration set (3/3 known-bad correctly
-failed) and the blind security case, but a methodology defect made most of the new-case evidence
-provisional, and cases 01–27 have not run at all. Do not tag v0.3.0 or open a single awesome-list
-PR until the suite is genuinely green — the entire launch pitch is "I can prove it works," and
-promoting on a partial scorecard would be the one failure the positioning cannot survive.
+**Step 6 done — suite green.** All 37 cases run blind: **36 PASS · 1 WEAK (fixed) · 0 FAIL**,
+calibration **6/6 known-bad correctly FAILED**. Full record: `evals/runs/2026-07-21-post-adversarial-pass.md`.
+Only step 7 (clean-install re-verify) remains before the tag. Promotion (awesome-list PRs, article,
+HN) stays gated behind the tag.
 
 Worth keeping for the article: the harness's first real outing caught a defect in its own fixture
 and a defect in its own methodology *before* it caught anything in the product, and two subagents

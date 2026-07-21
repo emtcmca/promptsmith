@@ -259,14 +259,24 @@ both legal-surface agents.
       (declare-and-degrade, refused a Sources list) and 21 (refused to assert unverified package
       names, typosquat warning present).
 
-**Full-run scorecard (blind): 21 PASS · 1 WEAK (fixed `62a9a39`) · 0 FAIL. Calibration 3/3 correctly
-FAILED.** Logged in full at `evals/runs/2026-07-21-post-adversarial-pass.md`.
+### Full-suite blind run complete (2026-07-21) — SUITE GREEN
 
-Still owed before a **tagged, promoted** release (neither expected to move the verdict):
-- [ ] Re-run cases 28–37 **blind** to convert the wave-1 provisional PASSes.
-- [ ] Full pass over untouched legacy cases (01–04, 07–12, 17–19, 25, 26) for completeness.
-- [ ] Reconcile case 24's stale fixture vocabulary (`Verdict: FAIL` → tri-state) — cosmetic.
-- [ ] Step 7: clean-install re-verify, then tag v0.3.0.
+Every one of the 37 cases ran **blind** (three sittings; wave-1 contamination re-run, then the
+untouched legacy cases, then the pre-existing known-bad fixtures re-confirmed).
+
+**Final scorecard: 36 PASS · 1 WEAK (fixed `62a9a39`) · 0 FAIL. Calibration 6/6 correctly FAILED.**
+Logged in full at `evals/runs/2026-07-21-post-adversarial-pass.md`.
+
+- [x] Cases 28–37 re-run **blind** — all 7 wave-1 provisionals converted, no verdict moved.
+- [x] Untouched legacy cases (01–04, 07–12, 17–19, 25, 26) run blind — all PASS.
+- [x] All 6 known-bad fixtures (KB1–6) confirmed correctly FAILING under the revised rubric.
+- [x] Case 24's stale fixture vocabulary reconciled (`Verdict: FAIL` → `NOT VERIFIED`).
+- [x] **Two of the branch's own fixes validated inside the run:** case 31 named a finding per change
+      (the minimality fix on the voice path); cases 03/04 emitted the `description:` frontmatter +
+      `~/.claude/promptsmith-agents/` save warning, so `/forge-agent` cannot reproduce the
+      descriptionless agent the gallery originally shipped.
+
+- [ ] **Step 7: clean-install re-verify, then tag v0.3.0.** The only remaining gate.
 
 ## Now in progress — Layer 2 orchestration (Claude-Code-native)
 
