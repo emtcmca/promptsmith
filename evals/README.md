@@ -24,20 +24,31 @@ evals/
   README.md     this file
   rubric.md     structural invariants + quality dimensions per route, and the scoring scale
   runner.md     the protocol the host follows: run case → check → judge → write scorecard
-  cases/        27 input fixtures (one per file): the input + case-specific must / must-not
-                (01-08 engine/lens/agent core; 09-16 + 20-21 gallery-agent stress, incl. 15-16
-                hard-gate security, 20 backend-builder, 21 mcp-integrator; 17-19 + 22-23
-                orchestration & security — 17 live dispatch, 18 fallback, 19 coverage-gap, 22
-                intent-gate refusal, 23 lens injection-resistance; 24 verifier; 25-27 new
-                gallery agents — 25 evaluator, 26 planner, 27 compliance-reviewer)
+  cases/        37 input fixtures (one per file): the input + case-specific must / must-not
   runs/         dated scorecards — the regression trail, committed
-  known-bad/    negative fixtures the harness MUST FAIL — the test of the test (calibration)
+  known-bad/    6 negative fixtures the harness MUST FAIL — the test of the test (calibration)
 ```
 
+### Coverage by route
+
+Stated per route rather than per case, so it doesn't go stale every time a case is added:
+
+| Route | Cases |
+|---|---|
+| `sharpen` | 01, 02, 28 |
+| `forge-agent` | 03, 04 |
+| `lens` (critique) | 05, 06, 23, 29, 30 |
+| `lens --fix` | 31, 32, 33 |
+| `grade` | 35, 36, 37 |
+| `orchestrate` | 17, 18, 19, 22 |
+| gallery agents | 07–16, 20, 21, 24–27, 34 |
+
 **Judge independence.** The harness is host-judged, which risks a producer grading its own work
-(the first 9 runs were all-PASS). For high-stakes routes (cases 15, 16, 17, 20) the judge must be a
-**separate invocation** from the producer (see `runner.md`), and the `known-bad/` fixtures must
-periodically FAIL — a judge that can't say no isn't judging.
+(the first 9 runs were all-PASS). The judge must be a **separate invocation** from the producer
+whenever a case tests a security gate, a legal/regulatory output, a code artifact, an
+artifact-producing route (including any `--fix`), or orchestration — the rule lives in
+`rubric.md`, deliberately as a rule and not a case list, because the list went stale once already.
+The `known-bad/` fixtures must periodically FAIL — a judge that can't say no isn't judging.
 
 ## How to run
 

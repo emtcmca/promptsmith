@@ -40,9 +40,20 @@ one. Getting this wrong is a self-inflicted wound: a developer who installs expe
   full strength. *"Most prompt tools can't answer 'how do you know it works?' So I built the eval
   harness first."* True as narrative, and it is the whole thesis.
 
-**This rule relaxes once the user-facing eval loop ships** (approved 2026-07-21, ROADMAP). When a
-user can run their own prompts through the grading loop, the stronger framing becomes literally
-true on product surfaces too. Until then, hold the line.
+**Updated 2026-07-21 — `/grade` shipped, so the line moves.** A user can now run their own prompt
+through a scored rubric and compare two versions with regressions named. On product surfaces you
+may now say promptsmith **grades prompts against a rubric** and is **eval-backed**, because both
+are literally true.
+
+Still do not say it *is* an eval harness, flatly. `evals/` (the 37-case regression suite with
+known-bad calibration) tests promptsmith; `/grade` scores the user's prompts. They are related by
+method, not identical, and a reader who installs expecting the former gets the latter. The honest
+strong claim:
+
+> The same score → change → re-score → keep-only-what-didn't-regress loop promptsmith runs on
+> itself, pointed at your prompts.
+
+That sentence is defensible line by line, and it is stronger than the overclaim would have been.
 
 ---
 
@@ -57,8 +68,8 @@ the audits are folded in as steps 2–3 because fixing files after an eval run i
    2a. functional  (paths, agent descriptions, phantom agents)       ✅ done 2026-07-21
    2b. docs + metadata (GIF, Option B, plugin.json, doc drift)       ✅ done 2026-07-21
 3. security findings          (3 HIGH, 5 MED)                        ✅ done 2026-07-21
-4. user-facing eval loop      (the grade/iterate loop, for the user's prompts)
-5. new eval cases             (28–34, KB4–6, incl. cases for step 4)
+4. user-facing eval loop      (/grade)                               ✅ done 2026-07-21
+5. new eval cases             (27→37 cases, 3→6 fixtures)            ✅ done 2026-07-21
 6. full suite re-run          → v0.3.0 → promote
 7. clean-install re-verify    ← same test as step 1, after everything lands
 ```

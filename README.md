@@ -13,7 +13,7 @@ and asked the agent to push back on you and review the work like a seasoned prof
 - **No dependencies. No API keys. No model calls.** It's pure method + structure. Your agent
   (Claude Code, or anything you paste the output into) does the reasoning. Model-agnostic by
   construction.
-- **Four commands** (three core + a coordinator), one shared engine, a library of expert lenses
+- **Five commands** (four core + a coordinator), one shared engine, a library of expert lenses
   you can extend, and a 20-agent specialist gallery.
 
 ---
@@ -25,9 +25,10 @@ and asked the agent to push back on you and review the work like a seasoned prof
 | `/sharpen` | a rough task request | a complete, gap-filled, reviewed **prompt** to paste into any agent |
 | `/forge-agent` | a short description of an assistant | a complete, reusable **system prompt** |
 | `/lens` | an existing prompt / page / draft | **findings** from one or more professional lenses |
+| `/grade` | a prompt (or two, to compare) | a **scored verdict** + the fixes that raise it most |
 | `/orchestrate` | a multi-domain request | **one synthesized deliverable** — the gallery, coordinated *(Layer 2)* |
 
-The first three run with zero model calls, paste-anywhere. `/orchestrate` needs a host that can
+The first four run with zero model calls, paste-anywhere. `/orchestrate` needs a host that can
 spawn subagents (Claude Code) — why that split exists is below, after a real run of each.
 
 Every run is **hybrid**: it returns a finished draft immediately, lists the assumptions it
@@ -77,7 +78,7 @@ constraints they forgot to state, the edge cases they didn't think of, the push-
 hear. promptsmith makes that scaffolding explicit, repeatable, and auditable — the two runs above
 are what that looks like end to end, not a claim to take on faith.
 
-The two-layer split is deliberate. Layer 1 (`/sharpen`, `/forge-agent`, `/lens`) stays portable:
+The two-layer split is deliberate. Layer 1 (`/sharpen`, `/forge-agent`, `/lens`, `/grade`) stays portable:
 no API keys, no model calls, works pasted into anything. Layer 2 (`/orchestrate`) coordinates the
 specialist gallery on multi-domain work, catching the cross-slice conflicts no single agent sees
 and escalating real product decisions instead of guessing. Honesty guardrails run through both —
@@ -100,8 +101,9 @@ with evals, logged in `evals/runs/`.
 
 Verify, in order:
 
-1. Type `/promptsmith` and confirm all four autocomplete — `/promptsmith:sharpen`,
-   `/promptsmith:forge-agent`, `/promptsmith:lens`, `/promptsmith:orchestrate`.
+1. Type `/promptsmith` and confirm all five autocomplete — `/promptsmith:sharpen`,
+   `/promptsmith:forge-agent`, `/promptsmith:lens`, `/promptsmith:grade`,
+   `/promptsmith:orchestrate`.
 2. Run `/promptsmith:lens --lens skeptic` on any short paragraph. If it reports running the
    `skeptic` lens, the bundled lens library resolved correctly — that is the check that
    actually proves the install, not the autocomplete.
@@ -112,14 +114,14 @@ Copy four things into your `~/.claude/` directory (Windows: `C:\Users\<you>\.cla
 
 | Copy this | To here | Needed for |
 |---|---|---|
-| `commands/` | `~/.claude/commands/` | the four commands |
+| `commands/` | `~/.claude/commands/` | the five commands |
 | `skills/` | `~/.claude/skills/` | the engine + coordinator |
 | `lenses/` | `~/.claude/promptsmith-lenses/` | the lens pass |
-| `templates/` | `~/.claude/promptsmith-templates/` | `/sharpen` + `/forge-agent` output |
+| `templates/` | `~/.claude/promptsmith-templates/` | `/sharpen`, `/forge-agent`, `/grade` output |
 | `agents/` | `~/.claude/promptsmith-agents/` | gallery seeding + `/orchestrate` routing |
 
-Installed this way the commands are bare — `/sharpen`, `/forge-agent`, `/lens`, `/orchestrate` —
-because standalone commands aren't namespaced.
+Installed this way the commands are bare — `/sharpen`, `/forge-agent`, `/lens`, `/grade`,
+`/orchestrate` — because standalone commands aren't namespaced.
 
 Skip any row and that capability degrades: no `lenses/` and the lens step has nothing to load;
 no `templates/` and the synthesis step has no skeleton; no `agents/` and `/forge-agent` can't
@@ -136,7 +138,7 @@ If you installed as a plugin (Option A):
 
 If you installed manually (Option B), delete what you copied:
 
-- `~/.claude/commands/sharpen.md`, `forge-agent.md`, `lens.md`, `orchestrate.md`
+- `~/.claude/commands/sharpen.md`, `forge-agent.md`, `lens.md`, `grade.md`, `orchestrate.md`
 - `~/.claude/skills/prompt-engineering/` and `~/.claude/skills/orchestration/`
 - `~/.claude/promptsmith-lenses/`, `~/.claude/promptsmith-templates/`,
   `~/.claude/promptsmith-agents/`
@@ -151,7 +153,8 @@ and no state is left behind.
 ## Usage
 
 > **Command names are namespaced.** Installed as a plugin (Option A), the commands are
-> `/promptsmith:sharpen`, `/promptsmith:forge-agent`, and `/promptsmith:lens` — type
+> `/promptsmith:sharpen`, `/promptsmith:forge-agent`, `/promptsmith:lens`,
+> `/promptsmith:grade`, and `/promptsmith:orchestrate` — type
 > `/promptsmith` to autocomplete them. Claude Code namespaces every plugin command to avoid
 > collisions; bare `/sharpen` exists only with the manual/standalone install (Option B).
 > The examples below use the namespaced form.
@@ -200,6 +203,30 @@ fixes by impact. Add `--fix` to get a corrected version in the same run:
 ```
 /promptsmith:lens (paste a component, prompt, or draft) --lens accessibility --fix
 ```
+
+### Grade a prompt
+
+```
+/promptsmith:grade (paste a system prompt)
+```
+
+Returns a **scored verdict** — PASS / WEAK / FAIL — with the nine concerns a complete prompt
+resolves marked ✅/⚠️/❌, an adversarial quality pass, and the 2–3 fixes that raise the score most.
+It grades *coverage, not conformance*: a prompt that resolves a concern in one fluent sentence
+passes, and is never docked for failing to look like promptsmith output.
+
+Then compare versions and catch what you broke:
+
+```
+/promptsmith:grade (paste the revision) --against (paste the original)
+```
+
+Per-dimension deltas, with **regressions called out even when the revision wins overall** — the
+thing a one-shot rewrite hides, and the reason to measure instead of eyeballing.
+
+`/lens` gives you findings. `/grade` gives you a measurement, which is what makes two versions
+comparable. This is the same score → change → re-score → keep-only-what-didn't-regress loop
+promptsmith runs on itself in `evals/`, pointed at your prompts instead.
 
 ---
 
@@ -273,7 +300,7 @@ own, then drop it in `agents/` to grow the roster. Full list + format in
 
 ## How it works (the engine)
 
-All four commands run one method, defined in
+All five commands run one method, defined in
 [`skills/prompt-engineering/SKILL.md`](skills/prompt-engineering/SKILL.md):
 
 1. **Route** — sharpen / forge / lens.
@@ -294,7 +321,7 @@ reasoning. That's what makes it model-agnostic and zero-cost.
 ```
 promptsmith/
   .claude-plugin/      plugin.json + marketplace.json (install metadata)
-  commands/            /sharpen, /forge-agent, /lens, /orchestrate
+  commands/            /sharpen, /forge-agent, /lens, /grade, /orchestrate
   skills/
     prompt-engineering/SKILL.md   Layer 1 engine (sharpen / forge / lens)
     orchestration/SKILL.md        Layer 2 coordinator (orchestrate)

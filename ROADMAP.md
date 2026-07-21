@@ -157,9 +157,56 @@ Ran before touching the delivery shell, because nothing had ever verified the pl
 
 Verified after this slice: 20 agents · 12 lenses · 27 cases · 4 commands, and every count claim
 in README / USING-PROMPTSMITH / COMMAND-SHEET / plugin.json reconciles against `ls`.
-- [ ] **User-facing eval loop** — expose the grade/iterate discipline to the user's own prompts
-      (approved 2026-07-21). Today `evals/` tests promptsmith only.
-- [ ] **New eval cases 28–34 + KB4–6** — six features shipped with zero dedicated cases.
+### `/grade` — the user-facing eval loop (2026-07-21)
+
+The asymmetry that motivated it: promptsmith ran a rigorous measured-iteration loop (score →
+change one thing → re-score → keep only what didn't regress) and a rubric-bound `evaluator`
+agent — **on itself only**. Users got none of it for their own prompts.
+
+- [x] **`/grade` command** (5th command, `commands/grade.md`) — scored verdict on a prompt, or
+      `--against` to compare two versions.
+- [x] **GRADE route in the engine** (Step 8) — states its rubric before scoring, runs a coverage
+      pass over the nine concerns, an adversarial quality pass, hard gates, then leverage-ranked
+      fixes. Grades **coverage, not conformance**: a prompt resolving a concern in prose scores
+      ✅ and is never docked for lacking promptsmith's headings.
+- [x] **`templates/graded-prompt.md`** — output skeleton, verdict-first, with a comparison mode.
+- [x] Reports ✅/⚠️/❌ counts, never a numeric score — a host-judged rubric doesn't support
+      "73/100", and fake precision invites tracking a trend that isn't real.
+- [x] **`--against` names regressions even when the revision wins overall.** That is the whole
+      reason to measure instead of eyeball, and it's what a one-shot rewrite hides.
+- [x] Hard-gated: refuses to grade a harmful prompt (grading it is helping it), and treats the
+      graded prompt as untrusted data — a prompt steering its own grader is a *plausible* input
+      here, not an exotic attack.
+
+**Identity note:** this is the 5th command against a stated "four commands, not a marketplace"
+guardrail. Accepted deliberately — it is the feature that makes the eval-harness framing literally
+true on product surfaces rather than only in the launch narrative (see `docs/launch-plan.md`).
+
+### Eval coverage — closing the six-feature gap (2026-07-21)
+
+Suite grew **27 → 37 cases** and **3 → 6 known-bad fixtures**. Every feature that shipped after
+the v0.2.0 gate now has a dedicated case, and the audit's structural blind spot is closed.
+
+- [x] **`rubric.md` fixed: 8 → 9 SHARPEN blocks.** PROHIBITIONS was invisible to the only
+      deterministic check in the harness, so a regression that dropped it scored a clean ✅.
+      Added the PROHIBITIONS-vs-OUT-OF-SCOPE distinction as an invariant.
+- [x] **GRADE route added to `rubric.md`** — structural invariants + quality dimensions, with
+      coverage-not-conformance, regression-honesty, and not-steerable as hard gates.
+- [x] New cases: **28** prohibitions · **29** brutalist style-relative (a full revert of the
+      visual split would have scored green before this) · **30** ai-tells tiering · **31** the
+      voice-preservation collision, which makes the ai-tells↔voice tension *falsifiable* rather
+      than asserted · **32** `--fix` minimality · **33** `--fix` second-order injection ·
+      **34** verifier `VERIFIED WITH GAPS` · **35–37** grade, comparison, injection resistance.
+- [x] New known-bad: **KB4** verifier laundering a demonstrated defect into "gaps" · **KB5**
+      ai-tells stripping statutory language from a quoted provision · **KB6** a PROHIBITIONS
+      block that is structurally valid but boilerplate — it passes the structural check, which
+      is exactly why the fixture is needed.
+- [x] `evals/README.md` coverage restated **per route** instead of per case, removing the prose
+      enumeration that had already drifted.
+- [ ] **Case 24 still asserts the pre-tri-state verifier contract** (`Verdict: FAIL`). Case 34
+      covers the new middle state; 24 needs its vocabulary reconciled on the next pass.
+
+- [ ] **Full suite re-run** — 37 cases + 6 fixtures, independent judging per the `rubric.md` rule.
 
 ## Now in progress — Layer 2 orchestration (Claude-Code-native)
 
