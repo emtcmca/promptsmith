@@ -50,7 +50,8 @@ the assumptions it made, the push-back worth hearing, and the open questions.
 ```
 /promptsmith:orchestrate add public read-only shareable links to user dashboards
 ```
-What happens (the proven flow — from a live 8-agent run, logged in `evals/runs/`):
+What happens (the proven flow — from a live run of 7 specialists plus 1 independent verifier,
+8 agents in total, logged in `evals/runs/`):
 1. **Sharpens** the request, then **decomposes** it into slices: spec · schema · security · API · UI · tests · docs.
 2. **Routes** each slice to a gallery agent; **gates** for approval (7 agents > the smart threshold).
 3. **Dispatches** them as live subagents in parallel.
@@ -97,16 +98,32 @@ with evals, logged in `evals/runs/`.
 (For local development against a clone, add the working copy instead:
 `/plugin marketplace add C:\Dev\promptsmith`.)
 
-Verify: type `/promptsmith` and confirm `/promptsmith:sharpen`, `/promptsmith:forge-agent`,
-and `/promptsmith:lens` autocomplete.
+Verify, in order:
+
+1. Type `/promptsmith` and confirm all four autocomplete — `/promptsmith:sharpen`,
+   `/promptsmith:forge-agent`, `/promptsmith:lens`, `/promptsmith:orchestrate`.
+2. Run `/promptsmith:lens --lens skeptic` on any short paragraph. If it reports running the
+   `skeptic` lens, the bundled lens library resolved correctly — that is the check that
+   actually proves the install, not the autocomplete.
 
 ### Option B — manual (standalone, bare command names)
 
-Copy `commands/` and `skills/` into your `~/.claude/` directory
-(Windows: `C:\Users\<you>\.claude\`), **and** copy `lenses/` into
-`~/.claude/promptsmith-lenses/` so the lens pass can find them. Installed this way the
-commands are bare — `/sharpen`, `/forge-agent`, `/lens` — because standalone commands
-aren't namespaced. (Skip the lenses copy and the engine's lens step has nothing to load.)
+Copy four things into your `~/.claude/` directory (Windows: `C:\Users\<you>\.claude\`):
+
+| Copy this | To here | Needed for |
+|---|---|---|
+| `commands/` | `~/.claude/commands/` | the four commands |
+| `skills/` | `~/.claude/skills/` | the engine + coordinator |
+| `lenses/` | `~/.claude/promptsmith-lenses/` | the lens pass |
+| `templates/` | `~/.claude/promptsmith-templates/` | `/sharpen` + `/forge-agent` output |
+| `agents/` | `~/.claude/promptsmith-agents/` | gallery seeding + `/orchestrate` routing |
+
+Installed this way the commands are bare — `/sharpen`, `/forge-agent`, `/lens`, `/orchestrate` —
+because standalone commands aren't namespaced.
+
+Skip any row and that capability degrades: no `lenses/` and the lens step has nothing to load;
+no `templates/` and the synthesis step has no skeleton; no `agents/` and `/forge-agent` can't
+seed from the gallery while `/orchestrate` has no roster to route to.
 
 ### Uninstall
 
@@ -121,9 +138,13 @@ If you installed manually (Option B), delete what you copied:
 
 - `~/.claude/commands/sharpen.md`, `forge-agent.md`, `lens.md`, `orchestrate.md`
 - `~/.claude/skills/prompt-engineering/` and `~/.claude/skills/orchestration/`
-- `~/.claude/promptsmith-lenses/`
+- `~/.claude/promptsmith-lenses/`, `~/.claude/promptsmith-templates/`,
+  `~/.claude/promptsmith-agents/`
 
-That's the full footprint — promptsmith writes nothing else and leaves no state behind.
+That's the full footprint. promptsmith writes exactly one file on its own, and only after asking:
+`~/.claude/promptsmith-coverage-gaps.md`, the log `/orchestrate` appends to when a request slice
+falls outside every agent's purview. Delete it too if you created one. Nothing else is written
+and no state is left behind.
 
 ---
 
@@ -184,7 +205,7 @@ fixes by impact. Add `--fix` to get a corrected version in the same run:
 
 ## Expert lenses
 
-A lens is a professional's checklist in a markdown file. Built-in lenses:
+A lens is a professional's checklist in a markdown file. The 12 built-in lenses:
 
 | Lens | Applies to |
 |---|---|
@@ -245,14 +266,14 @@ checks this gallery first and **adapts** a close match instead of starting cold.
 own, then drop it in `agents/` to grow the roster. Full list + format in
 [`docs/agent-gallery.md`](docs/agent-gallery.md).
 
-> **Roadmap:** the gallery is also the foundation for a planned **orchestration layer** —
-> promptsmith as a coordinator that sharpens a prompt, dispatches the right specialists, and
-> assembles their work. That layer is Claude-Code-native; the core plugin stays zero-call and
-> paste-anywhere. See [`ROADMAP.md`](ROADMAP.md).
+> The gallery is also the dispatch roster for the **orchestration layer** (`/orchestrate`,
+> shipped — see the live run above): promptsmith as a coordinator that sharpens a prompt,
+> dispatches the right specialists, and assembles their work. That layer is Claude-Code-native;
+> the core three commands stay zero-call and paste-anywhere. See [`ROADMAP.md`](ROADMAP.md).
 
 ## How it works (the engine)
 
-All three commands run one method, defined in
+All four commands run one method, defined in
 [`skills/prompt-engineering/SKILL.md`](skills/prompt-engineering/SKILL.md):
 
 1. **Route** — sharpen / forge / lens.
@@ -273,16 +294,16 @@ reasoning. That's what makes it model-agnostic and zero-cost.
 ```
 promptsmith/
   .claude-plugin/      plugin.json + marketplace.json (install metadata)
-  commands/            /sharpen, /forge-agent, /lens
+  commands/            /sharpen, /forge-agent, /lens, /orchestrate
   skills/
     prompt-engineering/SKILL.md   Layer 1 engine (sharpen / forge / lens)
     orchestration/SKILL.md        Layer 2 coordinator (orchestrate)
-  lenses/              built-in expert lenses
-  agents/              pre-forged specialist system prompts (the gallery / dispatch roster)
-                       + coverage-gaps.md (slices no agent covers yet)
+  lenses/              12 built-in expert lenses
+  agents/              the 20-agent gallery / dispatch roster — agent files only
   templates/           output skeletons for sharpen + forge
   evals/               host-judged eval harness (rubric, runner, cases, runs)
-  docs/                test-run records, README assets
+  docs/                guides, agent-gallery.md (roster index), coverage-gaps.md,
+                       test-run records, README assets
 ```
 
 ---

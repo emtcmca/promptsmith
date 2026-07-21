@@ -132,13 +132,31 @@ Ran before touching the delivery shell, because nothing had ever verified the pl
         written to, and `${CLAUDE_PLUGIN_ROOT}` is a cache wiped on update. Now asks before
         creating, consistent with the stateless identity.
 
-Held for their own slices:
-- [ ] **Delivery shell, part 2 — cosmetic:** track the hero GIF; Option B must include `templates/`
-      and `agents/`; `plugin.json` advertises `/lens-review` (command is `/lens`); doc drift (lens
-      count 11→12, "three commands"→four, `/orchestrate` marketed as "planned" 200 lines after its
-      live run, `USING-PROMPTSMITH.md` still teaching the round-trip `--fix` deleted).
-- [ ] **`voice:` missing from frontmatter** on `api-reviewer`, `copy-rewrite`, `feature-spec`
-      (present in their bodies) — breaks roster machine-readability.
+- [x] **Delivery shell, part 2 — docs + metadata:**
+  - [x] Hero GIF tracked (`docs/assets/`) — the README referenced it while it was untracked, so
+        the image was broken on GitHub.
+  - [x] Option B rewritten as a 5-row table including `templates/` and `agents/`, each with what
+        breaks if you skip it. It previously omitted both, then claimed "that's the full
+        footprint."
+  - [x] Install verification now includes an actual functional check (`--lens skeptic` must
+        report running), not just command autocomplete — autocomplete would have passed on every
+        broken install described above.
+  - [x] `plugin.json` advertised `/lens-review`; the command is `/lens`. That string renders in
+        marketplace listings. Also added "Eval-backed."
+  - [x] Doc drift: lens count 11 → 12 (`ai-tells` was missing from both guides), "all three
+        commands" → four, repo layout omitted `/orchestrate`, `/orchestrate` was marketed as
+        "planned" 200 lines after its own live run, and `USING-PROMPTSMITH.md` +
+        `COMMAND-SHEET.md` still taught the manual round-trip that `--fix` deleted.
+  - [x] Uninstall footprint now names the one file promptsmith can write
+        (`~/.claude/promptsmith-coverage-gaps.md`) rather than claiming it writes nothing.
+  - [x] `voice:` added to frontmatter on `api-reviewer`, `copy-rewrite`, `feature-spec` (it was
+        only in their bodies). All 20 agents now carry name/description/role/voice/lenses.
+  - [x] README's "8-agent run" reworded to "7 specialists plus 1 independent verifier, 8 in
+        total" — the claim was accurate against the run file but read as contradicting its own
+        evidence filename, which is the first thing a skeptic checks.
+
+Verified after this slice: 20 agents · 12 lenses · 27 cases · 4 commands, and every count claim
+in README / USING-PROMPTSMITH / COMMAND-SHEET / plugin.json reconciles against `ls`.
 - [ ] **User-facing eval loop** — expose the grade/iterate discipline to the user's own prompts
       (approved 2026-07-21). Today `evals/` tests promptsmith only.
 - [ ] **New eval cases 28–34 + KB4–6** — six features shipped with zero dedicated cases.

@@ -63,19 +63,23 @@ states what it adapted from.
 
 ### `/promptsmith:lens <artifact> [--lens a,b]`
 Reviews an existing prompt/page/component/draft through expert lenses and returns findings
-(✅ checked / ⚠️ weak / ❌ failing), worst-first, with the top-3 fixes. It critiques; it does
-not rewrite. To get a corrected version, feed the findings into `/sharpen`.
+(✅ checked / ⚠️ weak / ❌ failing), worst-first, with the top-3 fixes. By default it critiques
+and does not rewrite. Add `--fix` and it emits a corrected version of the artifact in its own
+form — prose stays prose, code stays code, a prompt comes back sharpened — making the minimal
+targeted change that resolves each finding.
 ```
 /promptsmith:lens (paste a React component) --lens accessibility,visual-design
+/promptsmith:lens (paste a React component) --lens accessibility --fix
 ```
 
 ---
 
 ## 4. Lenses
 
-A lens is a professional's checklist in a markdown file. Built-in: `visual-design`,
+A lens is a professional's checklist in a markdown file. The 12 built-ins: `visual-design`,
 `ux-designer`, `accessibility`, `security-reviewer`, `performance`, `api-design`,
-`data-integrity`, `seo`, `product-strategist`, `editorial`, `skeptic` (applied by default).
+`data-integrity`, `seo`, `product-strategist`, `editorial`, `ai-tells`, `skeptic` (applied by
+default).
 
 **Add your own** (no fork): drop a markdown file with `name:` + `applies-to:` frontmatter into
 `~/.claude/promptsmith-lenses/` (everywhere) or `./.promptsmith-lenses/` (one project). It's

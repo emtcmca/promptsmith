@@ -29,6 +29,7 @@ Critique only → `lens`. Several domains, one coherent result → `orchestrate`
 |---|---|---|
 | `--lens a,b` | sharpen, forge-agent, lens | force specific lenses (else auto-picked by topic) |
 | `--deep` | sharpen, forge-agent | interview one question at a time instead of assuming |
+| `--fix` | lens | also emit a corrected version of the artifact, not findings alone |
 | `--dry` | orchestrate | show decomposition + routing, don't dispatch |
 | `--gate` | orchestrate | always pause for approval before fan-out |
 | `--no-gate` | orchestrate | run autonomously through synthesis |
@@ -37,7 +38,8 @@ Critique only → `lens`. Several domains, one coherent result → `orchestrate`
 ## Lenses (auto-selected by topic, or force with `--lens`)
 
 `visual-design` · `ux-designer` · `accessibility` · `security-reviewer` · `performance` ·
-`api-design` · `data-integrity` · `seo` · `product-strategist` · `editorial` · `skeptic` (default)
+`api-design` · `data-integrity` · `seo` · `product-strategist` · `editorial` · `ai-tells` ·
+`skeptic` (default) — 12 built-in
 
 **Add your own:** a markdown file with `name:` + `applies-to:` frontmatter in
 `~/.claude/promptsmith-lenses/` (global) or `./.promptsmith-lenses/` (project). Auto-loaded.
@@ -60,9 +62,8 @@ Files live in `agents/`. Forge a new one with `/forge-agent` and drop it in to g
 # Forge a specialist (seeds from the gallery if a match exists)
 /promptsmith:forge-agent a reviewer that critiques API endpoints for security holes
 
-# Review a component, then get the fix
-/promptsmith:lens (paste code) --lens accessibility,visual-design
-# → then feed the findings into /promptsmith:sharpen
+# Review a component, then get the fix — one step
+/promptsmith:lens (paste code) --lens accessibility,visual-design --fix
 
 # Inspect an orchestration plan without spending fan-out
 /promptsmith:orchestrate build a password reset flow --dry

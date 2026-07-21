@@ -55,7 +55,7 @@ the audits are folded in as steps 2–3 because fixing files after an eval run i
 1. clean-install smoke test   ← gates everything                     ✅ done 2026-07-21
 2. delivery shell
    2a. functional  (paths, agent descriptions, phantom agents)       ✅ done 2026-07-21
-   2b. cosmetic    (GIF, Option B, plugin.json, doc drift)
+   2b. docs + metadata (GIF, Option B, plugin.json, doc drift)       ✅ done 2026-07-21
 3. security findings          (3 HIGH, 5 MED)                        ✅ done 2026-07-21
 4. user-facing eval loop      (the grade/iterate loop, for the user's prompts)
 5. new eval cases             (28–34, KB4–6, incl. cases for step 4)
@@ -73,10 +73,12 @@ Step 1 runs first because items in step 2 are unknowable without it: if `lenses/
 genuinely don't resolve at runtime, that is an architecture fix, not a doc edit. Step 7 repeats it
 because every step in between touches files the installer copies.
 
-- [ ] **Commit the README restructure + demo GIF.** Currently uncommitted. The GIF is the single
-      highest-leverage asset — most visitors decide in 5 seconds, above the fold.
-- [ ] **Re-run the full 27-case eval suite.** ROADMAP already states this is the release gate.
-      Six features landed since the last full run; that scorecard is stale.
+- [x] **Commit the README restructure + demo GIF.** The GIF is the single highest-leverage asset
+      — most visitors decide in 5 seconds, above the fold. It was referenced by the README while
+      untracked, so the hero image was broken on GitHub the whole time.
+- [ ] **Re-run the full eval suite.** ROADMAP already states this is the release gate. Six
+      features landed since the last full run, plus everything fixed in the adversarial pass;
+      that scorecard is stale. Runs *after* the new cases land (step 5), not before.
 - [ ] **Cut `v0.3.0`** — bump `plugin.json`, tag, and publish a **GitHub Release** with real
       notes. An empty Releases tab reads as abandoned. The release body is also the thing
       awesome-list maintainers skim.
@@ -85,7 +87,8 @@ because every step in between touches files the installer copies.
         `agent-orchestration`, `llm`, `anthropic`, `context-engineering`, `subagents`
       - Description: add `/orchestrate` (current one predates Layer 2)
       - Homepage URL: point at the README anchor or erictetzlaff.com
-- [ ] **Reconcile counts** across README / COMMAND-SHEET / plugin.json — lens count changed
+- [x] **Reconcile counts** — done 2026-07-21 and verified against `ls`: 20 agents · 12 lenses ·
+      27 cases · 4 commands. (Superseded note follows.) Original entry: lens count changed
       (12 now) and drifted counts are exactly what a reviewer catches first.
 
 ---
