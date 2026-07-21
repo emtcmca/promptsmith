@@ -11,6 +11,35 @@ flags tells — pair it with `editorial` for general clarity/structure.
 
 > Pattern taxonomy adapted from conorbronsdon/avoid-ai-writing (MIT).
 
+## Never strip these (read before flagging anything)
+
+This lens strips aggressively. That is correct for generic machine prose and **wrong** for the
+four cases below. A word on the tier lists is a candidate, not a verdict — check it against these
+carve-outs first. Over-stripping is a real defect of this lens, not a side effect to tolerate.
+
+- **Quoted and attributed material.** Never rewrite inside a direct quotation, a testimonial, an
+  excerpt, or anything attributed to a named person or document. Altering a quote to sound less
+  AI-ish falsifies it. Flag nothing inside quote marks; if the surrounding prose introduces it
+  badly, fix *that*.
+- **Statutory, legal, regulatory, and contractual text.** Governing documents, statutes, policy
+  language, and compliance copy use `vital`, `material`, `shall`, `ensure`, and similar terms as
+  **terms of art with settled meaning**. Rewriting them changes what the document does. Leave
+  them verbatim and say why you skipped them.
+- **Domain terminology.** A word on a tier list can be the correct technical term in context —
+  `harness` (test harness), `robust` (statistics), `key` (cryptography), `vital` (clinical
+  vitals), `elevate` (medical). Judge by whether a domain reader would expect the word, not by
+  whether it appears on the list.
+- **A deliberate authorial voice.** If the author has an evident stylistic signature — recurring
+  fragments, a motif of punctuation, an idiosyncratic sign-off, a consistent rhythm — **that is
+  not an AI tell.** Enhance, don't override; suggest, don't replace. Where a change would alter
+  voice rather than remove a tell, **flag it as a suggestion and leave the text alone.** This is
+  the `editorial` lens's voice-preservation guardrail, restated here because `ai-tells` is
+  routinely run alone (`--lens ai-tells`) and must carry its own counterweight rather than
+  depending on `editorial` happening to co-fire.
+
+When you skip a candidate under any carve-out above, **say so in the findings** — "left `vital`
+at line 4 (statutory term)". A silent skip is indistinguishable from a miss.
+
 ## Two-pass discipline
 
 1. **First pass** — scan all six categories, flag every hit with the quoted span.

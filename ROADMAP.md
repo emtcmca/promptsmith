@@ -56,8 +56,57 @@ Pre-public-promotion hardening pass:
       public release) — it diluted the prompt-engineering narrative. Public gallery: **20 agents**.
 - [x] **Reconciled all doc counts** that had drifted (16/17/22/15 → 20 agents; 21/24 → 27 cases);
       bumped `plugin.json` to 0.2.0 with a fuller description.
-- [ ] **Full-suite eval run (all 27 cases)** with independent judging on the high-stakes routes —
-      the release gate before tagging `v0.2.0` and promoting. Last logged run covered only case 24.
+- [x] **Full-suite eval run (all 27 cases)** with independent judging on the high-stakes routes —
+      the release gate before tagging `v0.2.0`. Logged:
+      `evals/runs/2026-06-25-2039-full-suite-v0.2.0-release-gate.md` (26 PASS / 1 WEAK / 0 FAIL).
+      **That scorecard is now stale** — six features merged after it (see below).
+
+### Pre-launch adversarial pass (2026-07-21)
+
+Three parallel audits — eval coverage, adversarial security, feature/doc drift — run before any
+public promotion. The launch pitch is verifiable rigor, so the claim has to survive an audit by
+someone hostile. It mostly did; three defects were the same shape and that shape is the lesson.
+
+**The pattern worth remembering: three separate documents asserted a defense the files did not
+implement.** Not sloppiness — drift. A roster that grows fast outruns its own invariants.
+
+- [x] **Slice outputs declared untrusted** in the coordinator (`skills/orchestration/SKILL.md`
+      Step 7 + Guardrails). `SECURITY.md:16` named subagent output as a threat source; only the
+      *request* had a boundary. A slice may now never self-certify Step 6.5 or 7.5.
+- [x] **Instruction/data boundary added to all 20 gallery agents.** The engine had the clause;
+      agents never inherited it, and orchestration Step 6 dispatches the agent body *without* the
+      engine. `agents/README.md:6` also invites pasting bodies into external hosts where the
+      engine never loads. `verifier.md:42` was instructed to catch this failure in others while
+      unprotected against it itself.
+- [x] **Lens shadowing closed in `commands/lens.md`.** `SECURITY.md:26-28` claimed project-local
+      lenses could not shadow `security-reviewer`; the engine implemented it, the command that
+      actually resolves lenses did not, and the two disagreed in the same run.
+- [x] **Intent gate extended to `--fix`.** `--fix` turned `/lens` from critic into producer
+      without inheriting the gate — it would have improved a credential-harvesting page.
+- [x] **Second-order injection broadened** beyond text that addressed the reviewer, to payloads
+      aimed at the *next* model to consume the artifact.
+- [x] **Approval-gate risk test made non-inferential** — content-derived thresholds let content
+      lower the bar.
+- [x] **`research-synthesizer` supplied-citation clause added.** `SECURITY.md:37-39` listed it as
+      a supplied-facts defender; the clause was absent.
+- [x] **Independent-judge list replaced with a rule** (`rubric.md`, `runner.md`) — the enumeration
+      predated cases 22–27, so the intent-refusal, injection, and compliance-reviewer cases were
+      self-grading, which `runner.md` itself calls "not a valid result."
+- [x] **`ai-tells` voice counterweight + carve-outs.** Commit `208e2f8` claimed to resolve the
+      ai-tells ↔ voice-preservation tension; it never touched `lenses/ai-tells.md`. `--lens
+      ai-tells` alone ran the stripping lens with no counterweight, and had no carve-out for
+      quotations, statutory terms of art, or domain terminology.
+
+Held for their own slices:
+- [ ] **Delivery shell** — `${CLAUDE_PLUGIN_ROOT}` appears zero times; `lenses/`, `templates/`,
+      and `agents/` have no resolvable address at runtime. Untracked hero GIF. Two non-agents
+      (`README.md`, `coverage-gaps.md`) loaded as invokable agents. Option B omits `templates/`
+      and `agents/`. Doc drift (lens count, `/lens-review`, "planned" orchestration).
+- [ ] **Clean-install smoke test** — nothing verifies the plugin works as installed from an empty
+      directory. Gates the delivery-shell work: if paths don't resolve, that fix is not doc edits.
+- [ ] **User-facing eval loop** — expose the grade/iterate discipline to the user's own prompts
+      (approved 2026-07-21). Today `evals/` tests promptsmith only.
+- [ ] **New eval cases 28–34 + KB4–6** — six features shipped with zero dedicated cases.
 
 ## Now in progress — Layer 2 orchestration (Claude-Code-native)
 
