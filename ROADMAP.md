@@ -227,13 +227,17 @@ to remove. Fixed by extracting all 37 inputs to standalone files and passing the
 prohibition on reading anything under `evals/`.
 
 **New findings from the run:**
-- [ ] **`commands/lens.md` Step 6 minimality is under-specified.** Case 32's blind run added an
-      unfindinged `borderRadius` and restructured more than "minimal targeted change" implies —
-      while its *contaminated* run of the same case was more minimal, because it had read the
-      must-not list. The rule belongs in the command text, not in the case file.
-- [ ] **`lenses/ai-tells.md` and `commands/lens.md` conflict on rewrite-by-default.** The lens
-      mandates "produce the cleaned version" as step 2 of its two-pass discipline; the command
-      gates rewriting behind `--fix`, and cases 05/06 assert "Must not: rewrite." Spec bug.
+- [x] **`commands/lens.md` Step 6 minimality under-specified — FIXED.** The rule now lives in the
+      command text as a mechanical test ("every change must trace to a finding you stated in
+      Step 4; walk your diff and name the finding each change answers"), with the two honest
+      escape hatches — add it as a finding first, or surface it as an unfixed observation — and a
+      requirement that the change-summary name a finding per change. No longer relies on the eval
+      case to carry the constraint.
+- [x] **`lenses/ai-tells.md` ↔ `commands/lens.md` rewrite-by-default conflict — FIXED.** The lens
+      no longer mandates emitting a rewrite; its two-pass discipline runs as internal validation,
+      and a new "What gets emitted depends on the invoking route — this lens never decides that
+      for itself" block defers to the command: findings-only by default, corrected artifact under
+      `--fix`, folded-in requirements on SHARPEN/FORGE.
 - [x] **Case 36's fixture was miscalibrated** — B dropped both safety rules while gaining only
       formatting, so a correct producer judged A stronger and the case never exercised
       "regression beneath a win." Rebalanced; calibration note in the case file. The fixture was

@@ -43,9 +43,21 @@ at line 4 (statutory term)". A silent skip is indistinguishable from a miss.
 ## Two-pass discipline
 
 1. **First pass** — scan all six categories, flag every hit with the quoted span.
-2. **Rewrite** — produce the cleaned version.
-3. **Second pass** — re-scan the rewrite; AI tells survive edits and breed new ones. Don't declare
-   done until a clean pass finds nothing new.
+2. **Draft the replacements** — for each hit, work out the plain-language replacement.
+3. **Second pass** — re-scan those replacements in context; AI tells survive edits and breed new
+   ones, so a fix that introduces a fresh tell is not a fix. Don't declare done until a clean pass
+   finds nothing new.
+
+**What gets emitted depends on the invoking route — this lens never decides that for itself.**
+
+- **LENS without `--fix` (the default):** findings only, each with its proposed replacement
+  quoted inline. Run steps 2–3 as *internal* work to validate the replacements you propose.
+  **Do not emit a rewritten artifact** — the command's default contract is critique, not rewrite,
+  and a lens may not override it.
+- **LENS with `--fix`:** emit the corrected artifact as the deliverable, followed by the
+  second-pass result in both directions (see `commands/lens.md` Step 6).
+- **SHARPEN / FORGE:** fold the findings in as prohibitions/requirements in the emitted prompt.
+  Nothing is rewritten.
 
 ## Tiered vocabulary
 
@@ -97,6 +109,9 @@ at line 4 (statutory term)". A silent skip is indistinguishable from a miss.
 
 ## Output
 
-Report findings worst-first (P0 placeholders/self-reference → P1 vocabulary/template phrases →
-P2 rhythm/structure), then the rewritten text, then the second-pass result. For a SHARPEN/FORGE
-run, fold these as prohibitions/requirements into the emitted prompt instead of rewriting.
+Report findings worst-first: P0 placeholders/self-reference → P1 vocabulary/template phrases →
+P2 rhythm/structure. Quote the offending span on every finding and give its replacement.
+
+Then follow the invoking route, per "What gets emitted" above — findings only by default, the
+corrected artifact plus the second-pass result under `--fix`, and folded-in requirements on a
+SHARPEN/FORGE run. When you skip a candidate under a carve-out, say so in the findings.
