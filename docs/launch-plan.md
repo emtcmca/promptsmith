@@ -70,9 +70,20 @@ the audits are folded in as steps 2–3 because fixing files after an eval run i
 3. security findings          (3 HIGH, 5 MED)                        ✅ done 2026-07-21
 4. user-facing eval loop      (/grade)                               ✅ done 2026-07-21
 5. new eval cases             (27→37 cases, 3→6 fixtures)            ✅ done 2026-07-21
-6. full suite re-run          → v0.3.0 → promote
+6. full suite re-run          → v0.3.0 → promote          ⚠️ partial — see below
 7. clean-install re-verify    ← same test as step 1, after everything lands
 ```
+
+**Step 6 is not done.** The 2026-07-21 run cleared the calibration set (3/3 known-bad correctly
+failed) and the blind security case, but a methodology defect made most of the new-case evidence
+provisional, and cases 01–27 have not run at all. Do not tag v0.3.0 or open a single awesome-list
+PR until the suite is genuinely green — the entire launch pitch is "I can prove it works," and
+promoting on a partial scorecard would be the one failure the positioning cannot survive.
+
+Worth keeping for the article: the harness's first real outing caught a defect in its own fixture
+and a defect in its own methodology *before* it caught anything in the product, and two subagents
+reported their own contamination unprompted. That is what a working eval loop looks like from the
+inside, and it is a better story than a clean green run.
 
 **What step 1 changed about the plan.** The smoke test found a defect neither audit caught: all 20
 gallery agents lacked a `description`, the one frontmatter field a host uses to auto-select an

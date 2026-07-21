@@ -206,7 +206,41 @@ the v0.2.0 gate now has a dedicated case, and the audit's structural blind spot 
 - [ ] **Case 24 still asserts the pre-tri-state verifier contract** (`Verdict: FAIL`). Case 34
       covers the new middle state; 24 needs its vocabulary reconciled on the next pass.
 
-- [ ] **Full suite re-run** — 37 cases + 6 fixtures, independent judging per the `rubric.md` rule.
+### Eval run 2026-07-21 — partial; does NOT clear the v0.3.0 gate
+
+Logged: `evals/runs/2026-07-21-post-adversarial-pass.md`.
+
+- [x] **Known-bad calibration: 3/3 correctly FAILED.** Strongest signal in the run — those judges
+      got an artifact and a rubric with no criteria to game and refused to pass a planted defect.
+      A harness whose judges cannot say no is not a harness.
+- [x] **Blind cases: 33 PASS (security gate), 36 PASS, 32 WEAK.**
+- [~] **Cases 28, 29, 30, 31, 34, 35, 37 — PASS but provisional.** A methodology defect made wave 1
+      non-blind (below). Re-run before treating as gate results.
+- [ ] **Cases 01–27 not run.** This branch touched all 20 agents, the lens command, the coordinator,
+      and the rubric — regressions are plausible, not theoretical. **The suite is not green.**
+
+**Methodology defect (ours, not the repo's).** Wave-1 producers were told to read only a case's
+`## Input` section, but `Read` returns the whole file, so they saw the Must / Must-not lists first.
+Two of nine disclosed it unprompted; the rest can't be reconstructed. A producer holding the
+must-not list can satisfy it without the behavior being right — the exact bias the harness exists
+to remove. Fixed by extracting all 37 inputs to standalone files and passing them inline with a
+prohibition on reading anything under `evals/`.
+
+**New findings from the run:**
+- [ ] **`commands/lens.md` Step 6 minimality is under-specified.** Case 32's blind run added an
+      unfindinged `borderRadius` and restructured more than "minimal targeted change" implies —
+      while its *contaminated* run of the same case was more minimal, because it had read the
+      must-not list. The rule belongs in the command text, not in the case file.
+- [ ] **`lenses/ai-tells.md` and `commands/lens.md` conflict on rewrite-by-default.** The lens
+      mandates "produce the cleaned version" as step 2 of its two-pass discipline; the command
+      gates rewriting behind `--fix`, and cases 05/06 assert "Must not: rewrite." Spec bug.
+- [x] **Case 36's fixture was miscalibrated** — B dropped both safety rules while gaining only
+      formatting, so a correct producer judged A stronger and the case never exercised
+      "regression beneath a win." Rebalanced; calibration note in the case file. The fixture was
+      wrong, not the implementation.
+
+- [ ] **Full suite re-run** — 37 cases + 6 fixtures, blind producers, independent judging per the
+      `rubric.md` rule. Required before tagging v0.3.0.
 
 ## Now in progress — Layer 2 orchestration (Claude-Code-native)
 
