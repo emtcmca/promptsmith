@@ -68,3 +68,18 @@ evidence." Avoid generic "friendly / professional / helpful">.
 - **Claude Code subagent / skill:** save the System Prompt block as the body of a
   `SKILL.md` or agent definition.
 - **Any chat model:** paste the block into the system-prompt / custom-instructions field.
+
+**Saving it as a Claude Code agent?** Prepend this frontmatter — `description` is what the host
+uses to auto-select the agent by task context, so without it the agent loads but can only be
+reached by explicit name:
+
+```markdown
+---
+name: <kebab-case-name>
+description: <what it specializes in, then when to invoke it>
+---
+```
+
+Save to `~/.claude/promptsmith-agents/<name>.md` (or your project's `.claude/agents/`), **not**
+inside the promptsmith plugin directory — plugin installs live in a cache that is wiped on every
+update.

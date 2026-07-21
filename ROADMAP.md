@@ -97,13 +97,48 @@ implement.** Not sloppiness — drift. A roster that grows fast outruns its own 
       ai-tells` alone ran the stripping lens with no counterweight, and had no carve-out for
       quotations, statutory terms of art, or domain terminology.
 
+### Clean-install smoke test (2026-07-21)
+
+Ran before touching the delivery shell, because nothing had ever verified the plugin works as
+*installed* rather than as a repo. Findings:
+
+- **Root cause of the blind spot:** `known_marketplaces.json` had promptsmith registered as
+  `source: directory → C:\Dev\promptsmith`. Every run in the project's history had cwd == plugin
+  root, so every bare relative path resolved by coincidence. A dev-loop install is structurally
+  incapable of surfacing this class of bug.
+- **Packaging is fine** — a fresh GitHub clone carries all 22 agent files, both templates, and all
+  12 lenses. (The 0.1.0 plugin cache missing `agents/` was a stale artifact: it was built 38
+  minutes *before* the gallery was first committed at `94cb9cb`. Not a packaging defect.)
+- **15 bare relative paths** across 4 commands + 2 skills resolved against the user's cwd. From a
+  clean project directory all six probe paths missed.
+- **`${CLAUDE_PLUGIN_ROOT}` is the supported fix** — the plugins reference lists "Skill and agent
+  content / Anywhere the placeholder appears." Verified against the doc directly after a subagent
+  gave contradictory guidance on it.
+
+- [x] **Delivery shell, part 1 — functional breaks:**
+  - [x] All 15 references now use `${CLAUDE_PLUGIN_ROOT}`, each with the standalone (Option B)
+        fallback path stated alongside it.
+  - [x] **`description:` added to all 20 gallery agents.** They shipped with `name`/`role`/`voice`/
+        `lenses`, of which the host only recognizes `name` — so all 20 rendered as the identical
+        label "Agent from promptsmith plugin" and **could not be auto-selected by task context**.
+        The marquee feature was reachable only by explicit name. `role`/`voice`/`lenses` retained
+        for paste-anywhere use. Template, `/forge-agent`, and the gallery format spec updated so
+        newly forged agents carry one.
+  - [x] **Phantom agents removed** — `agents/README.md` → `docs/agent-gallery.md`,
+        `agents/coverage-gaps.md` → `docs/coverage-gaps.md`. Both lacked frontmatter yet loaded as
+        invokable agents (`promptsmith:README`, `promptsmith:coverage-gaps`), confirmed in a live
+        session roster. `agents/` now holds 20 files, all real agents.
+  - [x] **Coverage-gap log redirected** to `~/.claude/promptsmith-coverage-gaps.md` — it is
+        written to, and `${CLAUDE_PLUGIN_ROOT}` is a cache wiped on update. Now asks before
+        creating, consistent with the stateless identity.
+
 Held for their own slices:
-- [ ] **Delivery shell** — `${CLAUDE_PLUGIN_ROOT}` appears zero times; `lenses/`, `templates/`,
-      and `agents/` have no resolvable address at runtime. Untracked hero GIF. Two non-agents
-      (`README.md`, `coverage-gaps.md`) loaded as invokable agents. Option B omits `templates/`
-      and `agents/`. Doc drift (lens count, `/lens-review`, "planned" orchestration).
-- [ ] **Clean-install smoke test** — nothing verifies the plugin works as installed from an empty
-      directory. Gates the delivery-shell work: if paths don't resolve, that fix is not doc edits.
+- [ ] **Delivery shell, part 2 — cosmetic:** track the hero GIF; Option B must include `templates/`
+      and `agents/`; `plugin.json` advertises `/lens-review` (command is `/lens`); doc drift (lens
+      count 11→12, "three commands"→four, `/orchestrate` marketed as "planned" 200 lines after its
+      live run, `USING-PROMPTSMITH.md` still teaching the round-trip `--fix` deleted).
+- [ ] **`voice:` missing from frontmatter** on `api-reviewer`, `copy-rewrite`, `feature-spec`
+      (present in their bodies) — breaks roster machine-readability.
 - [ ] **User-facing eval loop** — expose the grade/iterate discipline to the user's own prompts
       (approved 2026-07-21). Today `evals/` tests promptsmith only.
 - [ ] **New eval cases 28–34 + KB4–6** — six features shipped with zero dedicated cases.
@@ -112,13 +147,13 @@ Held for their own slices:
 
 **Status (2026-06-25):** coordinator v0 built on branch `feat/layer2-orchestration` —
 `skills/orchestration/SKILL.md` (the pipeline) + `commands/orchestrate.md` (the `/orchestrate`
-command) + `agents/coverage-gaps.md` (the gap log). The pipeline encodes gate → sharpen →
+command) + `docs/coverage-gaps.md` (the gap log). The pipeline encodes gate → sharpen →
 decompose → route → seams/conflicts → approval gate → dispatch (subagents) → assemble/curate →
 report. **Not yet merged** (awaits review). Open mechanism decisions remain (below). Acceptance
 target is eval case 17.
 
 - [x] Coordinator pipeline (decompose / route / seams / synthesize) specified as runnable protocol.
-- [x] Coverage-gap detection + log (`agents/coverage-gaps.md`) feeding `/forge-agent`.
+- [x] Coverage-gap detection + log (now `~/.claude/promptsmith-coverage-gaps.md`) feeding `/forge-agent`.
 - [x] Approval gate before fan-out (default ON; `--no-gate` to waive); `--dry` to inspect routing.
 - [x] First live multi-agent run: case 17 PASS via real 4-agent dispatch; guardrail cases 18
   (overkill-fallback) + 19 (coverage-gap) PASS; D6 applied (catch agent-emergent conflicts).
@@ -184,7 +219,7 @@ conflict-resolution, single-voice synthesis, domain completeness.
 
 Resolved (2026-06-25):
 - Host mechanism → **subagents** (Agent/Task); Workflow revisited only if fan-out outgrows it.
-- Specialist selection → **roster/lens match** against `agents/README.md`.
+- Specialist selection → **roster/lens match** against `docs/agent-gallery.md`.
 - Approval point → **smart-threshold gate** before fan-out (Step 5).
 - Conflict handling → coordinator **resolves within authority, escalates product/risk calls** (D6).
 

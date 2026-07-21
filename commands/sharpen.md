@@ -9,8 +9,14 @@ output is plain text you can paste into any agent or chat.
 
 ## Step 1 — Load the engine
 
-Read `skills/prompt-engineering/SKILL.md` (in this plugin) in full. It defines the
+Read `${CLAUDE_PLUGIN_ROOT}/skills/prompt-engineering/SKILL.md` in full. It defines the
 pipeline. This command runs that pipeline on the **SHARPEN** path.
+
+> **Paths.** `${CLAUDE_PLUGIN_ROOT}` is this plugin's install directory, substituted
+> automatically — never a literal folder in the user's project. If promptsmith was installed
+> standalone (README Option B, no plugin root), read from `~/.claude/` instead:
+> `~/.claude/skills/…`, `~/.claude/promptsmith-templates/`, `~/.claude/promptsmith-lenses/`,
+> `~/.claude/promptsmith-agents/`. Never resolve these against the user's working directory.
 
 ## Step 2 — Parse arguments
 
@@ -29,7 +35,7 @@ Execute engine Steps 2–7 with route = SHARPEN:
 2. Gap-fill with labeled assumptions (unless `--deep`, then ask).
 3. Red-team the request; turn findings into guardrails.
 4. Load and apply the selected lenses (built-in + user dirs).
-5. Synthesize using `templates/sharpened-prompt.md`.
+5. Synthesize using `${CLAUDE_PLUGIN_ROOT}/templates/sharpened-prompt.md`.
 
 ## Step 4 — Output
 

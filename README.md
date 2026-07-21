@@ -2,6 +2,8 @@
 
 **Prompt & context engineering for agents — as a Claude Code plugin.**
 
+![`/promptsmith:sharpen` turning a one-line request into a full prompt, in a live terminal run](docs/assets/sharpen-demo.gif)
+
 You already know the move: a rough request gets *far* better results once you've spelled out
 the tone you wanted, the constraints you forgot to state, the edge cases you didn't think of,
 and asked the agent to push back on you and review the work like a seasoned professional.
@@ -25,27 +27,11 @@ and asked the agent to push back on you and review the work like a seasoned prof
 | `/lens` | an existing prompt / page / draft | **findings** from one or more professional lenses |
 | `/orchestrate` | a multi-domain request | **one synthesized deliverable** — the gallery, coordinated *(Layer 2)* |
 
-The first three are **Layer 1**: zero model calls, paste-anywhere. `/orchestrate` is **Layer 2**
-— it dispatches live subagents, so it needs a host that can spawn them (Claude Code). See
-[ROADMAP](ROADMAP.md).
+The first three run with zero model calls, paste-anywhere. `/orchestrate` needs a host that can
+spawn subagents (Claude Code) — why that split exists is below, after a real run of each.
 
 Every run is **hybrid**: it returns a finished draft immediately, lists the assumptions it
 had to make, and offers a `--deep` interview to resolve them one question at a time.
-
----
-
-## Why it matters
-
-The value a skilled person adds to a prompt is invisible scaffolding — the tone they wanted, the
-constraints they forgot to state, the edge cases they didn't think of, the push-back they need to
-hear. promptsmith makes that scaffolding explicit, repeatable, and auditable.
-
-The two-layer split is deliberate. Layer 1 (`/sharpen`, `/forge-agent`, `/lens`) stays portable:
-no API keys, no model calls, works pasted into anything. Layer 2 (`/orchestrate`) coordinates the
-specialist gallery on multi-domain work, catching the cross-slice conflicts no single agent sees
-and escalating real product decisions instead of guessing. Honesty guardrails run through both —
-it never fabricates a fact, a citation, or an MCP server it can't verify, and it shows its work
-with evals. The orchestration walkthrough below is a live run, logged in `evals/runs/`.
 
 ---
 
@@ -80,6 +66,22 @@ What happens (the proven flow — from a live 8-agent run, logged in `evals/runs
    escalates** rather than synthesizing a vouched-for-but-unverified build.
 7. **Synthesizes one build plan** — spec, schema, the API handler, the React modal, the test suite,
    and the docs — not seven pasted outputs, with the blocking fix surfaced as an open decision.
+
+---
+
+## Why it matters
+
+The value a skilled person adds to a prompt is invisible scaffolding — the tone they wanted, the
+constraints they forgot to state, the edge cases they didn't think of, the push-back they need to
+hear. promptsmith makes that scaffolding explicit, repeatable, and auditable — the two runs above
+are what that looks like end to end, not a claim to take on faith.
+
+The two-layer split is deliberate. Layer 1 (`/sharpen`, `/forge-agent`, `/lens`) stays portable:
+no API keys, no model calls, works pasted into anything. Layer 2 (`/orchestrate`) coordinates the
+specialist gallery on multi-domain work, catching the cross-slice conflicts no single agent sees
+and escalating real product decisions instead of guessing. Honesty guardrails run through both —
+it never fabricates a fact, a citation, or an MCP server it can't verify, and it shows its work
+with evals, logged in `evals/runs/`.
 
 ---
 
@@ -241,7 +243,7 @@ A roster of 20 specialists across spec → plan → build → test → review �
 Each carries a named **voice** so it speaks in character at injection. `/promptsmith:forge-agent`
 checks this gallery first and **adapts** a close match instead of starting cold. Forge your
 own, then drop it in `agents/` to grow the roster. Full list + format in
-[`agents/README.md`](agents/README.md).
+[`docs/agent-gallery.md`](docs/agent-gallery.md).
 
 > **Roadmap:** the gallery is also the foundation for a planned **orchestration layer** —
 > promptsmith as a coordinator that sharpens a prompt, dispatches the right specialists, and
@@ -280,7 +282,7 @@ promptsmith/
                        + coverage-gaps.md (slices no agent covers yet)
   templates/           output skeletons for sharpen + forge
   evals/               host-judged eval harness (rubric, runner, cases, runs)
-  docs/                test-run records
+  docs/                test-run records, README assets
 ```
 
 ---

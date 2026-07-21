@@ -52,14 +52,22 @@ No promotion until every box is checked. Order revised 2026-07-21 after three ad
 the audits are folded in as steps 2–3 because fixing files after an eval run invalidates the run.
 
 ```
-1. clean-install smoke test   ← gates everything; nothing below is knowable until it runs
-2. delivery shell             (paths, GIF, phantom agents, Option B, plugin.json, doc drift)
+1. clean-install smoke test   ← gates everything                     ✅ done 2026-07-21
+2. delivery shell
+   2a. functional  (paths, agent descriptions, phantom agents)       ✅ done 2026-07-21
+   2b. cosmetic    (GIF, Option B, plugin.json, doc drift)
 3. security findings          (3 HIGH, 5 MED)                        ✅ done 2026-07-21
 4. user-facing eval loop      (the grade/iterate loop, for the user's prompts)
 5. new eval cases             (28–34, KB4–6, incl. cases for step 4)
 6. full suite re-run          → v0.3.0 → promote
 7. clean-install re-verify    ← same test as step 1, after everything lands
 ```
+
+**What step 1 changed about the plan.** The smoke test found a defect neither audit caught: all 20
+gallery agents lacked a `description`, the one frontmatter field a host uses to auto-select an
+agent by task context. The gallery — the marquee feature in the README and `plugin.json` — could
+not be invoked automatically. Worth noting for the launch story: this was invisible to code
+review and visible in 30 seconds from a live agent roster. **Install it before you market it.**
 
 Step 1 runs first because items in step 2 are unknowable without it: if `lenses/` and `templates/`
 genuinely don't resolve at runtime, that is an architecture fix, not a doc edit. Step 7 repeats it

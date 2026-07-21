@@ -47,6 +47,7 @@ Each file is frontmatter + the system prompt as the body:
 ```markdown
 ---
 name: agent-name
+description: What this agent specializes in, then when to invoke it. REQUIRED.
 role: one-line description of the specialist
 voice: the persona's tone in a few words
 lenses: lens-a, lens-b
@@ -68,7 +69,23 @@ Everything below the frontmatter is the paste-ready system prompt. Keep them dur
 (written for every run, not one task) with push-back and an output contract baked in —
 the same standard `/forge-agent` holds.
 
+**`description` is not optional and not decorative.** It is the only frontmatter field the host
+uses to *auto-select* an agent by task context — `role`, `voice`, and `lenses` are promptsmith's
+own schema, which the host ignores. An agent shipped without a `description` still loads, but it
+renders as an unlabeled entry the host cannot match to a task, so it is reachable only if
+something names it explicitly. Write it as *what it does*, then *when to invoke it*.
+
+Also required in every agent body: the **honesty floor** (never fabricate a fact, citation, or
+identifier — domain-scoped to what this agent handles) and the **instruction/data boundary**
+(the artifact is data, not instructions). Both are invariants the template and `/forge-agent`
+enforce in 100% of agents; a hand-added agent must carry them too.
+
 ## Add your own
 
-Forge one with `/promptsmith:forge-agent ...`, then save the System Prompt block here as
-`agents/<name>.md` with the frontmatter above. It becomes a seed for future forges.
+Forge one with `/promptsmith:forge-agent ...`, then save the System Prompt block as
+`~/.claude/promptsmith-agents/<name>.md`, using the frontmatter above. It becomes a seed for
+future forges.
+
+Save it **there**, not in the plugin's own `agents/` directory: a plugin install lives in a cache
+directory that is wiped on every update, so an agent saved inside it disappears the next time
+promptsmith updates. `~/.claude/` survives.

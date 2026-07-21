@@ -9,7 +9,14 @@ text you can drop into a subagent, a skill, a custom GPT, or any system-prompt f
 
 ## Step 1 — Load the engine
 
-Read `skills/prompt-engineering/SKILL.md` in full. This command runs the **FORGE** path.
+Read `${CLAUDE_PLUGIN_ROOT}/skills/prompt-engineering/SKILL.md` in full. This command runs the
+**FORGE** path.
+
+> **Paths.** `${CLAUDE_PLUGIN_ROOT}` is this plugin's install directory, substituted
+> automatically — never a literal folder in the user's project. If promptsmith was installed
+> standalone (README Option B, no plugin root), read from `~/.claude/` instead:
+> `~/.claude/skills/…`, `~/.claude/promptsmith-templates/`, `~/.claude/promptsmith-lenses/`,
+> `~/.claude/promptsmith-agents/`. Never resolve these against the user's working directory.
 
 ## Step 2 — Parse arguments
 
@@ -23,8 +30,9 @@ If the description is empty, ask what agent to build and stop.
 
 ## Step 3 — Seed from the gallery (if a match exists)
 
-Before building cold, check this plugin's `agents/` gallery for a specialist whose role is
-close to the request (see `agents/README.md` for the roster). If one matches, **read it and
+Before building cold, check the gallery at `${CLAUDE_PLUGIN_ROOT}/agents/` for a specialist whose
+role is close to the request (the roster index is `${CLAUDE_PLUGIN_ROOT}/docs/agent-gallery.md`).
+If one matches, **read it and
 adapt it** — swap domain, tone, and lenses to fit the description — rather than starting from
 a blank page. If nothing is close, forge fresh. Either way, the output meets the same bar.
 
@@ -50,13 +58,17 @@ Execute engine Steps 2–7 with route = FORGE. Key differences from SHARPEN:
   3am-paged engineer, a cautious analyst) and a concrete manner (terse, warm, blunt, measured).
   If you couldn't tell this agent from another by its Voice alone, sharpen it.
 
-Synthesize using `templates/agent-system-prompt.md`.
+Synthesize using `${CLAUDE_PLUGIN_ROOT}/templates/agent-system-prompt.md`.
 
 ## Step 5 — Output
 
 Lead with the **System Prompt** block in a copy-pasteable code fence. Then, below it:
 assumptions made, push-back worth hearing, open questions (with the `--deep` offer), and
 the short "How to install this agent" note from the template.
+
+Include a one-line **`description:`** for the agent in that install note — what it specializes in,
+then when to invoke it. It is the field a host uses to auto-select the agent by task context; an
+agent without one is reachable only by explicit name.
 
 If you seeded from a gallery agent in Step 3, add a one-line **Adapted from: `<name>`** note
 after the block (or **Forged from scratch — no close gallery match** if you didn't), so the

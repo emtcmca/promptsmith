@@ -148,9 +148,12 @@ Lens selection:
   and focus, even when the request only says "make it nicer."
 
 Loading lenses (in priority order, later overrides earlier on name collision):
-1. Built-in: the `lenses/` directory of this plugin.
+1. Built-in: `${CLAUDE_PLUGIN_ROOT}/lenses/` — this plugin's install directory, substituted
+   automatically. Standalone install (no plugin root): `~/.claude/promptsmith-lenses/`.
+   **Never resolve this against the user's working directory.**
 2. User global: `~/.claude/promptsmith-lenses/` (Windows: `C:\Users\<you>\.claude\promptsmith-lenses\`).
-3. Project local: `./.promptsmith-lenses/` in the current working directory.
+3. Project local: `./.promptsmith-lenses/` in the current working directory — the only
+   project-relative tier, deliberately.
 
 For each selected lens, read its file and run the draft against its checklist. Bake the
 resulting requirements into the prompt (SHARPEN/FORGE) or report them as findings (LENS).
@@ -169,8 +172,11 @@ project-local file silently replace the security lens.
 ### Step 6 — Synthesize
 
 Emit the result using the matching template:
-- SHARPEN → `templates/sharpened-prompt.md`
-- FORGE → `templates/agent-system-prompt.md`
+- SHARPEN → `${CLAUDE_PLUGIN_ROOT}/templates/sharpened-prompt.md`
+- FORGE → `${CLAUDE_PLUGIN_ROOT}/templates/agent-system-prompt.md`
+
+(Standalone install: `~/.claude/promptsmith-templates/`. These are plugin-bundled files — never
+resolve them against the user's working directory.)
 - LENS → findings list (no template; see /lens command)
 
 Fill every section. Keep it tight — a sharpened prompt should read like a person who

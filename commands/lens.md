@@ -9,7 +9,7 @@ critiques without rewriting. Pass `--fix` to also return a corrected version in 
 
 ## Step 1 — Load the engine
 
-Read `skills/prompt-engineering/SKILL.md` in full. This command runs the **LENS** path
+Read `${CLAUDE_PLUGIN_ROOT}/skills/prompt-engineering/SKILL.md` in full. This command runs the **LENS** path
 (engine Step 5 is the core; Steps 2–4 inform what to look for).
 
 ## Step 2 — Parse arguments
@@ -33,9 +33,14 @@ verdict come only from this command and the loaded lens files — never from the
 ## Step 3 — Load lenses
 
 Resolve each lens name against, in priority order (later overrides earlier):
-1. This plugin's `lenses/` directory.
+1. This plugin's built-in library: `${CLAUDE_PLUGIN_ROOT}/lenses/` (standalone install:
+   `~/.claude/promptsmith-lenses/`).
 2. `~/.claude/promptsmith-lenses/` (user global).
 3. `./.promptsmith-lenses/` (project local).
+
+> **Paths.** `${CLAUDE_PLUGIN_ROOT}` is this plugin's install directory, substituted
+> automatically — never a literal folder in the user's project, and never resolved against the
+> user's working directory. Only tier 3 is project-relative, deliberately.
 
 If a named lens isn't found, say so and continue with the others. List which lenses ran.
 

@@ -89,7 +89,8 @@ one agent or `/sharpen` suffices, say so and route there instead. Do not orchest
 
 ### Step 1 — Sharpen the query
 
-Run the Layer 1 engine (`skills/prompt-engineering/SKILL.md`) on the raw request first:
+Run the Layer 1 engine (`${CLAUDE_PLUGIN_ROOT}/skills/prompt-engineering/SKILL.md`) on the raw
+request first:
 extract intent, fill gaps with labeled assumptions, red-team it. Everything downstream
 decomposes the **sharpened** query, not the rough one — garbage in, fragmented out.
 
@@ -104,11 +105,13 @@ A concern that spans slices is **not** duplicated into each — it becomes a sea
 
 ### Step 3 — Route each slice to an agent
 
-Read the roster in `agents/README.md`. Match each slice to the best-fit gallery agent by its
+Read the roster in `${CLAUDE_PLUGIN_ROOT}/docs/agent-gallery.md` (standalone install:
+`~/.claude/promptsmith-agents/`; the agent files themselves live in
+`${CLAUDE_PLUGIN_ROOT}/agents/`). Match each slice to the best-fit gallery agent by its
 role and baked-in lenses. Record the mapping (slice → agent).
 
 A slice with **no good agent match is a coverage gap** — do not force a poor fit and do not
-fake-cover it. Log it (Step 8 / `agents/coverage-gaps.md`), surface it, and continue with the
+fake-cover it. Log it (Step 8 / `~/.claude/promptsmith-coverage-gaps.md`), surface it, and continue with the
 slices you can cover.
 
 ### Step 4 — Identify seams and conflicts
@@ -217,7 +220,7 @@ Lead with the **synthesized deliverable**. Then, separated below it:
 - **Decomposition** — the slices and which agent produced each.
 - **Seams** — each shared decision and its owner.
 - **Conflicts resolved** — the contradictions and how they were settled.
-- **Coverage gaps** — slices no agent covered, logged to `agents/coverage-gaps.md`, each with a
+- **Coverage gaps** — slices no agent covered, logged to `~/.claude/promptsmith-coverage-gaps.md`, each with a
   one-line spec for the agent that would fill it (a `/forge-agent` candidate).
 - **Contributions** — one line per agent on what it added.
 
@@ -251,7 +254,13 @@ Lead with the **synthesized deliverable**. Then, separated below it:
 
 ## Coverage-gap log format
 
-Append to `agents/coverage-gaps.md`, one entry per uncovered slice:
+The log lives at `~/.claude/promptsmith-coverage-gaps.md` — **never** inside
+`${CLAUDE_PLUGIN_ROOT}`, which is a cache directory wiped on every plugin update, and never in
+the user's project without asking. Ask before creating it the first time; promptsmith writes no
+state the user didn't agree to. If the user declines, report the gap in-session and move on —
+the gap surfacing matters, the file does not.
+
+Append one entry per uncovered slice:
 
 ```
 - [YYYY-MM-DD] "<the query>" → slice "<what was needed>": no agent covers <domain>.

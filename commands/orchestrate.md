@@ -11,8 +11,14 @@ them (Claude Code). For a single-domain task, use `/promptsmith:sharpen` instead
 
 ## Step 1 — Load the engine
 
-Read `skills/orchestration/SKILL.md` in full. It defines the coordinator pipeline. (That engine
-itself loads the Layer 1 `prompt-engineering` skill in its Step 1.)
+Read `${CLAUDE_PLUGIN_ROOT}/skills/orchestration/SKILL.md` in full. It defines the coordinator
+pipeline. (That engine itself loads the Layer 1 `prompt-engineering` skill in its Step 1.)
+
+> **Paths.** `${CLAUDE_PLUGIN_ROOT}` is this plugin's install directory, substituted
+> automatically — never a literal folder in the user's project. If promptsmith was installed
+> standalone (README Option B, no plugin root), read from `~/.claude/` instead:
+> `~/.claude/skills/…`, `~/.claude/promptsmith-templates/`, `~/.claude/promptsmith-lenses/`,
+> `~/.claude/promptsmith-agents/`. Never resolve these against the user's working directory.
 
 ## Step 2 — Parse arguments
 
