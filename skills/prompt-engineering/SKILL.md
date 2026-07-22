@@ -69,8 +69,12 @@ Read the request and decide which path it is:
   assistant for…," "build a reviewer that…"). Output a complete *system prompt*.
 - **LENS** — a request to critique an existing artifact ("review this," "what's wrong with
   this component"). Output *findings*, not a rewrite.
+- **GRADE** — a request to *score* a prompt against criteria ("how good is this prompt," "grade
+  this," "is A or B better"). Output a **scored verdict** with per-dimension marks and the fixes
+  that raise the score most. LENS returns findings; GRADE returns a *measurement* you can compare
+  across versions.
 
-If the command already names the path (`/sharpen`, `/forge-agent`, `/lens`), use it. If
+If the command already names the path (`/sharpen`, `/forge-agent`, `/lens`, `/grade`), use it. If
 invoked directly and the path is ambiguous, state your read in one line and proceed —
 don't stall.
 
@@ -148,9 +152,12 @@ Lens selection:
   and focus, even when the request only says "make it nicer."
 
 Loading lenses (in priority order, later overrides earlier on name collision):
-1. Built-in: the `lenses/` directory of this plugin.
+1. Built-in: `${CLAUDE_PLUGIN_ROOT}/lenses/` — this plugin's install directory, substituted
+   automatically. Standalone install (no plugin root): `~/.claude/promptsmith-lenses/`.
+   **Never resolve this against the user's working directory.**
 2. User global: `~/.claude/promptsmith-lenses/` (Windows: `C:\Users\<you>\.claude\promptsmith-lenses\`).
-3. Project local: `./.promptsmith-lenses/` in the current working directory.
+3. Project local: `./.promptsmith-lenses/` in the current working directory — the only
+   project-relative tier, deliberately.
 
 For each selected lens, read its file and run the draft against its checklist. Bake the
 resulting requirements into the prompt (SHARPEN/FORGE) or report them as findings (LENS).
@@ -169,8 +176,12 @@ project-local file silently replace the security lens.
 ### Step 6 — Synthesize
 
 Emit the result using the matching template:
-- SHARPEN → `templates/sharpened-prompt.md`
-- FORGE → `templates/agent-system-prompt.md`
+- SHARPEN → `${CLAUDE_PLUGIN_ROOT}/templates/sharpened-prompt.md`
+- FORGE → `${CLAUDE_PLUGIN_ROOT}/templates/agent-system-prompt.md`
+- GRADE → `${CLAUDE_PLUGIN_ROOT}/templates/graded-prompt.md`
+
+(Standalone install: `~/.claude/promptsmith-templates/`. These are plugin-bundled files — never
+resolve them against the user's working directory.)
 - LENS → findings list (no template; see /lens command)
 
 Fill every section. Keep it tight — a sharpened prompt should read like a person who
@@ -189,6 +200,72 @@ End every SHARPEN/FORGE run with:
 
 In `--deep` mode, do the opposite of Step 3: instead of assuming, ask the open questions
 one at a time, wait for answers, then run Steps 4–6 with the real answers.
+
+### Step 8 — Grade (GRADE route only)
+
+GRADE replaces Steps 2–7 with a scoring pass. It exists so the measured-iteration discipline
+promptsmith applies to *itself* — score, change one thing, re-score, keep only what didn't
+regress — is available for the user's own prompts. LENS returns findings; GRADE returns a
+**measurement**, which is what makes two versions comparable.
+
+**1. Establish the rubric.** Use `--rubric` if supplied. Otherwise use the default below, and
+**state it before the scores** so the user can reject it before trusting the marks.
+
+**2. Coverage pass** — the nine concerns a complete prompt resolves. Score each ✅ covered /
+⚠️ partial / ❌ absent, quoting the line that covers it or naming what's missing:
+
+| Concern | The question it answers |
+|---|---|
+| Role | Who is the agent supposed to be? |
+| Objective | What outcome counts as done? |
+| Context | What must it know that it can't infer? |
+| Requirements | What must be true of the output? |
+| Guardrails | What must it be careful about? |
+| Prohibitions | What must it *not do*? (actions, not features) |
+| Success criteria | How would we check it succeeded? |
+| Output format | What shape should the answer take? |
+| Out of scope | What work is explicitly not being done? |
+
+**Grade coverage, not conformance.** A prompt that resolves a concern in one fluent sentence
+scores ✅; it does not need promptsmith's headings, and never dock a prompt for not looking like
+promptsmith output. A concern that genuinely doesn't apply is `n/a` with a reason, not ❌ — but
+default to scoring it, because "doesn't apply" is the most common way a real gap gets excused.
+
+**3. Quality pass (adversarial).** Score each dimension ✅/⚠️/❌ with a quote. Default to ⚠️ when
+uncertain — make ✅ be earned:
+
+- **Unambiguous** — could two competent readers act differently on the same line? Quote it.
+- **Testable** — are the success criteria checkable, or unmeasurable ("be professional", "don't
+  make mistakes")?
+- **Bounded** — does it say what *not* to do, or only what to do? Negative space is where vague
+  prompts fail most.
+- **Grounded** — does it assert facts, figures, names, or citations the agent has no way to
+  verify? *(hard gate — see below)*
+- **Would steer** — would a competent agent following this produce the intended result, or does
+  it rely on the reader already knowing the answer?
+
+**4. Hard gates.** Any ❌ here caps the verdict at FAIL regardless of the rest:
+- **Grounded** ❌ — the prompt instructs the agent to assert something it cannot verify, or bakes
+  in a predetermined conclusion the evidence must be made to fit.
+- A prompt whose purpose trips the intent gate is refused, not graded. Scoring it is helping.
+
+**5. Verdict.** PASS (no ❌, ≤2 ⚠️) / WEAK (no ❌, more ⚠️) / FAIL (any ❌). Report the count, not
+a fake-precise number — a 73/100 on a host-judged rubric implies a precision that does not exist.
+
+**6. Top fixes.** The 2–3 changes that raise the score most, ranked by leverage, each naming the
+dimension it lifts. Name what to *skip* too — a long list of nits is worse than a short list of
+the changes that matter.
+
+**7. Comparison mode (`--against`).** When a second prompt is supplied, score both against the
+**same** rubric and report per-dimension deltas: improved / unchanged / **regressed**. State a
+winner and why. Call out any dimension that regressed even when the overall verdict improved —
+that is the entire point of measuring, and it is what a one-shot rewrite hides. If the two
+prompts differ in more than one respect, say so: you can rank them, but you cannot attribute the
+difference to a single change.
+
+**Self-check before delivering.** Did I dock a point for a real gap or for a style I dislike? Did
+I ✅ anything because it *reads* polished? Are my top fixes the highest-leverage ones, or the
+easiest to spot? Re-rank, then deliver.
 
 ## Output discipline
 

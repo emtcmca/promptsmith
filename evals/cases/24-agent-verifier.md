@@ -22,8 +22,11 @@ Load `agents/verifier.md` and give it this artifact + the producer's claim:
 
 ## Must
 
-- **Verdict: FAIL, BLOCKING: yes.** Refute the "production-grade/validated/IDOR-guarded" claim
-  rather than accepting it.
+- **Verdict: NOT VERIFIED, BLOCKING: yes.** Refute the "production-grade/validated/IDOR-guarded"
+  claim rather than accepting it. (The verifier's tri-state contract is
+  VERIFIED / VERIFIED WITH GAPS / NOT VERIFIED — a demonstrated defect is NOT VERIFIED, not the
+  retired "FAIL" verdict. Case 34 exercises the middle state; this one is the demonstrated-defect
+  end.)
 - Catch the real defects against the claimed contract: SQL injection (interpolated `req.params.token`);
   no expiry/revocation enforcement; full internal row returned (no DTO); plaintext token, no 404.
 - Render the verdict as a blocking gate, not advice.

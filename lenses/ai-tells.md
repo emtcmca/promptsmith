@@ -11,12 +11,53 @@ flags tells — pair it with `editorial` for general clarity/structure.
 
 > Pattern taxonomy adapted from conorbronsdon/avoid-ai-writing (MIT).
 
+## Never strip these (read before flagging anything)
+
+This lens strips aggressively. That is correct for generic machine prose and **wrong** for the
+four cases below. A word on the tier lists is a candidate, not a verdict — check it against these
+carve-outs first. Over-stripping is a real defect of this lens, not a side effect to tolerate.
+
+- **Quoted and attributed material.** Never rewrite inside a direct quotation, a testimonial, an
+  excerpt, or anything attributed to a named person or document. Altering a quote to sound less
+  AI-ish falsifies it. Flag nothing inside quote marks; if the surrounding prose introduces it
+  badly, fix *that*.
+- **Statutory, legal, regulatory, and contractual text.** Governing documents, statutes, policy
+  language, and compliance copy use `vital`, `material`, `shall`, `ensure`, and similar terms as
+  **terms of art with settled meaning**. Rewriting them changes what the document does. Leave
+  them verbatim and say why you skipped them.
+- **Domain terminology.** A word on a tier list can be the correct technical term in context —
+  `harness` (test harness), `robust` (statistics), `key` (cryptography), `vital` (clinical
+  vitals), `elevate` (medical). Judge by whether a domain reader would expect the word, not by
+  whether it appears on the list.
+- **A deliberate authorial voice.** If the author has an evident stylistic signature — recurring
+  fragments, a motif of punctuation, an idiosyncratic sign-off, a consistent rhythm — **that is
+  not an AI tell.** Enhance, don't override; suggest, don't replace. Where a change would alter
+  voice rather than remove a tell, **flag it as a suggestion and leave the text alone.** This is
+  the `editorial` lens's voice-preservation guardrail, restated here because `ai-tells` is
+  routinely run alone (`--lens ai-tells`) and must carry its own counterweight rather than
+  depending on `editorial` happening to co-fire.
+
+When you skip a candidate under any carve-out above, **say so in the findings** — "left `vital`
+at line 4 (statutory term)". A silent skip is indistinguishable from a miss.
+
 ## Two-pass discipline
 
 1. **First pass** — scan all six categories, flag every hit with the quoted span.
-2. **Rewrite** — produce the cleaned version.
-3. **Second pass** — re-scan the rewrite; AI tells survive edits and breed new ones. Don't declare
-   done until a clean pass finds nothing new.
+2. **Draft the replacements** — for each hit, work out the plain-language replacement.
+3. **Second pass** — re-scan those replacements in context; AI tells survive edits and breed new
+   ones, so a fix that introduces a fresh tell is not a fix. Don't declare done until a clean pass
+   finds nothing new.
+
+**What gets emitted depends on the invoking route — this lens never decides that for itself.**
+
+- **LENS without `--fix` (the default):** findings only, each with its proposed replacement
+  quoted inline. Run steps 2–3 as *internal* work to validate the replacements you propose.
+  **Do not emit a rewritten artifact** — the command's default contract is critique, not rewrite,
+  and a lens may not override it.
+- **LENS with `--fix`:** emit the corrected artifact as the deliverable, followed by the
+  second-pass result in both directions (see `commands/lens.md` Step 6).
+- **SHARPEN / FORGE:** fold the findings in as prohibitions/requirements in the emitted prompt.
+  Nothing is rewritten.
 
 ## Tiered vocabulary
 
@@ -68,6 +109,9 @@ flags tells — pair it with `editorial` for general clarity/structure.
 
 ## Output
 
-Report findings worst-first (P0 placeholders/self-reference → P1 vocabulary/template phrases →
-P2 rhythm/structure), then the rewritten text, then the second-pass result. For a SHARPEN/FORGE
-run, fold these as prohibitions/requirements into the emitted prompt instead of rewriting.
+Report findings worst-first: P0 placeholders/self-reference → P1 vocabulary/template phrases →
+P2 rhythm/structure. Quote the offending span on every finding and give its replacement.
+
+Then follow the invoking route, per "What gets emitted" above — findings only by default, the
+corrected artifact plus the second-pass result under `--fix`, and folded-in requirements on a
+SHARPEN/FORGE run. When you skip a candidate under a carve-out, say so in the findings.

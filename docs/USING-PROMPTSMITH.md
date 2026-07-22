@@ -19,9 +19,13 @@ promptsmith is prompt & context engineering delivered as a Claude Code plugin, i
 /plugin marketplace add emtcmca/promptsmith
 /plugin install promptsmith
 ```
-Verify: type `/promptsmith` — `/promptsmith:sharpen`, `:forge-agent`, `:lens`, `:orchestrate`
-should autocomplete. (Plugin commands are namespaced — bare `/sharpen` only exists with the
-manual/standalone install in the README.)
+Verify: type `/promptsmith` — `/promptsmith:sharpen`, `:forge-agent`, `:lens`, `:grade`,
+`:orchestrate` should autocomplete. (Plugin commands are namespaced — bare `/sharpen` only exists
+with the manual/standalone install in the README.)
+
+Then run `/promptsmith:lens --lens skeptic` on any short paragraph. If it reports running the
+`skeptic` lens, the bundled lens library resolved correctly. Autocomplete alone doesn't prove the
+install — the commands can load while the files they read don't.
 
 ---
 
@@ -63,19 +67,42 @@ states what it adapted from.
 
 ### `/promptsmith:lens <artifact> [--lens a,b]`
 Reviews an existing prompt/page/component/draft through expert lenses and returns findings
-(✅ checked / ⚠️ weak / ❌ failing), worst-first, with the top-3 fixes. It critiques; it does
-not rewrite. To get a corrected version, feed the findings into `/sharpen`.
+(✅ checked / ⚠️ weak / ❌ failing), worst-first, with the top-3 fixes. By default it critiques
+and does not rewrite. Add `--fix` and it emits a corrected version of the artifact in its own
+form — prose stays prose, code stays code, a prompt comes back sharpened — making the minimal
+targeted change that resolves each finding.
 ```
 /promptsmith:lens (paste a React component) --lens accessibility,visual-design
+/promptsmith:lens (paste a React component) --lens accessibility --fix
 ```
+
+### `/promptsmith:grade <prompt> [--against <v2>] [--rubric a,b]`
+Scores a prompt rather than critiquing it: a PASS / WEAK / FAIL verdict, the nine concerns a
+complete prompt resolves marked ✅/⚠️/❌, an adversarial quality pass, and the 2–3 fixes that raise
+the score most. It grades **coverage, not conformance** — a prompt that resolves a concern in one
+fluent sentence passes, and is never penalized for not looking like promptsmith output.
+
+`--against` scores two versions on the same rubric and reports per-dimension deltas, **naming any
+dimension that regressed even when the revision wins overall**. That is what eyeballing a rewrite
+misses, and it's the same score → change → re-score → keep-only-what-didn't-regress loop the
+project runs on itself in `evals/`.
+```
+/promptsmith:grade (paste a system prompt)
+/promptsmith:grade (paste the revision) --against (paste the original)
+```
+
+**`lens` vs `grade`:** `lens` answers *what's wrong with this?* through a professional's
+checklist. `grade` answers *how good is this, and did my change help?* Findings versus a
+measurement. Use `lens` to find problems, `grade` to track whether you fixed them.
 
 ---
 
 ## 4. Lenses
 
-A lens is a professional's checklist in a markdown file. Built-in: `visual-design`,
+A lens is a professional's checklist in a markdown file. The 12 built-ins: `visual-design`,
 `ux-designer`, `accessibility`, `security-reviewer`, `performance`, `api-design`,
-`data-integrity`, `seo`, `product-strategist`, `editorial`, `skeptic` (applied by default).
+`data-integrity`, `seo`, `product-strategist`, `editorial`, `ai-tells`, `skeptic` (applied by
+default).
 
 **Add your own** (no fork): drop a markdown file with `name:` + `applies-to:` frontmatter into
 `~/.claude/promptsmith-lenses/` (everywhere) or `./.promptsmith-lenses/` (one project). It's

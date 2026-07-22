@@ -25,8 +25,11 @@ the host both runs and judges, matching promptsmith's zero-call ethos.
    make ✅ be earned. Quote the output you react to.
 
    **Independent judging for high-stakes routes.** The producer must not grade its own work on the
-   cases that matter most — the security hard-gate cases (15, 16), the code-builder agents (20),
-   and orchestration (17). For these, spawn the judge as a **separate subagent** — the `verifier`
+   cases that matter most. Apply the **rule** in `rubric.md` (not a fixed case list, which goes
+   stale): a case needs an independent judge if it tests a security gate, a legal/regulatory/
+   medical/financial output, a code or config artifact, an artifact-producing route including any
+   `--fix` run, or orchestration. At time of writing: cases **13, 15, 16, 17, 20, 21, 22, 23, 27**
+   and every `--fix` case. For these, spawn the judge as a **separate subagent** — the `verifier`
    agent is purpose-built for this — given *only* the case input + the captured output + the rubric,
    **not** the producing context, reasoning, or self-description. Its frame is "assume this is wrong;
    refute it." Record the judge's identity in the scorecard. (A self-graded run on a high-stakes case
