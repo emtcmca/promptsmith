@@ -8,7 +8,7 @@ A one-page reference. For the narrative walkthrough see [USING-PROMPTSMITH.md](U
 /plugin marketplace add emtcmca/promptsmith
 /plugin install promptsmith
 ```
-Verify: type `/promptsmith` → the five commands autocomplete. Plugin commands are **namespaced**
+Verify: type `/promptsmith` → the four commands autocomplete. Plugin commands are **namespaced**
 (`/promptsmith:sharpen`); bare names only exist with the manual/standalone install (see README).
 
 ## Commands
@@ -18,12 +18,12 @@ Verify: type `/promptsmith` → the five commands autocomplete. Plugin commands 
 | `/promptsmith:sharpen <request>` | a rough one-off task | a complete, reviewed **prompt** |
 | `/promptsmith:forge-agent <description>` | a reusable assistant | a durable **system prompt** |
 | `/promptsmith:lens <artifact>` | critiquing something | **findings** (✅/⚠️/❌), worst-first |
-| `/promptsmith:grade <prompt>` | scoring a prompt | a **scored verdict** + top fixes |
+| `/promptsmith:lens <prompt> --grade` | scoring a prompt | a **scored verdict** + top fixes |
 | `/promptsmith:orchestrate <request>` | a multi-domain build | **one synthesized deliverable** |
 
 **Pick fast:** one domain → `sharpen` (or one gallery agent). Reusable → `forge-agent`.
-Critique only → `lens`. Score it, or compare two versions → `grade`. Several domains, one
-coherent result → `orchestrate`.
+Critique an artifact → `lens`. Score a prompt, or compare two versions → `lens --grade`. Several
+domains, one coherent result → `orchestrate`.
 
 ## Flags
 
@@ -32,8 +32,9 @@ coherent result → `orchestrate`.
 | `--lens a,b` | sharpen, forge-agent, lens | force specific lenses (else auto-picked by topic) |
 | `--deep` | sharpen, forge-agent | interview one question at a time instead of assuming |
 | `--fix` | lens | also emit a corrected version of the artifact, not findings alone |
-| `--against <p>` | grade | score two prompts on one rubric; report deltas and regressions |
-| `--rubric a,b` | grade | grade against your own criteria instead of the defaults |
+| `--grade` | lens | score a prompt against a rubric (verdict) instead of lens findings |
+| `--against <p>` | lens `--grade` | score two prompts on one rubric; report deltas and regressions |
+| `--rubric a,b` | lens `--grade` | grade against your own criteria instead of the defaults |
 | `--dry` | orchestrate | show decomposition + routing, don't dispatch |
 | `--gate` | orchestrate | always pause for approval before fan-out |
 | `--no-gate` | orchestrate | run autonomously through synthesis |
@@ -70,8 +71,8 @@ Files live in `agents/`. Forge a new one with `/forge-agent` and drop it in to g
 /promptsmith:lens (paste code) --lens accessibility,visual-design --fix
 
 # Score a prompt, revise it, then prove the revision actually improved it
-/promptsmith:grade (paste a system prompt)
-/promptsmith:grade (paste the revision) --against (paste the original)
+/promptsmith:lens (paste a system prompt) --grade
+/promptsmith:lens (paste the revision) --grade --against (paste the original)
 
 # Inspect an orchestration plan without spending fan-out
 /promptsmith:orchestrate build a password reset flow --dry

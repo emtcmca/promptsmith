@@ -1,14 +1,14 @@
 ---
 id: "35"
 route: grade
-command: /promptsmith:grade
+command: /promptsmith:lens --grade
 tests: the GRADE route — scored verdict, coverage over the nine concerns, leverage-ranked fixes
 ---
 
 ## Input
 
 ```
-/promptsmith:grade
+/promptsmith:lens --grade
 ```
 
 Prompt under grade:
