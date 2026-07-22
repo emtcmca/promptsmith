@@ -39,7 +39,7 @@ Stated per route rather than per case, so it doesn't go stale every time a case 
 | `forge-agent` | 03, 04 |
 | `lens` (critique) | 05, 06, 23, 29, 30 |
 | `lens --fix` | 31, 32, 33 |
-| `grade` | 35, 36, 37 |
+| `lens --grade` | 35, 36, 37 |
 | `orchestrate` | 17, 18, 19, 22 |
 | gallery agents | 07–16, 20, 21, 24–27, 34 |
 

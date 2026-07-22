@@ -40,15 +40,17 @@ one. Getting this wrong is a self-inflicted wound: a developer who installs expe
   full strength. *"Most prompt tools can't answer 'how do you know it works?' So I built the eval
   harness first."* True as narrative, and it is the whole thesis.
 
-**Updated 2026-07-21 — `/grade` shipped, so the line moves.** A user can now run their own prompt
-through a scored rubric and compare two versions with regressions named. On product surfaces you
-may now say promptsmith **grades prompts against a rubric** and is **eval-backed**, because both
-are literally true.
+**Updated 2026-07-21 — grade mode shipped (as `/lens --grade`), so the line moves.** A user can now
+run their own prompt through a scored rubric and compare two versions with regressions named. On
+product surfaces you may now say promptsmith **grades prompts against a rubric** and is
+**eval-backed**, because both are literally true. *(Grading was briefly a standalone `/grade`
+command; merged into `/lens --grade` the same day, pre-promotion, after two launch reviews flagged
+the lens/grade overlap. Command surface is four.)*
 
 Still do not say it *is* an eval harness, flatly. `evals/` (the 37-case regression suite with
-known-bad calibration) tests promptsmith; `/grade` scores the user's prompts. They are related by
-method, not identical, and a reader who installs expecting the former gets the latter. The honest
-strong claim:
+known-bad calibration) tests promptsmith; `/lens --grade` scores the user's prompts. They are
+related by method, not identical, and a reader who installs expecting the former gets the latter.
+The honest strong claim:
 
 > The same score → change → re-score → keep-only-what-didn't-regress loop promptsmith runs on
 > itself, pointed at your prompts.
@@ -68,7 +70,7 @@ the audits are folded in as steps 2–3 because fixing files after an eval run i
    2a. functional  (paths, agent descriptions, phantom agents)       ✅ done 2026-07-21
    2b. docs + metadata (GIF, Option B, plugin.json, doc drift)       ✅ done 2026-07-21
 3. security findings          (3 HIGH, 5 MED)                        ✅ done 2026-07-21
-4. user-facing eval loop      (/grade)                               ✅ done 2026-07-21
+4. user-facing eval loop      (/lens --grade)                        ✅ done 2026-07-21
 5. new eval cases             (27→37 cases, 3→6 fixtures)            ✅ done 2026-07-21
 6. full suite re-run          → v0.3.0 → promote          ✅ SUITE GREEN 2026-07-21
 7. clean-install re-verify    ✅ PASS 2026-07-21 — plugin.json bumped to 0.3.0
@@ -76,7 +78,7 @@ the audits are folded in as steps 2–3 because fixing files after an eval run i
 
 **Phase 0 complete.** All seven steps done. Clean-install re-verify confirmed every
 `${CLAUDE_PLUGIN_ROOT}` path resolves from a non-repo cwd, all 20 agents load with descriptions,
-no phantom agents, five commands advertised, twelve lenses present, manifest bumped to 0.3.0.
+no phantom agents, four commands advertised, twelve lenses present, manifest bumped to 0.3.0.
 Next: merge to main, tag v0.3.0, cut the GitHub Release — *then* Phase 1 promotion (awesome-list
 PRs), Phase 2 (article), Phase 3 (Show HN).
 

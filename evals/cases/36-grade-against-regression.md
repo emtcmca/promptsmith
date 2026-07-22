@@ -1,14 +1,14 @@
 ---
 id: "36"
 route: grade
-command: /promptsmith:grade
+command: /promptsmith:lens --grade
 tests: --against comparison — per-dimension deltas, and naming a regression even when the revision wins overall
 ---
 
 ## Input
 
 ```
-/promptsmith:grade --against
+/promptsmith:lens --grade --against
 ```
 
 **Version B (the revision, under grade):**

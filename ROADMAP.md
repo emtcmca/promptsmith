@@ -6,17 +6,18 @@ Decided 2026-06-24. promptsmith is built in two deliberately separate layers so 
 identity survives the ambition.
 
 **Layer 1 — promptsmith-core (current, shipping).**
-The portable prompt & context engineering method: `/sharpen`, `/forge-agent`, `/lens`, the
-shared engine, the lens library, and the pre-forged agent gallery. **No model calls, no API
+The portable prompt & context engineering method: `/sharpen`, `/forge-agent`, `/lens`, `/grade`,
+the shared engine, the lens library, and the pre-forged agent gallery. **No model calls, no API
 keys, model-agnostic, paste-anywhere.** This is the defensible identity and it stays intact.
 
-**Layer 2 — orchestration (planned, deferred).**
+**Layer 2 — orchestration (shipped in v0.3.0).**
 promptsmith as a *coordinator*: sharpen the prompt to perfection, decompose it into
 non-overlapping slices, dispatch each to the right specialist as a live subagent, then receive,
 assemble, and curate their work into one coherent result before returning it. This layer is
 **Claude-Code-native** — it requires a runtime that can spawn subagents (Task / Workflow), so
-it has runtime dependencies the core does not. It is built **last**, only after core + gallery
-are tuned, per "build from the ground up; staff the coordinator last."
+it has runtime dependencies the core does not. It was built **last**, only after core + gallery
+were tuned, per "build from the ground up; staff the coordinator last." `/orchestrate` and the
+coordinator pipeline are live; see the logged 7-agent run in `evals/runs/`.
 
 The gallery is the bridge: today its files are paste-ready system prompts; under Layer 2 they
 become the **specialist roster** the coordinator dispatches to. Nothing built now is wasted.
@@ -165,6 +166,8 @@ agent — **on itself only**. Users got none of it for their own prompts.
 
 - [x] **`/grade` command** (5th command, `commands/grade.md`) — scored verdict on a prompt, or
       `--against` to compare two versions.
+      **⤷ Superseded 2026-07-21 (same session, pre-promotion): merged into `/lens --grade`.** The
+      standalone command was removed before a single external install. See the merge note below.
 - [x] **GRADE route in the engine** (Step 8) — states its rubric before scoring, runs a coverage
       pass over the nine concerns, an adversarial quality pass, hard gates, then leverage-ranked
       fixes. Grades **coverage, not conformance**: a prompt resolving a concern in prose scores
@@ -177,6 +180,28 @@ agent — **on itself only**. Users got none of it for their own prompts.
 - [x] Hard-gated: refuses to grade a harmful prompt (grading it is helping it), and treats the
       graded prompt as untrusted data — a prompt steering its own grader is a *plausible* input
       here, not an exotic attack.
+
+### Merge `/grade` → `/lens --grade` (2026-07-21, pre-promotion)
+
+Two adversarial launch reviews (GTM + cold-user) independently flagged that `/lens` and `/grade`
+overlap enough to confuse — the docs needed three separate "which do I use" paragraphs, and the
+`evaluator` gallery agent already overlapped `/grade`. When a distinction needs three paragraphs
+to defend, it's a product smell. Merged, in the only clean window: **before a single external
+install**, so the public never sees the 5-command surface get unwound.
+
+- [x] `/grade` deleted as a standalone command; folded into `/lens` as **`--grade`** (verdict
+      mode) + **`--against`** (comparison) + **`--rubric`**. Command surface: **5 → 4**.
+- [x] The GRADE engine route (Step 8), `templates/graded-prompt.md`, and the untrusted-input /
+      refuse-harmful / coverage-not-conformance / regression-honesty guarantees all **carried over
+      unchanged** — only the entry point moved. Reached via `/lens --grade`; there is no `/grade`.
+- [x] Reconciled every surface: `commands/lens.md` (grade mode section), engine routing,
+      template next-step, README, USING-PROMPTSMITH, COMMAND-SHEET, `plugin.json`, eval cases
+      35–37, and the `evals/README.md` route table. Command count back to **four** everywhere.
+- [x] Re-eval the grade path blind on the new `/lens --grade` surface (cases 35–37): all correct —
+      35 FAIL on Grounded, 36 names the Bounded regression under B's win, 37 flags the self-grading
+      injection. Producer confirmed `--grade` routing was unambiguous from `lens.md` + engine Step 8.
+- [x] Clean-install re-verify on the 4-command surface: PASS (all paths resolve, no standalone
+      `/grade`, `graded-prompt.md` still shipped).
 
 **Identity note:** this is the 5th command against a stated "four commands, not a marketplace"
 guardrail. Accepted deliberately — it is the feature that makes the eval-harness framing literally

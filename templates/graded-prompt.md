@@ -54,7 +54,7 @@ headings. A concern marked `n/a` carries a reason.>
 ## Next
 
 - `/promptsmith:sharpen <the same request>` — rebuild it with the gaps filled.
-- `/promptsmith:grade <revised> --against <original>` — confirm the revision actually scored
+- `/promptsmith:lens <revised> --grade --against <original>` — confirm the revision actually scored
   better and regressed nothing.
 
 ---

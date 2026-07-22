@@ -68,15 +68,15 @@ Read the request and decide which path it is:
 - **FORGE** — a request to build something reusable ("make an agent that…," "I need an
   assistant for…," "build a reviewer that…"). Output a complete *system prompt*.
 - **LENS** — a request to critique an existing artifact ("review this," "what's wrong with
-  this component"). Output *findings*, not a rewrite.
+  this component"). Output *findings*, not a rewrite. The `/lens` command's default mode.
 - **GRADE** — a request to *score* a prompt against criteria ("how good is this prompt," "grade
   this," "is A or B better"). Output a **scored verdict** with per-dimension marks and the fixes
   that raise the score most. LENS returns findings; GRADE returns a *measurement* you can compare
-  across versions.
+  across versions. Reached via `/lens --grade` (there is no separate `/grade` command).
 
-If the command already names the path (`/sharpen`, `/forge-agent`, `/lens`, `/grade`), use it. If
-invoked directly and the path is ambiguous, state your read in one line and proceed —
-don't stall.
+If the command already names the path (`/sharpen`, `/forge-agent`, `/lens`; `/lens --grade` for
+the GRADE route), use it. If invoked directly and the path is ambiguous, state your read in one
+line and proceed — don't stall.
 
 ### Step 2 — Extract
 
