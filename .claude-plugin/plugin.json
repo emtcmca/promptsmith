@@ -1,7 +1,7 @@
 {
   "name": "promptsmith",
   "description": "Prompt & context engineering for agents — /sharpen rough requests, /forge-agent reusable system prompts, /lens to review through expert lenses, /grade to score a prompt or compare two versions, and /orchestrate multi-domain builds across a 20-agent specialist gallery. Eval-backed. Zero dependencies, no API keys, model-agnostic.",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "author": {
     "name": "Eric Tetzlaff"
   },

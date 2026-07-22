@@ -71,8 +71,14 @@ the audits are folded in as steps 2–3 because fixing files after an eval run i
 4. user-facing eval loop      (/grade)                               ✅ done 2026-07-21
 5. new eval cases             (27→37 cases, 3→6 fixtures)            ✅ done 2026-07-21
 6. full suite re-run          → v0.3.0 → promote          ✅ SUITE GREEN 2026-07-21
-7. clean-install re-verify    ← same test as step 1, after everything lands
+7. clean-install re-verify    ✅ PASS 2026-07-21 — plugin.json bumped to 0.3.0
 ```
+
+**Phase 0 complete.** All seven steps done. Clean-install re-verify confirmed every
+`${CLAUDE_PLUGIN_ROOT}` path resolves from a non-repo cwd, all 20 agents load with descriptions,
+no phantom agents, five commands advertised, twelve lenses present, manifest bumped to 0.3.0.
+Next: merge to main, tag v0.3.0, cut the GitHub Release — *then* Phase 1 promotion (awesome-list
+PRs), Phase 2 (article), Phase 3 (Show HN).
 
 **Step 6 done — suite green.** All 37 cases run blind: **36 PASS · 1 WEAK (fixed) · 0 FAIL**,
 calibration **6/6 known-bad correctly FAILED**. Full record: `evals/runs/2026-07-21-post-adversarial-pass.md`.

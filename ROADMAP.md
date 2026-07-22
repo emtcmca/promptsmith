@@ -276,7 +276,22 @@ Logged in full at `evals/runs/2026-07-21-post-adversarial-pass.md`.
       `~/.claude/promptsmith-agents/` save warning, so `/forge-agent` cannot reproduce the
       descriptionless agent the gallery originally shipped.
 
-- [ ] **Step 7: clean-install re-verify, then tag v0.3.0.** The only remaining gate.
+### Step 7 — clean-install re-verify (2026-07-21) — PASS
+
+Simulated a real install: `git archive HEAD` into a plugin-root dir (tracked files only, i.e. what
+ships), cwd set to an empty project dir (the failure mode the path bug caused). Verified:
+
+- [x] **All 8 `${CLAUDE_PLUGIN_ROOT}/…` references resolve** against the install image from a
+      non-repo cwd — the bare-path bug that only ever worked under a dev-install is closed.
+- [x] `plugin.json` valid; advertises all five commands; **no `/lens-review`** (the retired name).
+- [x] All 5 command files ship with frontmatter.
+- [x] **All 20 agents load** (name + description present); **no phantom agents** — `README.md` /
+      `coverage-gaps.md` are absent from `agents/` (now in `docs/`).
+- [x] 12 lenses present; `skeptic` (the default lens) loads.
+- [x] **`plugin.json` bumped 0.2.0 → 0.3.0** so the manifest matches the tag (the exact drift this
+      whole pass fought).
+
+**All seven Phase-0 steps complete. Ready to tag v0.3.0 after merge to main.**
 
 ## Now in progress — Layer 2 orchestration (Claude-Code-native)
 
