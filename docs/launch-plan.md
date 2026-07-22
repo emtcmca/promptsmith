@@ -105,13 +105,22 @@ because every step in between touches files the installer copies.
 - [x] **Commit the README restructure + demo GIF.** The GIF is the single highest-leverage asset
       — most visitors decide in 5 seconds, above the fold. It was referenced by the README while
       untracked, so the hero image was broken on GitHub the whole time.
-- [ ] **Re-run the full eval suite.** ROADMAP already states this is the release gate. Six
-      features landed since the last full run, plus everything fixed in the adversarial pass;
-      that scorecard is stale. Runs *after* the new cases land (step 5), not before.
-- [ ] **Cut `v0.3.0`** — bump `plugin.json`, tag, and publish a **GitHub Release** with real
-      notes. An empty Releases tab reads as abandoned. The release body is also the thing
-      awesome-list maintainers skim.
-- [ ] **GitHub repo metadata** — free discovery, currently unset:
+- [x] **Ship the proof asset — done 2026-07-22.** The "why download this?" gap the GTM/cold-user
+      audits flagged. Built as the **prompt delta** (`proof-prompt-delta.png/.gif`): one-line
+      request → the fleshed prompt promptsmith hands back, each added line tagged in the margin
+      with the decision the one-liner left unstated (retryable-only, jitter, the double-charge
+      prohibition, the honesty-floor open question). Answer-vs-answer **code delta**
+      (`proof-code-delta.png/.gif`) kept for a dev audience in a README `<details>`. README section
+      retitled "What you actually get"; both generators committed (`make-prompt-delta.py`,
+      `make-code-delta.py`) so the assets are reproducible. Original design was answer-first;
+      switched to prompt-first after a target-reader review found the code-only cut didn't show
+      the product.
+- [x] **Re-run the full eval suite — done 2026-07-21.** 36 PASS · 1 WEAK (fixed) · 0 FAIL;
+      6/6 known-bad fixtures correctly FAILED. Scorecard: `evals/runs/2026-07-21-post-adversarial-pass.md`.
+- [x] **Cut `v0.3.0` — done 2026-07-21.** `plugin.json` bumped, tag pushed, GitHub Release
+      published with real notes (`--latest`, not a draft).
+- [x] **GitHub repo metadata — done 2026-07-21.** Topics, description (now names `/orchestrate`),
+      and homepage all set:
       - Topics: `claude-code`, `claude-code-plugin`, `prompt-engineering`, `ai-agents`,
         `agent-orchestration`, `llm`, `anthropic`, `context-engineering`, `subagents`
       - Description: add `/orchestrate` (current one predates Layer 2)

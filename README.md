@@ -18,6 +18,38 @@ and asked the agent to push back on you and review the work like a seasoned prof
 
 ---
 
+## What you actually get
+
+Give `/sharpen` a one-line request and it hands back the prompt a senior engineer would have
+written for you — every requirement, guardrail, and prohibition the one-liner left unstated, made
+explicit. Same request in; the scaffolding *named* on the way out:
+
+![Prompt delta: the one-line request "write a function to retry a failed API call" expanded into a full prompt — role, retryable-only requirements, jitter, a total deadline, a prohibition on retrying non-idempotent POSTs, and an open question about idempotency the tool refuses to guess](docs/assets/proof-prompt-delta.png)
+
+Every margin note is a decision a rushed one-liner forgets: which failures are safe to retry, the
+jitter that avoids a thundering herd, the prohibition that stops a double charge. The last line is
+the honesty floor — it flags the one fact it *can't* know (*is this call idempotent?*) instead of
+guessing it. You already know how to write the good version; the point of the tool is that you
+don't have to remember to, every time.
+
+<details>
+<summary><b>Prefer to see the code it buys you?</b> (the same task, answer-vs-answer)</summary>
+
+<br>
+
+The naive request gets a competent, backoff-aware retry function that **silently retries a
+`POST /charge` which already succeeded but timed out on the wire — a double charge.** The sharpened
+prompt gets one that retries only what's safe and *refuses to retry a write it was never told is
+idempotent*:
+
+![Answer delta: a buggy retry function that double-charges a non-idempotent POST, beside a safe one that refuses the unsafe retry](docs/assets/proof-code-delta.png)
+
+</details>
+
+The full four-beat walk-through is in [`docs/assets/proof-answer-delta.md`](docs/assets/proof-answer-delta.md).
+
+---
+
 ## What it does
 
 | Command | You give it | You get back |
@@ -46,7 +78,9 @@ accessibility/UX/visual lenses folded into the requirements, guardrails from a r
 — because it never invents facts — the stack flagged as `[stack?]` rather than assumed. Below it:
 the assumptions it made, the push-back worth hearing, and the open questions.
 
-**Layer 2 — coordinate a multi-domain build:**
+**Layer 2 — escalate only when the work spans domains.** One command isn't enough when a request
+needs a schema *and* an API *and* a security pass *and* tests to agree with each other. That's the
+signal to reach for the coordinator — not a first move, an escalation:
 ```
 /promptsmith:orchestrate add public read-only shareable links to user dashboards
 ```
