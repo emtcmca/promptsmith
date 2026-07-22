@@ -197,8 +197,11 @@ install**, so the public never sees the 5-command surface get unwound.
 - [x] Reconciled every surface: `commands/lens.md` (grade mode section), engine routing,
       template next-step, README, USING-PROMPTSMITH, COMMAND-SHEET, `plugin.json`, eval cases
       35–37, and the `evals/README.md` route table. Command count back to **four** everywhere.
-- [ ] Re-eval the grade path blind on the new `/lens --grade` surface (cases 35–37) before
-      re-cutting the release.
+- [x] Re-eval the grade path blind on the new `/lens --grade` surface (cases 35–37): all correct —
+      35 FAIL on Grounded, 36 names the Bounded regression under B's win, 37 flags the self-grading
+      injection. Producer confirmed `--grade` routing was unambiguous from `lens.md` + engine Step 8.
+- [x] Clean-install re-verify on the 4-command surface: PASS (all paths resolve, no standalone
+      `/grade`, `graded-prompt.md` still shipped).
 
 **Identity note:** this is the 5th command against a stated "four commands, not a marketplace"
 guardrail. Accepted deliberately — it is the feature that makes the eval-harness framing literally
