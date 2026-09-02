@@ -1,0 +1,39 @@
+name: Prompt quality
+description: A prompt produced a weak, wrong, or overconfident result. The most useful report there is.
+labels: [prompt-quality]
+body:
+  - type: markdown
+    attributes:
+      value: >-
+        These prompts are tested by an eval suite with deliberately-broken calibration
+        fixtures, and it still misses things. A concrete bad output is worth more than a
+        suggestion, because it can become a case in `evals/cases/`.
+  - type: input
+    id: surface
+    attributes:
+      label: Which command, agent, or lens
+    validations:
+      required: true
+  - type: textarea
+    id: input
+    attributes:
+      label: The input you gave it
+      render: markdown
+    validations:
+      required: true
+  - type: textarea
+    id: output
+    attributes:
+      label: The output you got
+      render: markdown
+    validations:
+      required: true
+  - type: textarea
+    id: wrong
+    attributes:
+      label: What is wrong with it
+      description: >-
+        Be specific about the defect -- invented a fact, missed a case, hedged instead of
+        deciding, ignored a stated constraint, produced generic boilerplate.
+    validations:
+      required: true

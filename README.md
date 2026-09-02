@@ -15,6 +15,9 @@ and asked the agent to push back on you and review the work like a seasoned prof
   construction.
 - **Four commands** (three core + a coordinator), one shared engine, a library of expert lenses
   you can extend, and a 20-agent specialist gallery.
+- **Not on Claude Code?** Thirteen of these ship as host-agnostic skills you can install into
+  Codex, Copilot, Cursor, or anything else that reads `SKILL.md` —
+  `npx skills add emtcmca/promptsmith-skills`. See [Option C](#option-c--any-other-agent).
 
 ---
 
@@ -158,6 +161,25 @@ because standalone commands aren't namespaced.
 Skip any row and that capability degrades: no `lenses/` and the lens step has nothing to load;
 no `templates/` and the synthesis step has no skeleton; no `agents/` and `/forge-agent` can't
 seed from the gallery while `/orchestrate` has no roster to route to.
+
+### Option C — any other agent
+
+The commands and the orchestrator are Claude Code features, but the prompts underneath are not.
+Thirteen of them are published as plain skills:
+
+```bash
+npx skills add emtcmca/promptsmith-skills
+```
+
+That installs the engine (`prompt-engineering`) plus twelve specialists from the gallery into
+any agent that reads `SKILL.md`. No plugin, no dependencies, no API keys.
+
+What you give up: the four slash commands, `/orchestrate` (it dispatches subagents from a
+plugin-bundled gallery and cannot run from a plain skills install), and eight of the twenty
+gallery agents that were left out of the mirror. What you keep: the same prompt bodies, generated
+from this repo and stamped with the commit they came from.
+
+Source and provenance: [emtcmca/promptsmith-skills](https://github.com/emtcmca/promptsmith-skills).
 
 ### Uninstall
 

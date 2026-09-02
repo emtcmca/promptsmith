@@ -1,0 +1,41 @@
+name: Bug
+description: A command, agent, or lens did not do what the docs say it does.
+labels: [bug]
+body:
+  - type: dropdown
+    id: install
+    attributes:
+      label: How did you install it
+      options:
+        - Option A -- plugin (/plugin marketplace add)
+        - Option B -- manual copy into ~/.claude/
+        - Option C -- npx skills add emtcmca/promptsmith-skills
+    validations:
+      required: true
+  - type: input
+    id: surface
+    attributes:
+      label: Which command, agent, or lens
+      placeholder: /promptsmith:lens --lens skeptic
+    validations:
+      required: true
+  - type: textarea
+    id: input
+    attributes:
+      label: What you ran
+      description: The request you gave it. Redact anything private.
+      render: shell
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: What you expected, and what you got instead
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: promptsmith version
+      description: From plugin.json, or the tag you installed.
+      placeholder: v0.3.0
