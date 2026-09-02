@@ -16,8 +16,52 @@ and asked the agent to push back on you and review the work like a seasoned prof
 - **Four commands** (three core + a coordinator), one shared engine, a library of expert lenses
   you can extend, and a 20-agent specialist gallery.
 - **Not on Claude Code?** Thirteen of these ship as host-agnostic skills you can install into
-  Codex, Copilot, Cursor, or anything else that reads `SKILL.md` —
+  Codex, Copilot, or anything else that reads `SKILL.md` —
   `npx skills add emtcmca/promptsmith-skills`. See [Option C](#option-c--any-other-agent).
+
+---
+
+## Try it before you install
+
+Because there is no runtime, you can run a piece of this by hand right now — no install, no
+plugin, no API key, in whatever chat you already have open.
+
+**1.** Open **[`agents/debugger.md`](https://raw.githubusercontent.com/emtcmca/promptsmith/main/agents/debugger.md)** and copy the whole file. It's one self-contained file, about 60 lines.
+
+**2.** Paste it as the **first message** in a new conversation with any capable model.
+
+**3.** Send your actual problem as the **second message**. If you don't have one handy:
+
+```text
+Here is the failure:
+
+TypeError: Cannot read properties of undefined (reading 'map')
+    at renderInvoiceLines (invoice-table.tsx:88)
+    at InvoiceTable (invoice-table.tsx:41)
+
+It hits about 3% of invoice page loads. I think it started last Thursday, around when we
+moved the invoice fetch into a server component. I don't have a reproduction.
+```
+
+### What you should see
+
+Check for these five, because they are what the prompt is actually buying you:
+
+- **Your claims come back labelled as yours.** The "last Thursday," the refactor, and the 3%
+  should be flagged as unverified input rather than absorbed as fact — all three are doing most
+  of the work in any ranking, and none are confirmed.
+- **It refuses to invent a reproduction** and says so, instead of producing a plausible one.
+- **Ranked hypotheses, each with the cheapest probe that would kill it** — a specific observation
+  and a rough cost, not a list of things to try.
+- **Trigger separated from root cause.** The server-component move is the trigger; the root cause
+  is code treating an optional field as guaranteed.
+- **No one-line patch handed over.** It should note that `?? []` stops the crash while telling you
+  nothing about whether those 3% of invoices are *supposed* to have line items — and that if they
+  are, the guard turns a loud crash into silent under-billing.
+
+That is one of twenty gallery agents, run the hard way. The plugin is the same prompts with the
+dispatch, the lens library, and the orchestration around them — but you should not have to take
+that on faith before installing anything.
 
 ---
 
