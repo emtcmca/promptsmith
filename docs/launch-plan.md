@@ -279,9 +279,31 @@ Write it once; reuse it everywhere.
 **Do not write "I built a prompt tool."** Write the teardown. Candidate angles, best first:
 
 1. **"I ran 7 AI agents on one feature. They contradicted each other — here's the log."**
-   The case-17 run is genuinely interesting *independent of promptsmith*: three agents each
-   assumed another owned `expires_at` enforcement, so nobody enforced it. Unowned seams are a
-   real, general multi-agent failure mode. The tool is the answer at the end, not the premise.
+   The case-17 run is genuinely interesting *independent of promptsmith*. All seven agents agreed
+   the public payload should be an "allow-list DTO." The allow-list was written at the **column**
+   level, and one of those columns was a `widgets` JSONB blob that shipped whole to anonymous
+   callers — widget config routinely carries data-source connection strings, internal IDs, and
+   owner-scoped filter values. The producer missed it. The security slice missed it. The contract
+   missed it. An independent `verifier`, handed only the artifact and the claimed contract and
+   told to assume it was wrong, caught it, returned FAIL/BLOCKING, and **halted synthesis** rather
+   than emitting a plan that read as finished.
+
+   The general finding, and it is not specific to this tool: **agreement at one granularity hides
+   a gap at another.** Everyone said "allow-list DTO"; nobody owned filtering *inside* `widgets`.
+   The seam was not missing from the conversation, it was hiding inside a term the whole room had
+   already agreed on. That is a real multi-agent failure mode and it is the reason to read the
+   log. The tool is the answer at the end, not the premise.
+   Source: `evals/runs/2026-06-25-2101-orchestration-case17-live-7agent.md`.
+
+   > **Do not tell the `expires_at` version of this story.** Until 2026-09-02 this entry said
+   > three agents each assumed another owned `expires_at` enforcement, so nobody enforced it. The
+   > run log does not support that. `expires_at` was a three-way disagreement about whether expiry
+   > should exist at all — `feature-spec`: none in v1; `data-modeler`: optional, `NULL = never`;
+   > `security-review`: non-negotiable — the coordinator resolved it to a mandatory server-set 30d
+   > default, and the seam table assigns enforcement to the backend public-read query with the
+   > owner column marked `Y`. It was caught and assigned, which is the opposite of unowned.
+   > Corrected against the run file. An article premise that misdescribes the log it links is the
+   > one paragraph a hostile reader will actually check.
 2. **"How do you eval a prompt tool that makes zero model calls?"** — the known-bad fixtures and
    independent-judge design. Narrow, credible, low bullshit surface.
 3. **"An honesty floor for agent system prompts"** — the no-fabrication invariant and the
