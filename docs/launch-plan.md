@@ -1,10 +1,22 @@
 # promptsmith — launch plan
 
-Status: **draft, 2026-07-21.** Sequenced. Nothing in Phase 1+ ships until Phase 0 is done —
-promoting a repo that looks mid-build burns the one first impression each channel gives you.
+Status: **Phase 0 complete 2026-07-22. Phases 1-4 not started as of 2026-09-02.** Sequenced.
+Nothing in Phase 1+ ships until Phase 0 is done — promoting a repo that looks mid-build burns
+the one first impression each channel gives you.
 
-Baseline at time of writing: public repo, 2 stars, 0 topics, no release notes, `v0.2.0` tag
-with 6 unreleased features on `main`.
+Baseline at time of writing (2026-07-21): public repo, 2 stars, 0 topics, no release notes,
+`v0.2.0` tag with 6 unreleased features on `main`.
+
+**Where it actually stands, 2026-09-02.** `v0.3.0` shipped 2026-07-22 with topics, description,
+homepage, and a real GitHub Release. Then nothing: no awesome-list PR has ever been opened
+(`gh search prs --author emtcmca` returns two PRs, both to `anthropics/claude-for-legal`), no
+article, no Show HN. Still 2 stars. Six weeks of the plan being written and not run. The blocker
+was never readiness.
+
+**What changed under the plan.** `promptsmith-skills` did not exist when this was written — it
+was built 2026-07-26 as a generated distribution mirror, because `npx skills add` only indexes
+`skills/<name>/SKILL.md` and this repo's `agents/` and `commands/` are invisible to it. There
+are now two products with two audiences and two channels, so Phase 1 splits (see below).
 
 ---
 
@@ -13,8 +25,10 @@ with 6 unreleased features on `main`.
 There are hundreds of "prompt improver" repos. Almost none of them can answer *"how do you know
 it works?"* promptsmith can, and that is the only durable wedge:
 
-- **27 eval cases, 14 logged runs**, including known-bad calibration fixtures and an independent
-  judge on high-stakes routes.
+- **37 eval cases, 15 logged runs, 6 known-bad calibration fixtures**, plus an independent judge
+  on high-stakes routes. (Counted on `main` 2026-09-02, not recalled. The original entry here
+  said 27 cases and 14 runs; both were true when written and went stale by standing still, which
+  is the exact defect a reviewer catches first.)
 - **A red-team pass** (13 findings) with a threat model in `docs/SECURITY.md`.
 - **An honesty floor** enforced across 100% of gallery agents — no fabricated facts, citations,
   or MCP servers.
@@ -137,13 +151,42 @@ Awesome-list PRs keep delivering traffic for years. Do these before any post —
 spike; a list entry compounds. **Stagger them** (2–3 days apart); simultaneous identical PRs
 across every list reads as spam to maintainers who watch each other.
 
-Targets, in priority order:
+**Two products, two tracks.** An awesome-claude-code entry sends Claude Code users to the
+plugin; a skills-list entry sends everyone else to the mirror. Sending either audience to the
+wrong repo wastes the click, which is what the repos did to each other until 2026-09-02 — the
+plugin README had no mention of the mirror, so every Codex, Copilot, and Cursor visitor hit a
+Claude-Code-only install section and bounced. Fixed; the cross-link is Option C.
+
+Track A — **promptsmith** (the plugin):
 
 1. `hesreallyhim/awesome-claude-code` — the canonical one. Highest traffic.
-2. `ComposioHQ/awesome-claude-skills` — already cited as a source in `planned-features.md`.
-3. Claude Code plugin marketplace registries (community-maintained plugin indexes).
-4. `e2b-dev/awesome-ai-agents` — orchestration/gallery angle.
-5. `promptslab/Awesome-Prompt-Engineering` or equivalent.
+2. Claude Code plugin marketplace registries (community-maintained plugin indexes).
+3. `e2b-dev/awesome-ai-agents` — orchestration/gallery angle.
+4. `promptslab/Awesome-Prompt-Engineering` or equivalent.
+
+Track B — **promptsmith-skills** (the mirror):
+
+1. `ComposioHQ/awesome-claude-skills` — already cited as a source in `planned-features.md`.
+2. General agent-skill lists that are not Claude-specific — the mirror's whole argument is that
+   it is not Claude-specific, and the plugin cannot make that argument.
+
+### skills.sh — a channel this plan predates
+
+The mirror is already listed (**16 installs as of 2026-09-02**, which is roughly one full-pack
+install plus a few singles — that is the verification install, not adoption; do not cite it as
+traction). Two mechanics worth knowing:
+
+- **Listing is automatic and telemetry-driven.** There is no submission form. The directory
+  registers a skill when someone *installs* it, so a repo can be perfectly published and still be
+  invisible. Publishing is not distribution.
+- **Ranking is install count over a rolling 8-week window**, and `find-skills` — the
+  highest-installed skill in the directory — is the discovery path. It matches on the
+  `description` field. That is why `build-skills.mjs` overrides upstream descriptions rather
+  than copying them: same prompt body, different shop window. A weak description is a
+  distribution bug, not a documentation nit.
+
+The 8-week window means installs decay. Time the awesome-list PRs and the article to land inside
+one window rather than spread across three.
 
 **PR hygiene that gets merged:** read `CONTRIBUTING.md` first, match the existing entry format
 exactly, one entry per PR, alphabetical placement, one-line description under whatever char limit
