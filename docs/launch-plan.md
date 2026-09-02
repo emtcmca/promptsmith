@@ -188,10 +188,80 @@ traction). Two mechanics worth knowing:
 The 8-week window means installs decay. Time the awesome-list PRs and the article to land inside
 one window rather than spread across three.
 
-**PR hygiene that gets merged:** read `CONTRIBUTING.md` first, match the existing entry format
-exactly, one entry per PR, alphabetical placement, one-line description under whatever char limit
-they enforce, no marketing adjectives. Verify each list's format before opening — a
-malformed entry is a silent close.
+### Track A — SUBMITTED 2026-09-02
+
+[`hesreallyhim/awesome-claude-code` issue #2715](https://github.com/hesreallyhim/awesome-claude-code/issues/2715).
+Bot validation **passed** the same minute; labels went `validation-pending` → `validation-passed`,
+all fields parsed, license auto-detected as Apache-2.0. Awaiting maintainer review, which has no
+SLA. Nothing further to do; do not follow up more than once.
+
+**That list does not take PRs, and this is the finding to carry forward.** Their CONTRIBUTING:
+"Do not open a PR. Just fill out the form," and, in a warning block, "It is **not** possible to
+submit a resource recommendation using the `gh` CLI." Opening a PR risks "being restricted from
+interacting with this repository." Recommendations must also be created by human beings. So the
+agent-side work is the packet; Eric submits it in the web UI.
+
+Submission form:
+`https://github.com/hesreallyhim/awesome-claude-code/issues/new?template=recommend-resource.yml`
+
+**The exact values submitted** (reusable if the issue is ever closed and refiled):
+
+| Field | Value |
+|---|---|
+| Title | `[Resource]: promptsmith` (the form PREFILLS `[Resource]: <name of your resource>` — replace the whole line, do not append) |
+| Display Name | `promptsmith` |
+| Category | `Agent Orchestration` |
+| Link | `https://github.com/emtcmca/promptsmith` |
+| Author Name | `Eric Tetzlaff` |
+| Author Link | `https://github.com/emtcmca` |
+
+Description, 478 chars, 3 sentences, every number ground-truthed on `main` that day
+(4 commands, 12 lenses, 20 agents, 37 cases, 6 known-bad fixtures):
+
+> A Claude Code plugin for prompt and context engineering. /sharpen turns a rough request into a
+> complete prompt, /forge-agent authors reusable agent system prompts, /lens reviews an artifact
+> through twelve expert lenses or grades a prompt against a rubric, and /orchestrate dispatches a
+> twenty-agent gallery across a multi-domain request. It makes no model calls, has no
+> dependencies, and ships a 37-case eval suite including six deliberately-broken fixtures the
+> suite must fail.
+
+Checklist: check the first five. **The sixth is a trap** — it reads "By checking this box, I admit
+that I am not reading any of these statements." Leave it unchecked.
+
+**Category was the judgment call.** `Agent Orchestration` holds autonomous loops and
+plan-work-review harnesses (Ralph variants, gstack, RIPER), which promptsmith is not. It fits
+because `/orchestrate` dispatches the gallery and `/forge-agent` authors agent system prompts —
+the same machinery as their accepted "Harness" entry. There is no prompt-engineering category, and
+`Skills` is worse: that category is skill bundles and promptsmith ships two. A maintainer can
+recategorize; miscategorization is far less fatal than ineligibility.
+
+**Pre-flight, all verified 2026-09-02:** not already listed (checked all 162 rows of
+`THE_RESOURCES_TABLE_NEW.csv`); no prompt or context-engineering toolkit anywhere on the list;
+first commit 2026-06-24, 70 days against their 14-day minimum; Apache-2.0 detected via the API;
+repo and author links both 200; description inside 10–500 chars and ≤3 sentences, no emoji, no
+second person.
+
+**Two honest caveats recorded at submission time.** The 90 commits on `main` fall on only six
+distinct days — bursts in June and July, then nothing until the day of submission. The rule is
+satisfied and that day's commits were substantive, but the graph does not read as steady
+development and that is a plausible silent close. And their CONTRIBUTING says outright: "If
+'getting on the list' is any part of a promotional strategy for your project, you should be
+prepared to have a backup plan," with "no guarantee is made as to whether you will receive a
+response." 53k stars, 162 curated entries, against 2 stars here. Silence is the expected outcome.
+
+**`promptsmith-skills` is ineligible for this list**, and that is settled rather than untried: a
+required checkbox asserts "This resource is specific to Claude Code," and the mirror is
+deliberately host-agnostic. Track B is its only path.
+
+**Do not edit issue #2715.** The bot re-runs validation on every edit. There is no upside — it
+parsed correctly — and a re-run is noise in a maintainer's feed.
+
+### For the lists that DO take PRs (Track B and beyond)
+
+Read `CONTRIBUTING.md` first and confirm the submission mechanism before writing anything; Track A
+proves the mechanism is not guessable. Where it is a PR: match the existing entry format exactly,
+one entry per PR, alphabetical placement, one-line description under whatever char limit they
+enforce, no marketing adjectives. A malformed entry is a silent close.
 
 Draft entry line (tune per list):
 
